@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import treeTable from '@/views/treeTable'
+import treeTable from '@/views/treeTable/treeTable'
 
 Vue.use(Router)
 
