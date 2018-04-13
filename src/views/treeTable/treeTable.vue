@@ -2,7 +2,7 @@
   
  <template>
   <div class="hello">
-      <h2>hello treeTable</h2>
+      <h2>hello myTable</h2>
     <tree-grid :columns="columns" :tree-structure="true" :data-source="dataSource"></tree-grid>
   </div>
 </template>

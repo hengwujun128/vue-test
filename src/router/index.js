@@ -16,6 +16,7 @@ export default new Router({
       path:'/treeTable',
       name:'treeTable',
       component:treeTable
-    }
+    },
+    // drag and drop
   ]
 })
