@@ -1,33 +1,65 @@
 <template>
     <div class="canban-container">
-        <h2>this is canban</h2>
-        <!-- group1 -->
-        <!-- <draggable element="el-collapse" :list="list1" :component-data="getComponentData()">
-            <el-collapse-item v-for="e in list1" :title="e.title" :name="e.name" :key="e.name">
-                <div>{{e.description}}</div>
-            </el-collapse-item>
-        </draggable> -->
         <div class="drag-group">
             <div class="group1">
-                <draggable v-model="list1" :options="{group:'group1',draggable:'.drag-item'}" @start="drag=true" @end="drag=false">
+                <div class="group-header">
+                 <h2>planning</h2> 
+                  </div>
+                <draggable v-model="list1" :options="dragOptions" @start="drag=true" @end="drag=false" :move="checkMove"  :component-data="getComponentData()">
                 <!-- <transition-group> -->
                     <div v-for="element in list1" :key="element.title" class="drag-item">
-                        {{element.name}}
+                      
+                        <div class="first">
+                          <span class="title">
+                            <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
+                          <span class="avator">
+                            <!-- <img src="../../assets/logo.png"/> -->
+                          </span>
+                        </div>
+                        <div class="second">
+                          <span>6月30日截止</span>
+                          <span>每月重复</span>
+                        </div>
+                        <div class="third">
+                          <span><i></i>自动部署</span>
+                          <span><i></i>技能提升</span>
+                        </div>
                     </div>
                 <!-- </transition-group> -->
+                    <el-button slot="footer" @click="addItem" type="primary">添加任务</el-button>
             </draggable>
             </div>
             
             <div class="group2">
-                <draggable v-model="list2" :options="{group:'group2',put:'group1',draggable:'.drag-item'}" @start="drag=true" @end="drag=false">
+               <div class="group-header">
+                  <h2>working on</h2> 
+               </div>
+                <draggable v-model="list2" :options="dragOptions" @start="drag=true" @end="drag=false">
                 <!-- <transition-group> -->
                     <div v-for="element in list2" :key="element.title" class="drag-item">
-                        {{element.name}}
+                     <div class="first">
+                          <span class="title">
+                            <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
+                          <span class="avator">
+                            <!-- <img src="../../assets/logo.png"/> -->
+                          </span>
+                        </div>
+                        <div class="second">
+                          <span>6月30日截止</span>
+                          <span>每月重复</span>
+                        </div>
+                        <div class="third">
+                          <span><i></i>自动部署</span>
+                          <span><i></i>技能提升</span>
+                        </div>
                     </div>
                 <!-- </transition-group> -->
             </draggable>
             </div>
             <div class="group3">
+               <div class="group-header">
+                 <h2>completed</h2>
+                </div>
                  <draggable v-model="list3" :options="{group:'group3',draggable:'.drag-item'}" @start="drag=true" @end="drag=false">
                 <!-- <transition-group> -->
                     <div v-for="element in list3" :key="element.title" class="drag-item">
@@ -50,118 +82,162 @@ export default {
   },
   data: function() {
     return {
+      editable: true,
+      isDragging: false,
+      delayedDragging: false,
       list1: [
         {
           name: "apple1",
-          title: "apple",
-          description: "this is apple description"
+          title: "apple1",
+          description: "this is apple1 description"
         },
         {
           name: "banana1",
-          title: "banana",
-          description: "this is banana description"
+          title: "banana1",
+          description: "this is banana1 description"
         },
         {
           name: "pinapple1",
-          title: "pinapple",
-          description: "this is pinapple description"
+          title: "pinapple1",
+          description: "this is pinapple1 description"
         },
         {
-          name: "grape1",
-          title: "grape",
-          description: "this is grape description"
+          name: "odd1",
+          title: "odd1",
+          description: "this is odd1 description"
         },
-        {
-          name: "strawberry1",
-          title: "strawberry",
-          description: "this is strawberry description"
-        },
-        { name: "odd1", title: "odd1", description: "this is odd description" },
         {
           name: "pair1",
           title: "pair1",
-          description: "this is pair description"
+          description: "this is pair1 description"
         }
       ],
       list2: [
         {
-          name: "apple",
-          title: "apple",
-          description: "this is apple description"
+          name: "apple2",
+          title: "apple2",
+          description: "this is apple2 description"
         },
         {
-          name: "banana",
-          title: "banana",
-          description: "this is banana description"
+          name: "banana2",
+          title: "banana2",
+          description: "this is banana2 description"
         },
         {
-          name: "pinapple",
-          title: "pinapple",
-          description: "this is pinapple description"
+          name: "pinapple2",
+          title: "pinapple2",
+          description: "this is pinapple2 description"
         },
         {
-          name: "grape",
-          title: "grape",
-          description: "this is grape description"
+          name: "grape2",
+          title: "grape2",
+          description: "this is grape2 description"
         },
         {
-          name: "strawberry",
-          title: "strawberry",
-          description: "this is strawberry description"
-        },
-        { name: "odd", title: "odd", description: "this is odd description" },
-        { name: "pair", title: "pair", description: "this is pair description" }
+          name: "strawberry2",
+          title: "strawberry2",
+          description: "this is strawberry2 description"
+        }
       ],
       list3: [
         {
-          name: "apple",
-          title: "apple",
+          name: "apple3",
+          title: "apple3",
           description: "this is apple description"
         },
         {
-          name: "banana",
-          title: "banana",
+          name: "banana3",
+          title: "banana3",
           description: "this is banana description"
         },
         {
-          name: "pinapple",
-          title: "pinapple",
+          name: "pinapple3",
+          title: "pinapple3",
           description: "this is pinapple description"
         },
         {
-          name: "grape",
-          title: "grape",
+          name: "grape3",
+          title: "grape3",
           description: "this is grape description"
         },
         {
-          name: "strawberry",
-          title: "strawberry",
+          name: "strawberry3",
+          title: "strawberry3",
           description: "this is strawberry description"
-        },
-        { name: "odd", title: "odd", description: "this is odd description" },
-        { name: "pair", title: "pair", description: "this is pair description" }
+        }
       ],
-      options1: {}
+      options1: {
+        group: "group1",
+        pull: true,
+        draggable: ".drag-item"
+      },
+      options2: {
+        group: "group2",
+        put: ["group1", "group3"]
+      }
     };
   },
-  computed: {},
+  computed: {
+    dragOptions() {
+      return {
+        animation: 0,
+        group: "description",
+        disabled: !this.editable,
+        ghostClass: "ghost"
+      };
+    }
+  },
+  watch: {
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
+    }
+  },
   methods: {
     handleChange() {
       console.log("changed");
+      alert("changed");
     },
     inputChanged(value) {
       this.activeNames = value;
     },
+    handleClick() {
+      alert("click");
+    },
+
+    //This props is used to pass additional information to child component declared by element props
+    /** 
+    props: props to be passed to the child component
+    on:   events to be subscribe in the child component
+    */
+
     getComponentData() {
       return {
         on: {
           change: this.handleChange,
-          input: this.inputChanged
+          input: this.inputChanged,
+          click: this.handleClick
         },
         props: {
           value: this.activeNames
         }
       };
+    },
+    addItem() {
+      alert(123);
+    },
+    // evt object has same property as Sortable onMove event, and 3 additional properties:
+    //evt.relatedContext,evt.draggedContext
+    checkMove({ relatedContext, draggedContext }) {
+      //
+      //  return (evt.draggedContext.element.name!=='apple');
+      // alert(draggedContext.element.name);
+      return true;
     }
   }
 };
@@ -169,21 +245,103 @@ export default {
 
 <style lang="scss">
 .canban-container {
+  position: relative;
+  height: 100%;
+  // height: calc(100% - 200px);
+  box-sizing: border-box;
+  padding: 20px 10px;
   .drag-group {
     display: flex;
-    align-items: center;
+    height: 100%;
+    // align-items: center;
     .group1,
     .group2,
     .group3 {
       flex: 1;
       margin-right: 20px;
+      background-color: #eeeeee;
+      border-radius: 4px;
+      overflow: auto;
       .drag-item {
-        margin-top: 8px;
-        background: #ddd;
+        margin: 10px 10px;
+        padding: 10px;
+        border-left: 4px solid orange;
+        border-radius: 4px;
+        background: #ffffff;
         cursor: pointer;
-        font-size: 24px;
-        height: 40px;
-        line-height: 40px;
+        font-size: 14px;
+        min-height: 40px;
+        line-height: 1.2;
+        text-align: left;
+        .first {
+          display: flex;
+          align-items: center;
+          .title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 700;
+          }
+          .avator {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #dddddd;
+            // 和左边文字垂直对其
+            // vertical-align: middle;
+            img {
+              max-width: 80%;
+              border-radius: 50%;
+            }
+          }
+        }
+        .second {
+          padding: 6px 0px;
+          line-height: 2;
+          display: flex;
+          // justify-content: center;
+          text-align: center;
+          // align-items: center;
+          span {
+            display: inline-block;
+            padding: 0px 10px;
+            border-radius: 4px;
+            // flex: 1;
+          }
+          span:nth-child(1) {
+            background: #e1e1e1;
+            margin-right: 10px;
+          }
+          span:nth-child(2) {
+            background: #3da8f5;
+            color: #ffffff;
+          }
+        }
+        .third {
+          padding: 6px 0px;
+          line-height: 2;
+          display: flex;
+          text-align: center;
+          // align-items: center;
+          span {
+            display: inline-block;
+            padding: 0px 10px;
+            border-radius: 4px;
+            color: #b0b0b0;
+            // flex: 1;
+            i {
+              background: #3da8f5;
+              display: inline-block;
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              margin-right: 6px;
+            }
+          }
+        }
+      }
+      .group-header {
+        margin: 10px;
       }
     }
   }
