@@ -5,15 +5,22 @@
                 <div class="group-header">
                  <h2>planning</h2> 
                   </div>
-                <draggable v-model="list1" :options="dragOptions" @start="drag=true" @end="drag=false" :move="checkMove"  :component-data="getComponentData()">
+                <draggable v-model="list1"
+                 :options="dragOptions"
+                  @start="isDragging=true"
+                  @end="isDragging=false"
+                  :move="checkMove"
+                  :component-data="getComponentData()"
+                  @change="group1Change"
+                  class="item-container">
                 <!-- <transition-group> -->
-                    <div v-for="element in list1" :key="element.title" class="drag-item">
+                    <div v-for="element in list1" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
                       
                         <div class="first">
                           <span class="title">
                             <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
                           <span class="avator">
-                            <!-- <img src="../../assets/logo.png"/> -->
+                            <img src="../../assets/header_user.png"/>
                           </span>
                         </div>
                         <div class="second">
@@ -34,16 +41,16 @@
                <div class="group-header">
                   <h2>working on</h2> 
                </div>
-                <draggable v-model="list2" :options="dragOptions" @start="drag=true" @end="drag=false">
+                <draggable v-model="list2" :options="dragOptions" @start="drag=true" @end="drag=false" class="item-container">
                 <!-- <transition-group> -->
-                    <div v-for="element in list2" :key="element.title" class="drag-item">
+                    <div v-for="element in list2" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
                      <div class="first">
                           <span class="title">
                             <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
                           <span class="avator">
-                            <!-- <img src="../../assets/logo.png"/> -->
+                            <img src="../../assets/header_user.png"/>
                           </span>
-                        </div>
+                      </div>
                         <div class="second">
                           <span>6月30日截止</span>
                           <span>每月重复</span>
@@ -57,16 +64,7 @@
             </draggable>
             </div>
             <div class="group3">
-               <div class="group-header">
-                 <h2>completed</h2>
-                </div>
-                 <draggable v-model="list3" :options="{group:'group3',draggable:'.drag-item'}" @start="drag=true" @end="drag=false">
-                <!-- <transition-group> -->
-                    <div v-for="element in list3" :key="element.title" class="drag-item">
-                        {{element.name}}
-                    </div>
-                <!-- </transition-group> -->
-            </draggable>
+                
             </div>
         </div>
     </div>
@@ -89,24 +87,29 @@ export default {
         {
           name: "apple1",
           title: "apple1",
+          draggable: true,
           description: "this is apple1 description"
         },
         {
           name: "banana1",
           title: "banana1",
+          draggable: true,
           description: "this is banana1 description"
         },
         {
           name: "pinapple1",
+          draggable: false,
           title: "pinapple1",
           description: "this is pinapple1 description"
         },
         {
+          draggable: true,
           name: "odd1",
           title: "odd1",
           description: "this is odd1 description"
         },
         {
+          draggable: false,
           name: "pair1",
           title: "pair1",
           description: "this is pair1 description"
@@ -114,26 +117,31 @@ export default {
       ],
       list2: [
         {
+          draggable: true,
           name: "apple2",
           title: "apple2",
           description: "this is apple2 description"
         },
         {
+          draggable: true,
           name: "banana2",
           title: "banana2",
           description: "this is banana2 description"
         },
         {
+          draggable: true,
           name: "pinapple2",
           title: "pinapple2",
           description: "this is pinapple2 description"
         },
         {
+          draggable: true,
           name: "grape2",
           title: "grape2",
           description: "this is grape2 description"
         },
         {
+          draggable: true,
           name: "strawberry2",
           title: "strawberry2",
           description: "this is strawberry2 description"
@@ -166,15 +174,7 @@ export default {
           description: "this is strawberry description"
         }
       ],
-      options1: {
-        group: "group1",
-        pull: true,
-        draggable: ".drag-item"
-      },
-      options2: {
-        group: "group2",
-        put: ["group1", "group3"]
-      }
+      count: 0
     };
   },
   computed: {
@@ -182,8 +182,12 @@ export default {
       return {
         animation: 0,
         group: "description",
-        disabled: !this.editable,
-        ghostClass: "ghost"
+        disabled: !this.editable, // disable the sortable if set true
+        ghostClass: "ghost",
+        draggable: ".draggable", // Specifies which items inside the element should be draggable
+        chosenClass: "sortable-chosen", // Class name for the chosen item
+        ghostClass: "sortable-ghost" // Class name for the drop placeholder
+        // handle: ".my-handle" //
       };
     }
   },
@@ -193,6 +197,7 @@ export default {
         this.delayedDragging = true;
         return;
       }
+      //
       this.$nextTick(() => {
         this.delayedDragging = false;
       });
@@ -206,8 +211,9 @@ export default {
     inputChanged(value) {
       this.activeNames = value;
     },
+    // add event handler to  child
     handleClick() {
-      alert("click");
+      // alert("click");
     },
 
     //This props is used to pass additional information to child component declared by element props
@@ -229,122 +235,34 @@ export default {
       };
     },
     addItem() {
-      alert(123);
+      let index = this.count++;
+      let item = {
+        draggable: true,
+        name: "新增item" + index,
+        title: "新增item" + index,
+        description: "hello,这是新增的item" + index
+      };
+      this.list1.push(item);
     },
     // evt object has same property as Sortable onMove event, and 3 additional properties:
     //evt.relatedContext,evt.draggedContext
     checkMove({ relatedContext, draggedContext }) {
       //
       //  return (evt.draggedContext.element.name!=='apple');
-      // alert(draggedContext.element.name);
+      alert(draggedContext.element.description);
       return true;
+    },
+    // can watch any changes for an group
+    group1Change({ added, removed, moved }) {
+      // console.log(added.element.name);
+      console.log(removed.element.name);
+      // console.log(moved.element.name);
     }
   }
 };
 </script>
 
 <style lang="scss">
-.canban-container {
-  position: relative;
-  height: 100%;
-  // height: calc(100% - 200px);
-  box-sizing: border-box;
-  padding: 20px 10px;
-  .drag-group {
-    display: flex;
-    height: 100%;
-    // align-items: center;
-    .group1,
-    .group2,
-    .group3 {
-      flex: 1;
-      margin-right: 20px;
-      background-color: #eeeeee;
-      border-radius: 4px;
-      overflow: auto;
-      .drag-item {
-        margin: 10px 10px;
-        padding: 10px;
-        border-left: 4px solid orange;
-        border-radius: 4px;
-        background: #ffffff;
-        cursor: pointer;
-        font-size: 14px;
-        min-height: 40px;
-        line-height: 1.2;
-        text-align: left;
-        .first {
-          display: flex;
-          align-items: center;
-          .title {
-            flex: 1;
-            font-size: 16px;
-            font-weight: 700;
-          }
-          .avator {
-            display: inline-block;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #dddddd;
-            // 和左边文字垂直对其
-            // vertical-align: middle;
-            img {
-              max-width: 80%;
-              border-radius: 50%;
-            }
-          }
-        }
-        .second {
-          padding: 6px 0px;
-          line-height: 2;
-          display: flex;
-          // justify-content: center;
-          text-align: center;
-          // align-items: center;
-          span {
-            display: inline-block;
-            padding: 0px 10px;
-            border-radius: 4px;
-            // flex: 1;
-          }
-          span:nth-child(1) {
-            background: #e1e1e1;
-            margin-right: 10px;
-          }
-          span:nth-child(2) {
-            background: #3da8f5;
-            color: #ffffff;
-          }
-        }
-        .third {
-          padding: 6px 0px;
-          line-height: 2;
-          display: flex;
-          text-align: center;
-          // align-items: center;
-          span {
-            display: inline-block;
-            padding: 0px 10px;
-            border-radius: 4px;
-            color: #b0b0b0;
-            // flex: 1;
-            i {
-              background: #3da8f5;
-              display: inline-block;
-              width: 10px;
-              height: 10px;
-              border-radius: 50%;
-              margin-right: 6px;
-            }
-          }
-        }
-      }
-      .group-header {
-        margin: 10px;
-      }
-    }
-  }
-}
+@import "./canban.scss";
 </style>
 

@@ -1,0 +1,139 @@
+.canban-container {
+  position: relative;
+  height: 100%;
+  // height: calc(100% - 200px);
+  box-sizing: border-box;
+  padding: 20px 10px;
+  .drag-group {
+    display: flex;
+    height: 100%;
+    // align-items: center;
+    .group1,
+    .group2,
+    .group3 {
+      flex: 1;
+      margin-right: 20px;
+      background-color: #eeeeee;
+      // background-color: #ffffff;
+      border-radius: 4px;
+      overflow: auto;
+      .item-container {
+        min-height: 80%;
+        .drag-item {
+          margin: 10px 10px;
+          padding: 10px;
+          border-left: 4px solid orange;
+          border-radius: 4px;
+          transition: 0.3s all;
+          // background: #ffffff; do not set background-color at .drag-item,it is better set to .draggable
+          cursor: pointer;
+          font-size: 14px;
+          min-height: 40px;
+          line-height: 1.2;
+          text-align: left;
+          .first {
+            display: flex;
+            align-items: center;
+            .title {
+              flex: 1;
+              font-size: 16px;
+              font-weight: 700;
+            }
+            .avator {
+              display: inline-block;
+              width: 50px;
+              height: 50px;
+              // border-radius: 50%;
+              background-color: #dddddd;
+              position: relative;
+              // background: url("../../assets/3.png") no-repeat;
+              // background-attachment: fixed;
+              // background-position: center;
+              img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                max-width: 60%;
+                border-radius: 50%;
+              }
+            }
+          }
+          .second {
+            padding: 6px 0px;
+            line-height: 2;
+            display: flex;
+            // justify-content: center;
+            text-align: center;
+            // align-items: center;
+            span {
+              display: inline-block;
+              padding: 0px 10px;
+              border-radius: 4px;
+              // flex: 1;
+            }
+            span:nth-child(1) {
+              background: #e1e1e1;
+              margin-right: 10px;
+            }
+            span:nth-child(2) {
+              background: #3da8f5;
+              color: #ffffff;
+            }
+          }
+          .third {
+            padding: 6px 0px;
+            line-height: 2;
+            display: flex;
+            text-align: center;
+            // align-items: center;
+            span {
+              display: inline-block;
+              padding: 0px 10px;
+              border-radius: 4px;
+              color: #b0b0b0;
+              // flex: 1;
+              i {
+                background: #3da8f5;
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 6px;
+              }
+            }
+          }
+        }
+      }
+      .group-header {
+        margin: 10px;
+      }
+    }
+  }
+}
+
+.sortable-chosen {
+  // color: #fff;
+  // background-color: #c00;
+  // box-shadow: 4px 4px 8px 0px #f7f7f7;
+  box-shadow: 6px 14px 42px 0 rgba(99, 117, 138, 0.23);
+  // transform: scale(1.5);
+  transform: rotate(3deg);
+  transition: 0.5s all;
+}
+
+.sortable-ghost {
+  // opacity: 0.5;
+  background: #48a64c;
+}
+// which item shoud be draggable
+.draggable {
+  background: #ffffff;
+  // background-color: #fbfbfb;
+  &:hover {
+    box-shadow: 6px 14px 42px 0 rgba(99, 117, 138, 0.23);
+  }
+}
+.no-draggable {
+  background: #f7f7f7;
+}
