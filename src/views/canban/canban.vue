@@ -64,7 +64,30 @@
             </draggable>
             </div>
             <div class="group3">
-                
+                 <div class="group-header">
+                  <h2>complete</h2> 
+               </div>
+                <draggable v-model="list3" :options="dragOptions" @start="drag=true" @end="drag=false" class="item-container">
+                <!-- <transition-group> -->
+                    <div v-for="element in list3" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
+                     <div class="first">
+                          <span class="title">
+                            <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
+                          <span class="avator">
+                            <img src="../../assets/header_user.png"/>
+                          </span>
+                      </div>
+                        <div class="second">
+                          <span>6月30日截止</span>
+                          <span>每月重复</span>
+                        </div>
+                        <div class="third">
+                          <span><i></i>自动部署</span>
+                          <span><i></i>技能提升</span>
+                        </div>
+                    </div>
+                <!-- </transition-group> -->
+            </draggable>
             </div>
         </div>
     </div>
@@ -98,7 +121,7 @@ export default {
         },
         {
           name: "pinapple1",
-          draggable: false,
+          draggable: true,
           title: "pinapple1",
           description: "this is pinapple1 description"
         },
@@ -109,7 +132,7 @@ export default {
           description: "this is odd1 description"
         },
         {
-          draggable: false,
+          draggable: true,
           name: "pair1",
           title: "pair1",
           description: "this is pair1 description"
@@ -147,33 +170,7 @@ export default {
           description: "this is strawberry2 description"
         }
       ],
-      list3: [
-        {
-          name: "apple3",
-          title: "apple3",
-          description: "this is apple description"
-        },
-        {
-          name: "banana3",
-          title: "banana3",
-          description: "this is banana description"
-        },
-        {
-          name: "pinapple3",
-          title: "pinapple3",
-          description: "this is pinapple description"
-        },
-        {
-          name: "grape3",
-          title: "grape3",
-          description: "this is grape description"
-        },
-        {
-          name: "strawberry3",
-          title: "strawberry3",
-          description: "this is strawberry description"
-        }
-      ],
+      list3: [],
       count: 0
     };
   },
@@ -206,7 +203,7 @@ export default {
   methods: {
     handleChange() {
       console.log("changed");
-      alert("changed");
+      // alert("changed");
     },
     inputChanged(value) {
       this.activeNames = value;
@@ -235,27 +232,27 @@ export default {
       };
     },
     addItem() {
-      let index = this.count++;
-      let item = {
-        draggable: true,
-        name: "新增item" + index,
-        title: "新增item" + index,
-        description: "hello,这是新增的item" + index
-      };
-      this.list1.push(item);
+      // let index = this.count++;
+      // let item = {
+      //   draggable: true,
+      //   name: "新增item" + index,
+      //   title: "新增item" + index,
+      //   description: "hello,这是新增的item" + index
+      // };
+      // this.list1.push(item);
     },
     // evt object has same property as Sortable onMove event, and 3 additional properties:
     //evt.relatedContext,evt.draggedContext
     checkMove({ relatedContext, draggedContext }) {
       //
       //  return (evt.draggedContext.element.name!=='apple');
-      alert(draggedContext.element.description);
+      // alert(draggedContext.element.description);
       return true;
     },
     // can watch any changes for an group
     group1Change({ added, removed, moved }) {
       // console.log(added.element.name);
-      console.log(removed.element.name);
+      // console.log(removed.element.name);
       // console.log(moved.element.name);
     }
   }

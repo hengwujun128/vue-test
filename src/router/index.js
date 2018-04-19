@@ -1,28 +1,29 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import treeTable from '@/views/treeTable/treeTable'
-import canban from '@/views/canban/canban'
+import Vue from "vue";
+import Router from "vue-router";
+import HelloWorld from "@/components/HelloWorld";
+import treeTable from "@/views/treeTable/treeTable";
+import canban from "@/views/canban/canban";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: "/",
+      name: "HelloWorld",
+      component: HelloWorld,
+      redirect: "canban"
     },
     {
-      path:'/treeTable',
-      name:'treeTable',
-      component:treeTable
+      path: "/treeTable",
+      name: "treeTable",
+      component: treeTable
     },
     {
-      path:'/canban',
-      name:'canban',
-      component:canban
+      path: "/canban",
+      name: "canban",
+      component: canban
     }
     // drag and drop
   ]
-})
+});
