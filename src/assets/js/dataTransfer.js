@@ -1,4 +1,4 @@
-
+ 
 import Vue from 'vue'
 // 单例模式
 function DataTransfer (data) {

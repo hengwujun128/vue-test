@@ -2,7 +2,9 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <router-view/>
+    <notifications group="foo" />
   </div>
+  
 </template>
 
 <script>

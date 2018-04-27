@@ -5,12 +5,18 @@ import App from "./App";
 import router from "./router";
 
 import "normalize.css/normalize.css";
-// third party code
+
+// third party lib
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 
+// third party component
+import Notifications from "vue-notification";
+
 Vue.use(ElementUI, { size: "small" });
 Vue.config.productionTip = false;
+
+Vue.use(Notifications);
 
 /* eslint-disable no-new */
 new Vue({
