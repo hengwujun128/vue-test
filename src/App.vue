@@ -28,4 +28,13 @@ body {
   // height: calc(100% - 60px);
   height: 100%;
 }
+
+#nprogress .bar {
+  height: 4px;
+  background: #27c4f5
+    linear-gradient(to right, #27c4f5, #a307ba, #fd8d32, #70c050, #27c4f5);
+  background-size: 500%;
+  animation: 2s linear infinite barprogress, 0.3s fadein;
+  width: 100%;
+}
 </style>
