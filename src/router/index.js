@@ -11,15 +11,17 @@ import direc from "@/views/directiveTest/directiveTest";
 // tagInput
 import tagInput from "@/views/tagInput/tagInput.vue";
 
+// dialog
+import dialog from "@/views/dialog/dialog"
+
 Vue.use(Router);
 
 let app_router = new Router({
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "HelloWorld",
       component: HelloWorld,
-      redirect: "directive"
+      redirect: "dialog"
     },
     {
       path: "/treeTable",
@@ -35,6 +37,11 @@ let app_router = new Router({
       path: "/directive",
       name: "directive",
       component: direc
+    },
+    {
+      name: "dialog",
+      path: "/dialog",
+      component: dialog
     },
     {
       name: "tagInput",

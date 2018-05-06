@@ -13,7 +13,14 @@ import "element-ui/lib/theme-chalk/index.css";
 // third party component
 import Notifications from "vue-notification";
 
-Vue.use(ElementUI, { size: "small" });
+// 
+import modal from 'smart-modal';
+Vue.use(modal)
+
+
+Vue.use(ElementUI, {
+  size: "small"
+});
 Vue.config.productionTip = false;
 
 Vue.use(Notifications);
@@ -22,6 +29,8 @@ Vue.use(Notifications);
 new Vue({
   el: "#app",
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: "<App/>"
 });
