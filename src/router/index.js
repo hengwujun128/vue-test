@@ -11,6 +11,8 @@ import direc from "@/views/directiveTest/directiveTest";
 // tagInput
 import tagInput from "@/views/tagInput/tagInput.vue";
 
+// dialog
+import dialog from "@/views/dialog/dialog.vue";
 Vue.use(Router);
 
 let app_router = new Router({
@@ -19,7 +21,7 @@ let app_router = new Router({
       path: "/",
       name: "HelloWorld",
       component: HelloWorld,
-      redirect: "directive"
+      redirect: "dialog"
     },
     {
       path: "/treeTable",
@@ -40,8 +42,12 @@ let app_router = new Router({
       name: "tagInput",
       path: "/tagInput",
       component: tagInput
+    },
+    {
+      name: "dialog",
+      path: "/dialog",
+      component: dialog
     }
-    // drag and drop
   ]
 });
 NProgress.configure({

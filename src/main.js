@@ -13,6 +13,11 @@ import "element-ui/lib/theme-chalk/index.css";
 // third party component
 import Notifications from "vue-notification";
 
+// customed plugins
+// import VModal from "./components/modal/index";
+import VModal from "smart-modal";
+Vue.use(VModal);
+
 Vue.use(ElementUI, { size: "small" });
 Vue.config.productionTip = false;
 
