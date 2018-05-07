@@ -39,6 +39,11 @@ let app_router = new Router({
       component: direc
     },
     {
+      name: "dialog",
+      path: "/dialog",
+      component: dialog
+    },
+    {
       name: "tagInput",
       path: "/tagInput",
       component: tagInput
