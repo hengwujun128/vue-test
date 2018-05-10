@@ -1,8 +1,8 @@
-import Modal from './Modal.vue'
-import Dialog from './Dialog.vue'
-import ModalsContainer from './ModalsContainer.vue'
+import Modal from "./Modal.vue";
+import Dialog from "./Dialog.vue";
+import ModalsContainer from "./ModalsContainer.vue";
 
-const defaultComponentName = 'modal'
+const defaultComponentName = "modal";
 
 // vue实例在安装插件过程中，向自身添加了$modal 全局对象和方法
 //  同时向自身添加了全局的组件 (Vue.component(xxx)),modal, v-dialog,modal-container
@@ -14,22 +14,23 @@ const Plugin = {
      * Makes sure that plugin can be insstalled only once
      */
     if (this.installed) {
-      return
+      return;
     }
 
-    this.installed = true
+    this.installed = true;
     //  事件bus ,把vue实例作为plugin 对象的一个属性
-    this.event = new Vue()
-    this.dynamicContainer = null
+    this.event = new Vue();
+    this.dynamicContainer = null;
     // 自定义组件名称,否则使用默认名称 modal
-    this.componentName = options.componentName || defaultComponentName
+    this.componentName = options.componentName || defaultComponentName;
 
     /**
      * Plugin API  向vue实例添加全局对象和方法(同vuex )
      */
     Vue.prototype.$modal = {
+      // 设置dynamic model 时候，vue会注册全局组件modals-container,在此组件中会进行调用$modal._setDynamicContainer
       _setDynamicContainer(dynamicContainer) {
-        Plugin.dynamicContainer = dynamicContainer
+        Plugin.dynamicContainer = dynamicContainer;
       },
 
       //第一个参数 modal 是个字符串，对应模板中 modal element 的name 属性值; 一个模板字符串也可以；或者是个组件component
@@ -39,40 +40,41 @@ const Plugin = {
 
       // Dynamic Modals
       show(modal, paramsOrProps, params, events = {}) {
-        if (typeof modal === 'string') {
+        if (typeof modal === "string") {
           // 第三个参数是show or hide boolean
-          Plugin.event.$emit('toggle', modal, true, paramsOrProps)
+          Plugin.event.$emit("toggle", modal, true, paramsOrProps);
         } else {
           // dynamicContainer 默认值为空
           if (Plugin.dynamicContainer === null) {
             console.warn(
-              '[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page'
-            )
+              "[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page"
+            );
           } else {
-            Plugin.dynamicContainer.add(modal, paramsOrProps, params, events)
+            // dynamic modals
+            Plugin.dynamicContainer.add(modal, paramsOrProps, params, events);
           }
         }
       },
       hide(name, params) {
-        Plugin.event.$emit('toggle', name, false, params)
+        Plugin.event.$emit("toggle", name, false, params);
       },
-
+      // toggle 使用undefined as state
       toggle(name, params) {
-        Plugin.event.$emit('toggle', name, undefined, params)
+        Plugin.event.$emit("toggle", name, undefined, params);
       }
-    }
+    };
     /**
      * 可以自定义组件名称,如果没有自定义，就是用modal 作为组件名称
      * Sets custom component name (if provided)
      */
-    Vue.component(this.componentName, Modal)
+    Vue.component(this.componentName, Modal);
 
     /**
      * 如果用户使用v-dialog,在安装插件的时候要给参数
      * Registration of <Dialog/> component
      */
     if (options.dialog) {
-      Vue.component('v-dialog', Dialog)
+      Vue.component("v-dialog", Dialog);
     }
     /**
      * In order to instantiate modals at runtime, (for lazy-loading or decluttering templates), it is possible to create modals dynamically
@@ -82,9 +84,9 @@ const Plugin = {
      *
      */
     if (options.dynamic) {
-      Vue.component('modals-container', ModalsContainer)
+      Vue.component("modals-container", ModalsContainer);
     }
   }
-}
+};
 
-export default Plugin
+export default Plugin;

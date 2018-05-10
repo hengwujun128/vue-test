@@ -1,6 +1,5 @@
 <template>
   <transition name="overlay-fade">
-    <!-- overlay 判断,当visible为true时候，visibility.overlay is true -->
     <!-- 通过计算属性设置overlayClass 属性 -->
     <!--  -->
     <div v-if="visibility.overlay"
@@ -8,12 +7,13 @@
         :class="overlayClass"
         :aria-expanded="visible.toString()"
         :data-modal="name">
-      <!-- class -->
+      <!-- 在overlay 上加一个div -->
+      <!-- 点击背景关闭modal -->
       <div :class="backgroundClickClass"
           @mousedown.stop="onBackgroundClick"
           @touchstart.stop="onBackgroundClick">
 
-        
+        <!-- 可以用于image show -->
         <div class="v--modal-top-right">
           <slot name="top-right"/>
         </div>
@@ -24,14 +24,14 @@
               :style="modalStyle"
               @mousedown.stop
               @touchstart.stop>
-            <!-- title -->
+            <!-- title slot-->
               <div :class="modalHeaderClass">
                 <span><slot name="title">this is title</slot></span>
                 <span>
                     <a href="javascript:void(0)">&times;</a>
                   </span>
               </div>
-
+            <!-- main content区域 -->
             <slot/>
         
             <resizer v-if="resizable && !isAutoHeight"
@@ -249,12 +249,13 @@ export default {
       // this.name 用户通过props传入
       // name 也是用户通过this.$modal.show('name',...)第一个参数;这两个值要相同
       if (name === this.name) {
-        // 在 plugin 中设置
+        // 在 plugin 中设置,表示toggle 状态，单独处理
         if (typeof state === "undefined") {
           state = !this.visible;
         }
         // 把用户传入的paramsOrProps 带入
-        // 主要做了两件事：1.添加beforeEvent 事件；2.改变了this.visible 的值，触发了监听
+        // 主要做了两件事：1.添加beforeEvent 事件，以后再自己的组件中监听；
+        // 2.改变了this.visible 的值，触发了监听
         this.toggle(state, params);
       }
     });
@@ -516,7 +517,7 @@ export default {
         if (document.activeElement) {
           document.activeElement.blur();
         }
-        // 重置初始化分为两种情况：未打开过，rest 为false；如果已经打开过，此时在隐藏，rest 为真
+        // 因为是显示和隐藏状态，打开之前要initialization，位置和大小
         // Resets position and size before showing modal
         if (reset) {
           this.setInitialSize();
@@ -524,7 +525,7 @@ export default {
           this.shift.left = 0;
           this.shift.top = 0;
         }
-        //
+        // 如果已经设置了scrollable,再次打开之前，要设置为overflow:hidden，也就是不滚动
         if (scrollable) {
           document
             .getElementsByTagName("html")[0]
@@ -532,7 +533,7 @@ export default {
           document.body.classList.add("v--modal-block-scroll");
         }
       } else {
-        // 用户显示，show 要做的事情
+        // 用户显示，show 要做的事情,移除样式
         if (scrollable) {
           document
             .getElementsByTagName("html")[0]
@@ -543,6 +544,7 @@ export default {
 
       let stopEventExecution = false;
 
+      // 发射事件，传递一个回调
       const stop = () => {
         stopEventExecution = true;
       };
@@ -731,7 +733,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 999;
   opacity: 1;
 }
@@ -742,7 +744,7 @@ export default {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
-
+// width and height is equal to  parent div (overlay)
 .v--modal-overlay .v--modal-background-click {
   min-height: 100%;
   width: 100%;
@@ -805,7 +807,8 @@ export default {
 }
 
 .v--modal-header {
-  background: #69caf5;
+  // background: #69caf5;
+  background: #029be7;
   color: #ffffff;
   font-size: 18px;
   /* cursor: move; */

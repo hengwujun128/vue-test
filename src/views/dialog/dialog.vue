@@ -20,7 +20,9 @@ export default {
   },
   methods: {
     show() {
-      this.$modal.show("hello", {}, {});
+      // 向v-modal emit toggle event
+      // second params transfer to modal component
+      this.$modal.show("hello", {});
     },
     hide() {
       this.$modal.hide("hello");
