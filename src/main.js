@@ -14,11 +14,14 @@ import "element-ui/lib/theme-chalk/index.css";
 import Notifications from "vue-notification";
 
 // customed plugins
-import VModal from "./components/modal/index";
-// import VModal from "smart-modal";
-Vue.use(VModal);
+import SModal from "./components/modal/index";
+// SModal 在IE上报错
+// import SModal from "smart-modal";
+Vue.use(SModal);
 
-Vue.use(ElementUI, { size: "small" });
+Vue.use(ElementUI, {
+  size: "small"
+});
 Vue.config.productionTip = false;
 
 Vue.use(Notifications);

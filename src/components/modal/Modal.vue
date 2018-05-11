@@ -55,7 +55,7 @@ import { inRange } from "./util";
 import parseNumber from "./parser"; // parser.js 使用export default，因此可以改变名称
 
 export default {
-  name: "VueJsModal",
+  name: "smart-modal",
   // eighteen property
   props: {
     name: {
@@ -450,13 +450,14 @@ export default {
       modal.height = height.value;
       modal.heightType = height.type;
     },
-
+    // esc 上添加事件
     onEscapeKeyUp(event) {
       if (event.which === 27 && this.visible) {
+        // 在组件之内调用全局方法
         this.$modal.hide(this.name);
       }
     },
-    // 获取窗口大小
+    // 重置窗口大小
     onWindowResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;

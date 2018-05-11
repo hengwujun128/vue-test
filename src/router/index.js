@@ -13,15 +13,16 @@ import tagInput from "@/views/tagInput/tagInput.vue";
 
 // dialog
 import dialog from "@/views/dialog/dialog.vue";
+// jing
+import jing from "@/views/jing/index.vue";
 Vue.use(Router);
 
 let app_router = new Router({
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "HelloWorld",
       component: HelloWorld,
-      redirect: "dialog"
+      redirect: "jing"
     },
     {
       path: "/treeTable",
@@ -48,10 +49,11 @@ let app_router = new Router({
       path: "/tagInput",
       component: tagInput
     },
+
     {
-      name: "dialog",
-      path: "/dialog",
-      component: dialog
+      name: 'jing',
+      path: "/jing",
+      component: jing
     }
   ]
 });

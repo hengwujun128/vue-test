@@ -47,7 +47,7 @@ const Plugin = {
           // dynamicContainer 默认值为空
           if (Plugin.dynamicContainer === null) {
             console.warn(
-              "[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page"
+              "[smart-modal] In order to render dynamic modals, a <modals-container> component must be present on the page"
             );
           } else {
             // dynamic modals
