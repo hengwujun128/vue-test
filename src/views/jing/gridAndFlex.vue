@@ -7,7 +7,7 @@
                 <div :key="item">
                     <!-- {{item}} -->
                     <!-- pipe -->
-                    <div class="pipe-container" v-if="[2,4,6,8].indexOf(item)>-1">
+                    <div class="pipe-container" v-if="[2,4,6,8].includes(item)">
                         <!-- {{item}} -->
                         <template v-if="pipeTotal===4">
                           <div v-for="value in pipeTotal" :key="value" style="width:50%;height:50%;box-sizing:border-box;position:relative;float:left;">
@@ -52,7 +52,6 @@ export default {
       pipeTotal: 4 // 4|6|9
     };
   },
-  computed: {},
   methods: {
     toggle() {
       if (this.pipeTotal === 4) {
@@ -63,9 +62,6 @@ export default {
         this.pipeTotal = 4;
       }
     }
-  },
-  jing(v) {
-    return [2, 4, 6, 8].includes(v);
   }
 };
 </script>
@@ -76,41 +72,54 @@ export default {
   width: 50%;
   height: 50%;
   .container {
-    // if responsive,
-    // width: 100%;
-    // height: 100%;
-    width: 500px;
-    height: 500px;
+    display: grid;
+    // you need to modify width and height;
+    // 150 | 180
+    grid-template-rows: repeat(3, 150px);
+    grid-template-columns: repeat(3, 150px);
+    grid-auto-rows: 100px;
+
     & > div {
-      float: left;
-      width: 33.3%;
-      height: 33.3%;
-      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      color: #ffeead;
       .pipe-container {
-        width: 100%;
+        flex: 1;
         height: 100%;
-        background: #dddddd;
-        // border: 2px solid red;
-        font-size: 1.6em;
+        box-sizing: border-box;
+        padding: 10px;
+        position: relative;
       }
     }
+    // background
+    & > div:nth-child(2),
+    & > div:nth-child(4),
+    & > div:nth-child(5),
+    & > div:nth-child(6),
+    & > div:nth-child(8) {
+      background: #dddddd;
+      // border: 5px solid red;
+    }
+
     // border
-    // & > div:nth-child(2) {
-    //   border: 2px solid red;
-    //   border-bottom: none;
-    // }
-    // & > div:nth-child(4) {
-    //   border: 2px solid red;
-    //   border-right: none;
-    // }
-    // & > div:nth-child(6) {
-    //   border: 2px solid red;
-    //   border-left: none;
-    // }
-    // & > div:nth-child(8) {
-    //   border: 2px solid red;
-    //   border-top: none;
-    // }
+    & > div:nth-child(2) {
+      border-bottom: none;
+    }
+    & > div:nth-child(4) {
+      border-right: none;
+    }
+    & > div:nth-child(6) {
+      border-left: none;
+    }
+    & > div:nth-child(8) {
+      border-top: none;
+    }
+    // 特殊处理
+    & > div:nth-child(5) {
+      border: none;
+    }
   }
 }
 </style>
