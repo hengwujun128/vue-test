@@ -1,22 +1,27 @@
 <template>
   <transition name="overlay-fade">
+    <!-- 先控制overlay的显示隐藏 -->
     <!-- 通过计算属性设置overlayClass 属性 -->
-    <!--  -->
+    <!-- aria-expanded  -->
+    <!-- data-modal 在overlay上加上modal的名称-->
     <div v-if="visibility.overlay"
         ref="overlay"
         :class="overlayClass"
         :aria-expanded="visible.toString()"
-        :data-modal="name">
-      <!-- 在overlay 上加一个div -->
-      <!-- 点击背景关闭modal -->
+        :data-modal="name"
+        @click="overlayHandler">
+      <!-- 在overlay 上加一个div 用于控制overlay的点击事件,就是modal 背景的点击事件 -->
+      <!-- 这个div高度宽度和overlay一致，保证点击范围，主要是关闭overlay和modal -->
+      <!-- 阻止事件冒泡到overlay,用mousedown替代click -->
       <div :class="backgroundClickClass"
           @mousedown.stop="onBackgroundClick"
           @touchstart.stop="onBackgroundClick">
 
-        <!-- 可以用于image show -->
+        <!-- 关闭按钮，类似youtube -->
         <div class="v--modal-top-right">
           <slot name="top-right"/>
         </div>
+        <!--  -->
         <transition :name="transition">
           <div v-if="visibility.modal"
               ref="modal"
@@ -33,7 +38,10 @@
               </div>
             <!-- main content区域 -->
             <slot/>
-        
+            <!-- footer slot -->
+            <div class="v--modal-footer">
+              <slot name="footer">hello footer</slot>
+            </div>
             <resizer v-if="resizable && !isAutoHeight"
                     :min-width="minWidth"
                     :min-height="minHeight"
@@ -122,9 +130,12 @@ export default {
     width: {
       type: [Number, String],
       default: 600,
+      // 对传入的值做类型校验,返回true,false
       validator(value) {
         if (typeof value === "string") {
+          debugger;
           let width = parseNumber(value);
+          console.log(width);
           return (width.type === "%" || width.type === "px") && width.value > 0;
         }
 
@@ -206,7 +217,7 @@ export default {
      */
     // 通过监听 visible 的值来决定显示隐藏
     visible(value) {
-      // show
+      // show,先show overlay,在modal，最后添加事件处理程序
       if (value) {
         this.visibility.overlay = true;
         // show overlay first ,then show modal;this.delay value 0
@@ -399,6 +410,7 @@ export default {
      * Returns class list for screen overlay (modal background)
      */
     overlayClass() {
+      // control show or hide ,and scrollable
       return {
         "v--modal-overlay": true,
         scrollable: this.scrollable && this.isAutoHeight
@@ -420,6 +432,7 @@ export default {
      * CSS styles for position and size of the modal
      */
     modalStyle() {
+      // 用于精准控制modal 样式
       return {
         top: this.position.top + "px",
         left: this.position.left + "px",
@@ -439,7 +452,7 @@ export default {
      * every time "beforeOpen" is triggered
      */
     setInitialSize() {
-      // 对象结构赋值,获取this.modal对象；
+      // 对象结构赋值,获取this.modal对象；this.modal 是个active 属性
       // 并对modal 对象进行初始化设置,初始化宽高
       const { modal } = this;
       const width = parseNumber(this.width);
@@ -717,6 +730,10 @@ export default {
       if (this.mutationObserver) {
         this.mutationObserver.disconnect();
       }
+    },
+    overlayHandler() {
+      // 冒泡测试,stop 修饰符不能阻止
+      alert(123);
     }
   }
 };
@@ -780,6 +797,7 @@ export default {
 }
 
 .v--modal-top-right {
+  // 绝对定位到又top-right corner
   display: block;
   position: absolute;
   right: 0;
@@ -827,5 +845,11 @@ export default {
       color: #f1f1f1;
     }
   }
+}
+.v--modal-footer {
+  padding: 20px;
+  padding-top: 10px;
+  text-align: right;
+  box-sizing: border-box;
 }
 </style>

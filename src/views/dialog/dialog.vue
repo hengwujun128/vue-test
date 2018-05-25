@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>hello,this is dialog test</h2>
-    <modal name="hello" :draggable=draggable :reset=reset :transition="transition">
+    <modal name="hello" :draggable=draggable :reset=reset :transition="transition" width="50%">
         <!-- <div class="window-header">DRAG ME HERE</div> -->
           <h2>xxxx</h2>
     </modal>

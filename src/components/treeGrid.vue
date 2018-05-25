@@ -41,7 +41,7 @@
         </el-button>
         <button type="button" class="el-button el-button--success el-button--small">
           <router-link :to="{ path: requestUrl, query: {parentId: scope.row.parentOId} }"
-                       tag="span">
+                      tag="span">
             添加下级树结构
           </router-link>
         </button>
