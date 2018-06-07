@@ -16,13 +16,15 @@ import dialog from "@/views/dialog/dialog.vue";
 // jing
 import jing from "@/views/jing/index.vue";
 Vue.use(Router);
+// iframe
+import iframe from "@/views/iframe"
 
 let app_router = new Router({
   routes: [{
       path: "/",
       name: "HelloWorld",
       component: HelloWorld,
-      redirect: "jing"
+      redirect: "iframe"
     },
     {
       path: "/treeTable",
@@ -54,6 +56,11 @@ let app_router = new Router({
       name: 'jing',
       path: "/jing",
       component: jing
+    },
+    {
+      name: 'iframe',
+      path: '/iframe',
+      component: iframe
     }
   ]
 });
