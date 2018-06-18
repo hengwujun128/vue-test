@@ -17,14 +17,16 @@ import dialog from "@/views/dialog/dialog.vue";
 import jing from "@/views/jing/index.vue";
 Vue.use(Router);
 // iframe
-import iframe from "@/views/iframe"
+import iframe from "@/views/iframe";
+// vue-version
+import vueVersion from "@/views/testVueVersion/index.vue";
 
 let app_router = new Router({
   routes: [{
       path: "/",
       name: "HelloWorld",
       component: HelloWorld,
-      redirect: "iframe"
+      redirect: "version"
     },
     {
       path: "/treeTable",
@@ -61,6 +63,11 @@ let app_router = new Router({
       name: 'iframe',
       path: '/iframe',
       component: iframe
+    },
+    {
+      name: 'vueVersion',
+      path: '/version',
+      component: vueVersion
     }
   ]
 });
