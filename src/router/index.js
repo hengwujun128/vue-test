@@ -24,6 +24,7 @@ import vueVersion from "@/views/testVueVersion/index.vue";
 
 import myCanvas from "@/views/canvas/index.vue"
 
+import mock from "@/views/mock";
 let app_router = new Router({
   routes: [{
       path: "/",
@@ -76,6 +77,11 @@ let app_router = new Router({
       name: 'myHome',
       path: '/myHome',
       component: myCanvas
+    },
+    {
+      name: 'mock',
+      path: '/mock',
+      component: mock
     }
   ]
 });

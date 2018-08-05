@@ -14,18 +14,27 @@ import "element-ui/lib/theme-chalk/index.css";
 
 // third party component
 import Notifications from "vue-notification";
-
+import axios from "axios";
 // customed plugins
 import SModal from "./components/modal/index";
 // SModal 在IE上报错 import SModal from "smart-modal";
 Vue.use(SModal);
+// Vue.use(axios);
+Vue.prototype.axios = axios;
 
-Vue.use(ElementUI, {size: "small"});
+Vue.use(ElementUI, {
+  size: "small"
+});
 Vue.config.productionTip = false;
 
 Vue.use(Notifications);
 
 /* eslint-disable no-new */
-new Vue({el: "#app", router, components: {
+new Vue({
+  el: "#app",
+  router,
+  components: {
     App
-  }, template: "<App/>"});
+  },
+  template: "<App/>"
+});
