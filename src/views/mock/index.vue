@@ -12,6 +12,7 @@ export default {
   },
   created() {
     this.getUserInfo();
+    this.getMyTest();
   },
   methods: {
     getUserInfo() {
@@ -24,6 +25,11 @@ export default {
         } else {
           this.userInfo = {};
         }
+      });
+    },
+    getMyTest() {
+      this.axios.get('/planningData/list').then(res => {
+        console.log(data);
       });
     }
   }
