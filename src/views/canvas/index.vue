@@ -158,7 +158,7 @@ export default {
 // @import url("./style.css");
 @import "./style.css";
 #myCanvas {
-  background: url("./images/background.png");
+  //background: url("./images/background.png");
   border: 5px solid red;
 }
 .circleImage {

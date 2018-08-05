@@ -1,5 +1,7 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// The Vue build version to load with the `import` command (runtime-only or
+// standalone) has been set in webpack.base.conf with an alias.
+
+/* eslint-disable */
 import Vue from "vue";
 import App from "./App";
 import router from "./router";
@@ -15,23 +17,15 @@ import Notifications from "vue-notification";
 
 // customed plugins
 import SModal from "./components/modal/index";
-// SModal 在IE上报错
-// import SModal from "smart-modal";
+// SModal 在IE上报错 import SModal from "smart-modal";
 Vue.use(SModal);
 
-Vue.use(ElementUI, {
-  size: "small"
-});
+Vue.use(ElementUI, {size: "small"});
 Vue.config.productionTip = false;
 
 Vue.use(Notifications);
 
 /* eslint-disable no-new */
-new Vue({
-  el: "#app",
-  router,
-  components: {
+new Vue({el: "#app", router, components: {
     App
-  },
-  template: "<App/>"
-});
+  }, template: "<App/>"});
