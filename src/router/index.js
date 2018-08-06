@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from "vue";
 import Router from "vue-router";
 import NProgress from "nprogress";
@@ -19,10 +20,11 @@ Vue.use(Router);
 // iframe
 import iframe from "@/views/iframe";
 // vue-version
-// import vueVersion from "@/views/testVueVersion/index.vue";
+import vueVersion from "@/views/testVueVersion/index.vue";
 
 import myCanvas from "@/views/canvas/index.vue"
 
+import mock from "@/views/mock";
 let app_router = new Router({
   routes: [{
       path: "/",
@@ -65,15 +67,20 @@ let app_router = new Router({
       path: '/iframe',
       component: iframe
     },
-    // {
-    //   name: 'vueVersion',
-    //   path: '/version',
-    //   component: vueVersion
-    // },
+    {
+      name: 'vueVersion',
+      path: '/version',
+      component: vueVersion
+    },
     {
       name: 'myHome',
       path: '/myHome',
       component: myCanvas
+    },
+    {
+      name: 'mock',
+      path: '/mock',
+      component: mock
     }
   ]
 });

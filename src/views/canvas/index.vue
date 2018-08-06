@@ -175,10 +175,16 @@ export default {
 <style lang="scss" scoped>
 // @import url("./style.css");
 @import "./style.css";
+<<<<<<< HEAD
 #myCanvas,
 #canvas1 {
   // background: url("./images/background.png");
   border: 1px solid #dddddd;
+=======
+#myCanvas {
+  //background: url("./images/background.png");
+  border: 5px solid red;
+>>>>>>> 91f65389944eab3116bebb5adc7a32b244734c27
 }
 .circleImage {
   display: none;
