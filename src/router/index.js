@@ -55,7 +55,6 @@ let app_router = new Router({
       path: "/tagInput",
       component: tagInput
     },
-
     {
       name: 'jing',
       path: "/jing",

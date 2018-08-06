@@ -10,76 +10,87 @@
     <img src="./images/7.png" class="circleImage" id="circle7">
     <img src="./images/8.png" class="circleImage" id="circle8">
     <img src="./images/9.png" class="circleImage" id="circle9">
-    <canvas id="myCanvas" width="1000" height="360">
-
-    </canvas>
+    <!-- <canvas id="myCanvas" width="1000" height="360"></canvas> -->
+    <canvas id="canvas1" width="1000" height="360"></canvas>
   </div>
 </template>
 <script>
 require("./utils.js");
 // require("./circle.js");
 import Circle from "./circle.js";
+import Rectangle from "./rectangle.js";
+import Path from "./path.js";
 
 export default {
   data() {
     return {
-      circles: []
+      context: ""
     };
   },
-  methods: {},
-  mounted() {
-    let targets = [
-      { x: 125, y: 90, url: "" },
-      { x: 375, y: 90, url: "" },
-      { x: 625, y: 90, url: "" },
-      { x: 875, y: 90, url: "" },
-      { x: 100, y: 270, url: "" },
-      { x: 300, y: 270, url: "" },
-      { x: 500, y: 270, url: "" },
-      { x: 700, y: 270, url: "" },
-      { x: 900, y: 270, url: "" }
-    ];
-    let circles = [];
-    let animationId1 = "";
-    let animationId2 = "";
-
-    let myCanvas = document.getElementById("myCanvas"),
-      context = myCanvas.getContext("2d"),
-      mouse = utils.captureMouse(myCanvas),
-      // circle = new circle(60, "#ff0000", circleImage),
-      easing = 0.05;
-
-    for (var circle, i = 1; i <= 9; i++) {
-      let circleImage = document.getElementById("circle" + i);
-
-      circle = new Circle({ radius: 60, color: "#dddddd" });
-      circle.id = "circle" + i;
-      circle.backImg = circleImage;
-      // circle.x = Math.random() * myCanvas.width;
-      // circle.y = Math.random() * myCanvas.height;
-      circle.x = myCanvas.width / 2;
-      circle.y = myCanvas.height / 2;
-      // every circle speed is reandom
-      circle.vx = Math.random() * 2 - 1;
-      circle.vy = Math.random() * 2 - 1;
-
-      circles.push(circle);
+  methods: {
+    getContext() {
+      let canvas1 = document.getElementById("canvas1");
+      this.context = canvas1.getContext("2d");
+    },
+    rectangle() {
+      let rectangle = new Rectangle();
+      rectangle.draw(this.context);
+    },
+    triangle() {
+      let path = new Path();
+      path.drawTriangle(this.context);
     }
+  },
+  mounted() {
+    // let targets = [
+    //   { x: 125, y: 90, url: "" },
+    //   { x: 375, y: 90, url: "" },
+    //   { x: 625, y: 90, url: "" },
+    //   { x: 875, y: 90, url: "" },
+    //   { x: 100, y: 270, url: "" },
+    //   { x: 300, y: 270, url: "" },
+    //   { x: 500, y: 270, url: "" },
+    //   { x: 700, y: 270, url: "" },
+    //   { x: 900, y: 270, url: "" }
+    // ];
+    // let circles = [];
+    // let animationId1 = "";
+    // let animationId2 = "";
+
+    // let myCanvas = document.getElementById("myCanvas"),
+    //   context = myCanvas.getContext("2d"),
+    //   mouse = utils.captureMouse(myCanvas),
+    //   easing = 0.05;
+
+    // for (var circle, i = 1; i <= 9; i++) {
+    //   let circleImage = document.getElementById("circle" + i);
+
+    //   circle = new Circle({ radius: 60, color: "#dddddd" });
+    //   circle.id = "circle" + i;
+    //   circle.backImg = circleImage;
+    //   circle.x = myCanvas.width / 2;
+    //   circle.y = myCanvas.height / 2;
+    //   // every circle speed is reandom
+    //   circle.vx = Math.random() * 2 - 1;
+    //   circle.vy = Math.random() * 2 - 1;
+
+    //   circles.push(circle);
+    // }
     // add an event listener to a draw object on canvas
-    myCanvas.addEventListener("mousemove", function() {
-      circles.map(circle => {
-        if (utils.containsPoint(circle.getBounds(), mouse.x, mouse.y)) {
-          circle.lineWidth = 5;
-          this.scaleX = 2;
-          this.scaleY = 2;
-        } else {
-          circle.lineWidth = 1;
-          this.scaleX = 1;
-          this.scaleY = 1;
-          // circle.scale(1, 1);
-        }
-      });
-    });
+    // myCanvas.addEventListener("mousemove", function() {
+    //   circles.map(circle => {
+    //     if (utils.containsPoint(circle.getBounds(), mouse.x, mouse.y)) {
+    //       circle.lineWidth = 5;
+    //       this.scaleX = 2;
+    //       this.scaleY = 2;
+    //     } else {
+    //       circle.lineWidth = 1;
+    //       this.scaleX = 1;
+    //       this.scaleY = 1;
+    //       // circle.scale(1, 1);
+    //     }
+    //   });
+    // });
 
     function onMouseenter(e) {
       // first, remove animation
@@ -97,11 +108,11 @@ export default {
       // });
       drawFrame2();
     }
-    myCanvas.addEventListener("mouseenter", onMouseenter, false);
-    myCanvas.addEventListener("mouseout", function(e) {
-      window.cancelRequestAnimationFrame(animationId2);
-      drawFrame1();
-    });
+    // myCanvas.addEventListener("mouseenter", onMouseenter, false);
+    // myCanvas.addEventListener("mouseout", function(e) {
+    //   window.cancelRequestAnimationFrame(animationId2);
+    //   drawFrame1();
+    // });
     function drawFrame1() {
       animationId1 = window.requestAnimationFrame(drawFrame1, myCanvas);
       context.clearRect(0, 0, myCanvas.width, myCanvas.height);
@@ -150,16 +161,24 @@ export default {
         circle.draw(context);
       }
     }
-    drawFrame1();
+    // drawFrame1();
+  },
+  created() {
+    this.$nextTick(function() {
+      this.getContext();
+      this.rectangle();
+      this.triangle();
+    });
   }
 };
 </script>
 <style lang="scss" scoped>
 // @import url("./style.css");
 @import "./style.css";
-#myCanvas {
-  background: url("./images/background.png");
-  border: 5px solid red;
+#myCanvas,
+#canvas1 {
+  // background: url("./images/background.png");
+  border: 1px solid #dddddd;
 }
 .circleImage {
   display: none;
