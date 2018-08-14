@@ -24,7 +24,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column label="操作" v-if="treeType === 'normal'" width="260">
+    <el-table-column label="操作" v-if="treeType === 'normal'" min-width="260">
       <template slot-scope="scope">
         <button type="button" class="el-button el-button--default el-button--small">
           <router-link
@@ -41,7 +41,7 @@
         </el-button>
         <button type="button" class="el-button el-button--success el-button--small">
           <router-link :to="{ path: requestUrl, query: {parentId: scope.row.parentOId} }"
-                       tag="span">
+                      tag="span">
             添加下级树结构
           </router-link>
         </button>
@@ -179,8 +179,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1;
-    width: 18px;
-    height: 14px;}
+    width: 36px;
+    height: 14px;
+    background: red;
+    }
   .ms-tree-space::before{content: ""}
   table td{
     line-height: 26px;

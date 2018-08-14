@@ -14,12 +14,23 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.3.3",
+    "get-vue-version": "^1.0.0",
+    "node-sass": "^4.8.3",
+    "normalize.css": "^8.0.0",
+    "nprogress": "^0.2.0",
+    "sass-loader": "^7.0.1",
+    "smart-modal": "^1.0.3",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-notification": "^1.3.7",
+    "vue-router": "^3.0.1",
+    "vue-tag-autocomplete": "0.0.7",
+    "vuedraggable": "^2.16.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
+    "axios-mock-adapter": "^1.15.0",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -53,6 +64,7 @@
     "html-webpack-plugin": "^2.30.1",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
+    "mockjs": "^1.0.1-beta3",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
