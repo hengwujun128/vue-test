@@ -16,5 +16,21 @@ export default {
         }, 200);
       });
     })
+    mock.onGet('/api/testString').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 1,
+            msg: 'success',
+            // result 是个对象
+            str_result: testData.string,
+            arr_result: testData.array,
+            placeholder1: testData.placeholder1
+          }])
+        }, 2000)
+      })
+    })
+
+
   }
 }

@@ -43,10 +43,14 @@ export default {
     },
     testAdapter () {
       // 可以单独抽取出来，放入到src/api目录下面
+      api.mockTest().then(res => {
+        console.log(res)
+      })
       api.mockString().then(res => {
         console.log(res)
       })
     }
+
   }
 };
 </script>

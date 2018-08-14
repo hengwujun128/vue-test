@@ -33,7 +33,10 @@ export default {
   JH_news(url, params) {
     return fetch(url, params);
   },
-  mockString() {
+  mockTest() {
     return axios.get('/api/test')
+  },
+  mockString() {
+    return axios.get('/api/testString')
   }
 };
