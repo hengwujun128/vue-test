@@ -7,30 +7,37 @@
 <script>
 export default {
   name: 'mock',
-  data() {
+  data () {
     return {};
   },
-  created() {
-    this.getUserInfo();
-    this.getMyTest();
+  created () {
+    // this.getUserInfo();
+    // this.getMyTest();
+    this.getString()
   },
   methods: {
-    getUserInfo() {
+    getUserInfo () {
       // 请求'/user/userinfo'接口
       this.axios.get('/user/userinfo').then(({ data }) => {
         //打印mock data
         console.log(data);
         if (data.error === 0) {
           this.userInfo = data.data;
+          return this.userInfo
         } else {
           this.userInfo = {};
         }
       });
     },
-    getMyTest() {
+    getMyTest () {
       this.axios.get('/planningData/list').then(res => {
-        console.log(data);
+        return res;
       });
+    },
+    getString () {
+      this.axios.get('/planningData/stringAndNumber').then(res => {
+        return res;
+      })
     }
   }
 };

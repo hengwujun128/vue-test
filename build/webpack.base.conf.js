@@ -29,10 +29,10 @@ module.exports = {
   output: {
     path: config.build.assetsRoot, // ../dist
     filename: "[name].js",
-    publicPath:
-      process.env.NODE_ENV === "production"
-        ? config.build.assetsPublicPath
-        : config.dev.assetsPublicPath //  项目所在路径，这里为根路径 /
+    publicPath: // 发布的目录，静态资源访问的路径
+      process.env.NODE_ENV === "production" ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath //  项目所在路径，这里为根路径 /
   },
   resolve: {
     extensions: [".js", ".vue", ".json"],

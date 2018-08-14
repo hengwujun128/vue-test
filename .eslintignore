@@ -4,9 +4,4 @@
 /*.js
 /test/unit/coverage/
 
-#/src/
-/src/components
-/src/directive
-/src/views/
-/src/assets/
-
+/src/*

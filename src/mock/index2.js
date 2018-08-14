@@ -1,3 +1,13 @@
+// 1.为什么修改此页面代码不更新
+/**
+ * 因为，此页面代码是提供给nodejs用的，改变服务器代码是不会触发热更新的
+ * 
+ * 
+ * 
+ * 
+ */
+
+
 const Mock = require('mockjs'); // mockjs 导入依赖模块
 const util = require('./util'); // 自定义工具模块
 // 返回一个函数
@@ -22,8 +32,21 @@ module.exports = function (app) {
       // 从属性值 array 中生成1到10个元素,每个元素都包括三个值
       'result3|1-10': ['hello', 'zhangzequan', '!']
     };
-    console.log(12);
     // res.json(Mock.mock(data));
     res.send(Mock.mock(data));
   });
+  // json string
+  app.get('/planningData/stringAndNumber', function (req, res) {
+    const data = {
+      // 从属性值x中取出x，生成一符符串,重复次数为1-10
+      'result1|1-10': "x",
+      // 从属性值string中取出字符串（hello,world），重复次数为3
+      'result2|3': 'hello,world! ',
+      // 生成一个整数，从属性值中取出默认值，并顺序自增
+      'result3|+1': 1
+    };
+    res.send(Mock.mock(data))
+  })
+
+
 };

@@ -33,9 +33,9 @@ module.exports = {
    */
   rules: {
     // allow async-await
-    'generator-star-spacing': 'off',
-    "semi": [2, "always"], //语句强制分号结尾
-    "space-before-function-paren": [0, "always"], //函数定义时括号前面要不要有空格
+    // 'generator-star-spacing': 'off',
+    // "semi": [2, "always"], //语句强制分号结尾
+    // "space-before-function-paren": [0, "always"], //函数定义时括号前面要不要有空格
     // allow debugger during development
     // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
