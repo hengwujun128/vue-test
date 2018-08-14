@@ -6,7 +6,7 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
+    mock: true,
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

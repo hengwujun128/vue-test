@@ -11,26 +11,29 @@ axios.interceptors.request.use(function (config) {
 });
 // 响应拦截器
 axios.interceptors.response.use(function (response) {
-  return response;
+  return response.data;
 }, function (error) {
   return Promise.reject(error);
 });
 
 // 封装axios的post请求
-export function fetch(url, params) {
-  return new Promise((resolve, reject) => {
-    axios.post(url, params)
-      .then(response => {
-        resolve(response.data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
+// export function fetch(url, params) {
+//   return new Promise((resolve, reject) => {
+//     axios.post(url, params)
+//       .then(response => {
+//         resolve(response.data);
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// }
 
 export default {
   JH_news(url, params) {
     return fetch(url, params);
+  },
+  mockString() {
+    return axios.get('/api/test')
   }
 };

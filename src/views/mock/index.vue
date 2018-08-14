@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import api from "@/api"
 export default {
   name: 'mock',
   data () {
@@ -13,7 +14,8 @@ export default {
   created () {
     // this.getUserInfo();
     // this.getMyTest();
-    this.getString()
+    // this.getString()
+    this.testAdapter()
   },
   methods: {
     getUserInfo () {
@@ -37,6 +39,12 @@ export default {
     getString () {
       this.axios.get('/planningData/stringAndNumber').then(res => {
         return res;
+      })
+    },
+    testAdapter () {
+      // 可以单独抽取出来，放入到src/api目录下面
+      api.mockString().then(res => {
+        console.log(res)
       })
     }
   }

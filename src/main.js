@@ -21,6 +21,11 @@ import SModal from "./components/modal/index";
 Vue.use(SModal);
 // Vue.use(axios);
 Vue.prototype.axios = axios;
+import mock from './mock'
+mock.start()
+if (process.env.NODE_ENV === 'development') {
+  // mock.start()
+}
 
 Vue.use(ElementUI, {
   size: "small"

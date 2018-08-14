@@ -46,7 +46,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     publicPath: config.dev.assetsPublicPath, // 这里也要设置publicPath
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
-    // before: require('../src/index2'), //引入mock/index.js
+    // before: require('../src/mock/index2'), //引入mock/index.js
     watchOptions: {
       poll: config.dev.poll,
     }
