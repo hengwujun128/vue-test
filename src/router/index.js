@@ -25,6 +25,9 @@ import vueVersion from "@/views/testVueVersion/index.vue";
 import myCanvas from "@/views/canvas/index.vue"
 
 import mock from "@/views/mock";
+// myDirective
+import myDirective from '@/views/myDirective/index.vue'
+import scrollTo from '@/views/myDirective/scrollTo.vue'
 let app_router = new Router({
   routes: [{
       path: "/",
@@ -81,6 +84,20 @@ let app_router = new Router({
       name: 'mock',
       path: '/mock',
       component: mock
+    },
+    {
+      name: 'myDirective',
+      path: '/myDirective',
+      component: myDirective,
+      // redirect: scrollTo,
+      children: [{
+        name: 'scrollTo',
+        path: 'scrollTo',
+        // component: () => {
+        //   import ('@/views/myDirective/scrollTo.vue')
+        // }
+        component: scrollTo
+      }]
     }
   ]
 });
