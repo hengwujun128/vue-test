@@ -22,8 +22,8 @@ export default {
 
   methods: {
     loaded () {
-      const vm = this.$refs.iframe.contentWindow.vm;
-      console.log(vm);
+      // const vm = this.$refs.iframe.contentWindow.vm;
+      // console.log(vm);
       //vm.func1()
     },
     /**
@@ -32,8 +32,8 @@ export default {
      *
      */
     addSrc () {
-      // this.$refs.iframe.src = "http://sd-smartodn-sit.huawei.com/";
-      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/simplePlan";
+      this.$refs.iframe.src = "http://sd-smartodn-dev.huawei.com/#/planning/planningMain/";
+      // this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/simplePlan";
     }
   }
 };
