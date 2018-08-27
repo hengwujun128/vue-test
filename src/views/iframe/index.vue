@@ -14,14 +14,14 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       src: ""
     };
   },
 
   methods: {
-    loaded() {
+    loaded () {
       const vm = this.$refs.iframe.contentWindow.vm;
       console.log(vm);
       //vm.func1()
@@ -31,9 +31,9 @@ export default {
      * 2.ifram 进入之后就可以使用
      *
      */
-    addSrc() {
-      this.$refs.iframe.src = "http://sd-smartodn-sit.huawei.com/";
-      // this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/simplePlan";
+    addSrc () {
+      // this.$refs.iframe.src = "http://sd-smartodn-sit.huawei.com/";
+      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/simplePlan";
     }
   }
 };
