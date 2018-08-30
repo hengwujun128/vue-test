@@ -32,8 +32,9 @@ export default {
      *
      */
     addSrc () {
-      this.$refs.iframe.src = "http://sd-smartodn-dev.huawei.com/#/planning/planningMain/";
-      // this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/simplePlan";
+      // this.$refs.iframe.src = "http://sd-smartodn-dev.huawei.com/#/planning/planningMain/";
+      // this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/planningMain";
+      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/HBB/networkPlanning?cur_project_id=2325412908626000010"
     }
   }
 };
