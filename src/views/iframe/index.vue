@@ -14,16 +14,16 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       src: ""
     };
   },
 
   methods: {
-    loaded() {
-      const vm = this.$refs.iframe.contentWindow.vm;
-      console.log(vm);
+    loaded () {
+      // const vm = this.$refs.iframe.contentWindow.vm;
+      // console.log(vm);
       //vm.func1()
     },
     /**
@@ -31,9 +31,10 @@ export default {
      * 2.ifram 进入之后就可以使用
      *
      */
-    addSrc() {
-      this.$refs.iframe.src = "http://sd-smartodn-sit.huawei.com/";
-      // this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/simplePlan";
+    addSrc () {
+      // this.$refs.iframe.src = "http://sd-smartodn-dev.huawei.com/#/planning/planningMain/";
+      // this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/planning/planningMain";
+      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/HBB/networkPlanning?cur_project_id=2325412908626000010"
     }
   }
 };

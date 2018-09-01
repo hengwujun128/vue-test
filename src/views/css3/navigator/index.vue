@@ -64,7 +64,7 @@ $toolbar-size: 52px;
         position: absolute;
         // 偏离父元素的宽度,在父元素的左侧
         right: $toolbar-size;
-        bottom: 0;
+        bottom: -10px;
         width: 172px;
         background-image: url("../../../assets/img/toolbar.png");
         background-repeat: no-repeat;
