@@ -15,30 +15,30 @@
   </div>
 </template>
 <script>
-require("./utils.js");
-// require("./circle.js");
-import Circle from "./circle.js";
-import Rectangle from "./rectangle.js";
-import Path from "./path.js";
+require('./utils.js')
+import Circle from './circle.js'
+import Rectangle from './rectangle.js'
+import Path from './path.js'
 
 export default {
   data() {
     return {
-      context: ""
-    };
+      context: ''
+    }
   },
   methods: {
     getContext() {
-      let canvas1 = document.getElementById("canvas1");
-      this.context = canvas1.getContext("2d");
+      // document.querySelector('canvas1')
+      let canvas1 = document.getElementById('canvas1')
+      this.context = canvas1.getContext('2d')
     },
     rectangle() {
-      let rectangle = new Rectangle();
-      rectangle.draw(this.context);
+      let rectangle = new Rectangle()
+      rectangle.draw(this.context)
     },
     triangle() {
-      let path = new Path();
-      path.drawTriangle(this.context);
+      let path = new Path()
+      path.drawTriangle(this.context)
     }
   },
   mounted() {
@@ -94,7 +94,7 @@ export default {
 
     function onMouseenter(e) {
       // first, remove animation
-      cancelRequestAnimationFrame(animationId1);
+      cancelRequestAnimationFrame(animationId1)
 
       // targets.forEach((item, key) => {
       //   //get boundary
@@ -106,7 +106,7 @@ export default {
       //     debugger;
       //   }
       // });
-      drawFrame2();
+      drawFrame2()
     }
     // myCanvas.addEventListener("mouseenter", onMouseenter, false);
     // myCanvas.addEventListener("mouseout", function(e) {
@@ -114,16 +114,16 @@ export default {
     //   drawFrame1();
     // });
     function drawFrame1() {
-      animationId1 = window.requestAnimationFrame(drawFrame1, myCanvas);
-      context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+      animationId1 = window.requestAnimationFrame(drawFrame1, myCanvas)
+      context.clearRect(0, 0, myCanvas.width, myCanvas.height)
 
       var left = 0,
         right = myCanvas.width,
         top = 0,
-        bottom = myCanvas.height;
+        bottom = myCanvas.height
       for (let circle of circles) {
-        circle.x += circle.vx;
-        circle.y += circle.vy;
+        circle.x += circle.vx
+        circle.y += circle.vy
 
         if (
           circle.x + 60 > myCanvas.width ||
@@ -131,46 +131,46 @@ export default {
           circle.y + 60 > myCanvas.height ||
           circle.y - 60 < 0
         ) {
-          circle.vx *= -1;
-          circle.vy *= -1;
+          circle.vx *= -1
+          circle.vy *= -1
         }
-        circle.draw(context);
+        circle.draw(context)
       }
     }
     function drawFrame2() {
-      animationId2 = window.requestAnimationFrame(drawFrame2, myCanvas);
-      context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+      animationId2 = window.requestAnimationFrame(drawFrame2, myCanvas)
+      context.clearRect(0, 0, myCanvas.width, myCanvas.height)
 
       //
       let left = 0,
         right = myCanvas.width,
         top = 0,
-        bottom = myCanvas.height;
+        bottom = myCanvas.height
 
       for (let key of targets.keys()) {
         // console.log(targets[key]["x"]);
-        let targetX = targets[key]["x"];
-        let targetY = targets[key]["y"];
+        let targetX = targets[key]['x']
+        let targetY = targets[key]['y']
 
-        let vx = (targetX - circles[key]["x"]) * easing;
-        let vy = (targetY - circles[key]["y"]) * easing;
+        let vx = (targetX - circles[key]['x']) * easing
+        let vy = (targetY - circles[key]['y']) * easing
 
-        let circle = circles[key];
-        circle.x += vx;
-        circle.y += vy;
-        circle.draw(context);
+        let circle = circles[key]
+        circle.x += vx
+        circle.y += vy
+        circle.draw(context)
       }
     }
     // drawFrame1();
   },
   created() {
     this.$nextTick(function() {
-      this.getContext();
-      this.rectangle();
-      this.triangle();
-    });
+      this.getContext()
+      this.rectangle()
+      this.triangle()
+    })
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 // @import url("./style.css");

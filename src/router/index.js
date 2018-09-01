@@ -79,8 +79,8 @@ let app_router = new Router({
       component: vueVersion
     },
     {
-      name: 'myHome',
-      path: '/myHome',
+      name: 'myCanvas',
+      path: '/myCanvas',
       component: myCanvas
     },
     {
