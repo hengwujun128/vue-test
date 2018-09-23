@@ -1,22 +1,28 @@
 export default class Circle {
   constructor(options = {}) {
+    // 1.coordinate initialization
     this.x = options.x || 0;
     this.y = options.y || 0;
     this.radius = options.radius || 60;
+    // 2. 
     this.vx = options.vx || 0;
     this.vy = options.vy || 0;
+    // 3.rotation,scale 
     this.rotation = 0;
     this.scaleX = 1;
     this.scaleY = 1;
+    // 4.color,lineWidth
     this.color = utils.parseColor(options.color);
     this.lineWidth = 1;
-
+    // 5.backImg
     this.backImg = options.backImg || ''
 
   }
+
+
   draw(context) {
     context.save();
-
+    // 移动上下文坐标到指定位置(注意在原始的坐标进行累加)
     context.translate(this.x, this.y);
     context.rotate(this.rotation);
     context.scale(this.scaleX, this.scaleY);

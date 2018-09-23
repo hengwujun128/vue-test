@@ -25,6 +25,13 @@ import vueVersion from "@/views/testVueVersion/index.vue";
 import myCanvas from "@/views/canvas/index.vue"
 
 import mock from "@/views/mock";
+// myDirective
+import myDirective from '@/views/myDirective/index.vue'
+import scrollTo from '@/views/myDirective/scrollTo.vue'
+// css3
+// import css3 from '@/views/css3/index.vue'
+// import navigator from '@/views/css3/navigator/index.vue'
+import css3Router from './css.js'
 let app_router = new Router({
   routes: [{
       path: "/",
@@ -73,15 +80,39 @@ let app_router = new Router({
       component: vueVersion
     },
     {
-      name: 'myHome',
-      path: '/myHome',
+      name: 'myCanvas',
+      path: '/myCanvas',
       component: myCanvas
     },
     {
       name: 'mock',
       path: '/mock',
       component: mock
-    }
+    },
+    {
+      name: 'myDirective',
+      path: '/myDirective',
+      component: myDirective,
+      // redirect: scrollTo,
+      children: [{
+        name: 'scrollTo',
+        path: 'scrollTo',
+        // component: () => {
+        //   import ('@/views/myDirective/scrollTo.vue')
+        // }
+        component: scrollTo
+      }]
+    },
+    ...css3Router
+    // {
+    //   path: 'css3',
+    //   path: '/css3',
+    //   component: css3,
+    //   children: [{
+    //     path: 'navigator',
+    //     component: navigator
+    //   }]
+    // }
   ]
 });
 NProgress.configure({

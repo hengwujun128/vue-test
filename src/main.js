@@ -26,6 +26,10 @@ mock.start()
 if (process.env.NODE_ENV === 'development') {
   // mock.start()
 }
+// var VueScrollTo = require('vue-scrollto');
+import VueScrollTo from './src'
+
+Vue.use(VueScrollTo)
 
 Vue.use(ElementUI, {
   size: "small"
