@@ -1,11 +1,11 @@
 <template>
   <div id="scroll-wrapper">
     <ul>
-      <li><a href="#red">red</a></li>
-      <li><a href="#green">green</a></li>
-      <li><a href="#blue">blue</a></li>
-      <li><a href="#yellow">yellow</a></li>
-      <li><a href="#magenta">magenta</a></li>
+      <li :class="{active:active==='red'}" @click="active='red'"><a href="#red">red</a></li>
+      <li :class="{active:active==='green'}" @click="active='green'"><a href="#green">green</a></li>
+      <li :class="{active:active==='blue'}" @click="active='blue'"><a href="#blue">blue</a></li>
+      <li :class="{active:active==='yellow'}" @click="active='yellow'"><a href="#yellow">yellow</a></li>
+      <li :class="{active:active==='magenta'}" @click="active='magenta'"><a href="#magenta">magenta</a></li>
     </ul>
     <div class="container">
       <div id="red"><h1>red</h1></div>
@@ -20,10 +20,37 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      active: 'yellow'
+    }
   },
   created() {
     // alert(12344)
+  },
+  mounted() {
+    let me = this
+    let ele = document.querySelector('.container')
+    // 外层容器的高度是固定的
+    let eleHeight = window
+      .getComputedStyle(ele)
+      .getPropertyValue('height')
+      .split('px')[0]
+    ele.addEventListener('scroll', function(e) {
+      // if(ele.scrollTop>)
+      // console.log(ele.scrollTop)
+      // console.log(eleHeight * 2)
+      // if (ele.scrollTop < eleHeight * 1) {
+      //   me.active = 'red'
+      // } else if (eleHeight * 1 > ele.target.scrollTop) {
+      //   me.active = 'green'
+      // } else if (eleHeight * 2 > ele.scrollTo) {
+      //   me.active = 'blue'
+      // } else if (eleHeight * 3 > ele.scrollTo) {
+      //   me.active = 'yellow'
+      // } else if (eleHeight * 4 > ele.scrollTo) {
+      //   me.active = 'megenta'
+      // }
+    })
   }
 }
 </script>
@@ -74,7 +101,7 @@ body {
     scroll-behavior: smooth;
     div {
       width: 100%;
-      height: 50%;
+      height: 100%;
       position: relative;
       &#red {
         background: red;
@@ -104,6 +131,10 @@ body {
         text-transform: uppercase;
       }
     }
+  }
+  .active {
+    font-weight: 700;
+    // box-shadow: 0px 8px 8px #dddddd;
   }
 }
 </style>
