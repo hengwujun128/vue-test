@@ -44,24 +44,27 @@ function getBinding(el) {
 
   return binding;
 }
-
+// 通过指令可以为元素绑定事件处理程序
 function handleClick(e) {
   // debugger
   e.preventDefault();
+  // 在事件处理程序中获取指定绑定的数据
   let ctx = getBinding(this).binding;
-
+  // 如果元素中为指令绑定的是个字符串,则直接调用滚动方法直接滚动到指定位置
   if (typeof ctx.value === "string") {
     return scrollTo(ctx.value);
   }
+  // 
   scrollTo(ctx.value.el || ctx.value.element, ctx.value);
 }
 
 // directive 另一种写法，把逻辑封装在一个函数中,
 export default {
-  // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置,为绑定事件处理程序
+  // 只调用一次，指令第一次绑定到元素时调用。
   bind(el, binding) {
+    //在这里可以进行一次性的初始化设置,为绑定事件处理程序
     getBinding(el).binding = binding;
-    // 为绑定指令的元素添加事件处理程序click
+    // 为每一个绑定指令的元素添加事件处理程序click
     _.on(el, "click", handleClick);
   },
   unbind(el) {
