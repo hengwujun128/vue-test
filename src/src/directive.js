@@ -44,7 +44,7 @@ function getBinding(el) {
 
   return binding;
 }
-// 通过指令可以为元素绑定事件处理程序
+// 通过指令可以为元素绑定事件处理程序,并调用滚动构造函数
 function handleClick(e) {
   // debugger
   e.preventDefault();
