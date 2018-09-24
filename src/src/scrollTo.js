@@ -1,7 +1,7 @@
 import BezierEasing from "bezier-easing";
 import easings from "./easings";
 import _ from "./utils";
-
+// 存储各种事件名称
 const abortEvents = [
   "mousedown",
   "wheel",
@@ -10,7 +10,7 @@ const abortEvents = [
   "keyup",
   "touchmove"
 ];
-
+// 定义初始化变量
 let defaults = {
   container: "body",
   duration: 500,
@@ -64,6 +64,7 @@ export const scroller = () => {
 
   let progress; // progress
 
+  // 容器滚动条滚动的垂直距离
   function scrollTop(container) {
     let scrollTop = container.scrollTop;
 
@@ -76,7 +77,7 @@ export const scroller = () => {
 
     return scrollTop;
   }
-
+  //滚动条滚动的水平距离 
   function scrollLeft(container) {
     let scrollLeft = container.scrollLeft;
 
@@ -90,12 +91,13 @@ export const scroller = () => {
     return scrollLeft;
   }
 
+  // 每一帧要执行的函数
   function step(timestamp) {
     if (abort) return done();
     if (!timeStart) timeStart = timestamp;
-
+    // 耗时
     timeElapsed = timestamp - timeStart;
-
+    // duration 用户定义的滚动完成时间
     progress = Math.min(timeElapsed / duration, 1);
     progress = easingFn(progress);
 
@@ -104,7 +106,7 @@ export const scroller = () => {
       initialY + diffY * progress,
       initialX + diffX * progress
     );
-
+    // 
     timeElapsed < duration ? window.requestAnimationFrame(step) : done();
   }
 
@@ -116,7 +118,7 @@ export const scroller = () => {
     if (abort && onCancel) onCancel(abortEv, element);
     if (!abort && onDone) onDone(element);
   }
-
+  // 元素(容器)滚动到指定位置
   function topLeft(element, top, left) {
     if (y) element.scrollTop = top;
     if (x) element.scrollLeft = left;
@@ -128,7 +130,7 @@ export const scroller = () => {
       if (x) document.documentElement.scrollLeft = left;
     }
   }
-
+  // 滚动的构造函数 target:要滚动到指定的目标位置,_durration 是从指令中调用构造函数传过来的
   function scrollTo(target, _duration, options = {}) {
     debugger
     if (typeof _duration === "object") {
@@ -136,7 +138,7 @@ export const scroller = () => {
     } else if (typeof _duration === "number") {
       options.duration = _duration;
     }
-
+    // dom 元素
     element = _.$(target);
 
     if (!element) {
@@ -148,25 +150,34 @@ export const scroller = () => {
 
     container = _.$(options.container || defaults.container);
     duration = options.duration || defaults.duration;
+    // 动画效果The easing to be used when animating
     easing = options.easing || defaults.easing;
+    // 滚动的偏移位置
     offset = options.offset || defaults.offset;
+    // Indicates if user can cancel the scroll or not.
     cancelable = options.hasOwnProperty("cancelable") ?
       options.cancelable !== false :
       defaults.cancelable;
+    // A callback function that should be called when scrolling has started. Receives the target element as a parameter.
     onStart = options.onStart || defaults.onStart;
+    // A callback function that should be called when scrolling has ended. Receives the target element as a parameter.
     onDone = options.onDone || defaults.onDone;
+    // A callback function that should be called when scrolling has been aborted by the user (user scrolled, clicked etc.).
     onCancel = options.onCancel || defaults.onCancel;
+    // 
     x = options.x === undefined ? defaults.x : options.x;
     y = options.y === undefined ? defaults.y : options.y;
-
+    // 分别计算容器偏移量和元素的偏移量
     var cumulativeOffsetContainer = _.cumulativeOffset(container);
     var cumulativeOffsetElement = _.cumulativeOffset(element);
-
+    // offset is either a number or function
     if (typeof offset === "function") {
       offset = offset();
     }
-
+    // 容器中滚动条的初始位置
     initialY = scrollTop(container);
+    // 目标位置= 目标元素的偏移量-容器元素的偏移量(就是元素在容器中的偏移量)
+    // 加上 offset 就是用户手动设置的偏移
     targetY = cumulativeOffsetElement.top -
       cumulativeOffsetContainer.top +
       offset;
@@ -177,7 +188,7 @@ export const scroller = () => {
       offset;
 
     abort = false;
-
+    // ?????
     diffY = targetY - initialY;
     diffX = targetX - initialX;
 
@@ -204,6 +215,6 @@ export const scroller = () => {
 
   return scrollTo;
 };
-
+// 返回的是构造函数
 const _scroller = scroller();
 export default _scroller;

@@ -1,6 +1,6 @@
 <template>
   <div class="scrollTo-container" id="scrollTo-container">
-    <h2>hello,this is scrollTo directive</h2>
+    <h2>Adds a directive that listens for click events and scrolls to elements</h2>
 
     <div>
       <el-button v-scroll-to="options">scrollTo</el-button>
@@ -241,7 +241,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       options: {
         el: '#target1',
@@ -249,17 +249,17 @@ export default {
         container: 'body',
         duration: 1000,
         easing: 'linear',
-        offset: -10,        //The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
+        offset: -10, //The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
-        onStart: function (element) {
+        onStart: function(element) {
           // scrolling started
           // alert('start')
         },
-        onDone: function (element) {
+        onDone: function(element) {
           // scrolling is done
           // alert('done')
         },
-        onCancel: function () {
+        onCancel: function() {
           // scrolling has been interrupted
         },
         x: false,
