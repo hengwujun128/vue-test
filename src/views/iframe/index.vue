@@ -32,8 +32,9 @@ export default {
      *
      */
     addSrc () {
+      // /msp2/smartODN/#/HBB/networkPlanning?cur_project_id=2388439019186000000&language=en-US
       // this.$refs.iframe.src = "http://sd-smartodn-dev.huawei.com/#/planning/planningMain/";
-      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/HBB/networkPlanning?cur_project_id=2325412908626000010"
+      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/HBB/networkPlanning?cur_project_id=2388439019186000000&language=en-US"
     }
   }
 };

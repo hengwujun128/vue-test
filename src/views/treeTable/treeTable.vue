@@ -2,7 +2,7 @@
   
  <template>
   <div class="hello">
-      <h2>hello myTable</h2>
+    <h2>hello myTable</h2>
     <tree-grid :columns="columns" :tree-structure="true" :data-source="dataSource"></tree-grid>
   </div>
 </template>
@@ -11,7 +11,7 @@
 import TreeGrid from "@/components/treeGrid";
 export default {
   name: "hello",
-  data() {
+  data () {
     return {
       columns: [
         {
@@ -102,5 +102,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-
 </style>
