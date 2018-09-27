@@ -32,6 +32,7 @@ import scrollTo from '@/views/myDirective/scrollTo.vue'
 // import css3 from '@/views/css3/index.vue'
 // import navigator from '@/views/css3/navigator/index.vue'
 import css3Router from './css.js'
+import imageRouter from './image.js'
 let app_router = new Router({
   routes: [{
       path: "/",
@@ -103,16 +104,8 @@ let app_router = new Router({
         component: scrollTo
       }]
     },
-    ...css3Router
-    // {
-    //   path: 'css3',
-    //   path: '/css3',
-    //   component: css3,
-    //   children: [{
-    //     path: 'navigator',
-    //     component: navigator
-    //   }]
-    // }
+    ...css3Router,
+    ...imageRouter
   ]
 });
 NProgress.configure({
