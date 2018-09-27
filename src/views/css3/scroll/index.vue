@@ -8,26 +8,36 @@
       <li :class="{active:active==='magenta'}" @click="active='magenta'"><a href="#magenta">magenta</a></li>
     </ul>
     <div class="container">
-      <div id="red"><h1>red</h1></div>
-      <div id="green"><h1>green</h1></div>
-      <div id="blue"><h1>blue</h1></div>
-      <div id="yellow"><h1>yellow</h1></div>
-      <div id="magenta"><h1>megenta</h1></div>
+      <div id="red">
+        <h1>red</h1>
+      </div>
+      <div id="green">
+        <h1>green</h1>
+      </div>
+      <div id="blue">
+        <h1>blue</h1>
+      </div>
+      <div id="yellow">
+        <h1>yellow</h1>
+      </div>
+      <div id="magenta">
+        <h1>megenta</h1>
+      </div>
     </div>
   </div>
-  
+
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       active: 'yellow'
     }
   },
-  created() {
+  created () {
     // alert(12344)
   },
-  mounted() {
+  mounted () {
     let me = this
     let ele = document.querySelector('.container')
     // 外层容器的高度是固定的
@@ -35,7 +45,7 @@ export default {
       .getComputedStyle(ele)
       .getPropertyValue('height')
       .split('px')[0]
-    ele.addEventListener('scroll', function(e) {
+    ele.addEventListener('scroll', function (e) {
       // if(ele.scrollTop>)
       // console.log(ele.scrollTop)
       // console.log(eleHeight * 2)
@@ -98,6 +108,7 @@ body {
     height: 100vh;
     // 父容器使用overflow:scroll;scroll-behavior:smooth
     overflow-y: scroll;
+    // 不兼容IE
     scroll-behavior: smooth;
     div {
       width: 100%;
