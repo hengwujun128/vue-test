@@ -25,12 +25,8 @@ import vueVersion from "@/views/testVueVersion/index.vue";
 import myCanvas from "@/views/canvas/index.vue"
 
 import mock from "@/views/mock";
-// myDirective
-import myDirective from '@/views/myDirective/index.vue'
-import scrollTo from '@/views/myDirective/scrollTo.vue'
-// css3
-// import css3 from '@/views/css3/index.vue'
-// import navigator from '@/views/css3/navigator/index.vue'
+
+import directive from "./directive"
 import css3Router from './css.js'
 import imageRouter from './image.js'
 let app_router = new Router({
@@ -90,20 +86,7 @@ let app_router = new Router({
       path: '/mock',
       component: mock
     },
-    {
-      name: 'myDirective',
-      path: '/myDirective',
-      component: myDirective,
-      // redirect: scrollTo,
-      children: [{
-        name: 'scrollTo',
-        path: 'scrollTo',
-        // component: () => {
-        //   import ('@/views/myDirective/scrollTo.vue')
-        // }
-        component: scrollTo
-      }]
-    },
+    ...directive,
     ...css3Router,
     ...imageRouter
   ]
