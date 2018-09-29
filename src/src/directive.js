@@ -44,7 +44,7 @@ function getBinding(el) {
 
   return binding;
 }
-// 通过指令可以为元素绑定事件处理程序,并调用滚动构造函数
+// 通过指令可以为元素绑定事件处理程序,用户点击会调用滚动构造函数
 function handleClick(e) {
   // debugger
   e.preventDefault();
@@ -62,6 +62,7 @@ function handleClick(e) {
 export default {
   // 只调用一次，指令第一次绑定到元素时调用。
   bind(el, binding) {
+    // debugger
     //在这里可以进行一次性的初始化设置,为绑定事件处理程序
     getBinding(el).binding = binding;
     // 为每一个绑定指令的元素添加事件处理程序click

@@ -28,6 +28,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 // var VueScrollTo = require('vue-scrollto');
 import VueScrollTo from './src'
+// import VueScrollTo from './views/myDirective/scroll/second/index.js'
+
 
 Vue.use(VueScrollTo)
 

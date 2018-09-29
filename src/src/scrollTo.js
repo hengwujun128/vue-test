@@ -23,7 +23,7 @@ let defaults = {
   x: false,
   y: true
 };
-// 对象的合并
+// 对象的合并,外部调用setDefaults(),能够设置改变当前default，同闭包类似
 export function setDefaults(options) {
   defaults = Object.assign({}, defaults, options);
 }
@@ -64,7 +64,7 @@ export const scroller = () => {
 
   let progress; // progress
 
-  // 容器滚动条滚动的垂直距离
+  // 
   function scrollTop(container) {
     let scrollTop = container.scrollTop;
 
@@ -101,6 +101,7 @@ export const scroller = () => {
     progress = Math.min(timeElapsed / duration, 1);
     progress = easingFn(progress);
 
+    // 让容器元素在滚动条的位置(initialY,initialX)，滚动diff距离到目标位置
     topLeft(
       container,
       initialY + diffY * progress,
@@ -130,7 +131,7 @@ export const scroller = () => {
       if (x) document.documentElement.scrollLeft = left;
     }
   }
-  // 滚动的构造函数 target:要滚动到指定的目标位置,_durration 是从指令中调用构造函数传过来的
+  // 滚动的构造函数 target:要滚动到指定的目标位置(一个元素选择器),_durration 是从指令中调用构造函数传过来的
   function scrollTo(target, _duration, options = {}) {
     debugger
     if (typeof _duration === "object") {
@@ -167,14 +168,17 @@ export const scroller = () => {
     // 
     x = options.x === undefined ? defaults.x : options.x;
     y = options.y === undefined ? defaults.y : options.y;
-    // 分别计算容器偏移量和元素的偏移量
+
+
+    // 分别计算容器偏移量和元素的偏移量(在页面上面的偏移量)
     var cumulativeOffsetContainer = _.cumulativeOffset(container);
     var cumulativeOffsetElement = _.cumulativeOffset(element);
     // offset is either a number or function
     if (typeof offset === "function") {
       offset = offset();
     }
-    // 容器中滚动条的初始位置
+    // 默认container 为body，如果一个元素不能滚动，scrollTop is 0
+    // 通常使用容器元素的scrollTop
     initialY = scrollTop(container);
     // 目标位置= 目标元素的偏移量-容器元素的偏移量(就是元素在容器中的偏移量)
     // 加上 offset 就是用户手动设置的偏移
@@ -188,7 +192,7 @@ export const scroller = () => {
       offset;
 
     abort = false;
-    // ?????
+    // 元素相对于容器的偏移- 容器滚动条的滚动距离（也就是目标元素不需要从容器元素左上角开始滚动）
     diffY = targetY - initialY;
     diffX = targetX - initialX;
 
@@ -199,12 +203,13 @@ export const scroller = () => {
     easingFn = BezierEasing.apply(BezierEasing, easing);
 
     if (!diffY && !diffX) return;
+    // scroll开始的钩子函数
     if (onStart) onStart(element);
-
+    // 为容器元素添加事件处理程序
     _.on(container, abortEvents, abortFn, {
       passive: true
     });
-
+    // 把每一帧 action 放入到动画队列中
     window.requestAnimationFrame(step);
 
     return () => {
