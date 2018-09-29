@@ -46,7 +46,7 @@ export default {
       element.removeEventListener(events[i], handler);
     }
   },
-  // cumulative 累积偏移量
+  // cumulative 累积偏移量(元素在页面上的偏移量)
   cumulativeOffset(element) {
     let top = 0;
     let left = 0;

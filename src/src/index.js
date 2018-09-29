@@ -1,7 +1,7 @@
 // 入口文件中引入指令,引入 js 文件
 // 指令
 import VueScrollTo from "./directive";
-// 滚动器函数
+// 
 import {
   setDefaults
 } from "./scrollTo";
