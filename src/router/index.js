@@ -7,6 +7,9 @@ import "nprogress/nprogress.css"; // progress bar style
 import HelloWorld from "@/components/HelloWorld";
 import treeTable from "@/views/treeTable/treeTable";
 import canban from "@/views/canban/canban";
+import canban1 from "@/views/canban/example";
+import canban2 from "@/views/canban/drag2";
+
 import direc from "@/views/directiveTest/directiveTest";
 
 // tagInput
@@ -45,6 +48,16 @@ let app_router = new Router({
       path: "/canban",
       name: "canban",
       component: canban
+    },
+    {
+      path: "/canban1",
+      name: "canban1",
+      component: canban1
+    },
+    {
+      path: "/canban2",
+      name: "canban2",
+      component: canban2
     },
     {
       path: "/directive",

@@ -1,97 +1,90 @@
 <template>
-    <div class="canban-container">
-        <div class="drag-group">
-            <div class="group1">
-                <div class="group-header">
-                 <h2>planning</h2> 
-                  </div>
-                <draggable v-model="list1"
-                 :options="dragOptions"
-                  @start="isDragging=true"
-                  @end="isDragging=false"
-                  :move="checkMove"
-                  :component-data="getComponentData()"
-                  @change="group1Change"
-                  class="item-container">
-                <!-- <transition-group> -->
-                    <div v-for="element in list1" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
-                      
-                        <div class="first">
-                          <span class="title">
-                            <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
-                          <span class="avator">
-                            <img src="../../assets/header_user.png"/>
-                          </span>
-                        </div>
-                        <div class="second">
-                          <span>6月30日截止</span>
-                          <span>每月重复</span>
-                        </div>
-                        <div class="third">
-                          <span><i></i>自动部署</span>
-                          <span><i></i>技能提升</span>
-                        </div>
-                    </div>
-                <!-- </transition-group> -->
-                    <el-button slot="footer" @click="addItem" type="primary">添加任务</el-button>
-            </draggable>
-            </div>
-            
-            <div class="group2">
-               <div class="group-header">
-                  <h2>working on</h2> 
-               </div>
-                <draggable v-model="list2" :options="dragOptions" @start="drag=true" @end="drag=false" class="item-container">
-                <!-- <transition-group> -->
-                    <div v-for="element in list2" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
-                     <div class="first">
-                          <span class="title">
-                            <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
-                          <span class="avator">
-                            <img src="../../assets/header_user.png"/>
-                          </span>
-                      </div>
-                        <div class="second">
-                          <span>6月30日截止</span>
-                          <span>每月重复</span>
-                        </div>
-                        <div class="third">
-                          <span><i></i>自动部署</span>
-                          <span><i></i>技能提升</span>
-                        </div>
-                    </div>
-                <!-- </transition-group> -->
-            </draggable>
-            </div>
-            <div class="group3">
-                 <div class="group-header">
-                  <h2>complete</h2> 
-               </div>
-                <draggable v-model="list3" :options="dragOptions" @start="drag=true" @end="drag=false" class="item-container">
-                <!-- <transition-group> -->
-                    <div v-for="element in list3" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
-                     <div class="first">
-                          <span class="title">
-                            <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
-                          <span class="avator">
-                            <img src="../../assets/header_user.png"/>
-                          </span>
-                      </div>
-                        <div class="second">
-                          <span>6月30日截止</span>
-                          <span>每月重复</span>
-                        </div>
-                        <div class="third">
-                          <span><i></i>自动部署</span>
-                          <span><i></i>技能提升</span>
-                        </div>
-                    </div>
-                <!-- </transition-group> -->
-            </draggable>
-            </div>
+  <div class="canban-container">
+    <div class="drag-group">
+      <div class="group1">
+        <div class="group-header">
+          <h2>planning</h2>
         </div>
+        <draggable v-model="list1" :options="dragOptions" @start="isDragging=true" @end="isDragging=false" :move="checkMove" :component-data="getComponentData()" @change="group1Change" class="item-container">
+          <!-- <transition-group> -->
+          <div v-for="element in list1" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
+
+            <div class="first">
+              <span class="title">
+                <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
+              <span class="avator">
+                <img src="../../assets/header_user.png"/>
+                          </span>
+            </div>
+            <div class="second">
+              <span>6月30日截止</span>
+              <span>每月重复</span>
+            </div>
+            <div class="third">
+              <span><i></i>自动部署</span>
+              <span><i></i>技能提升</span>
+            </div>
+          </div>
+          <!-- </transition-group> -->
+          <el-button slot="footer" @click="addItem" type="primary">添加任务</el-button>
+        </draggable>
+      </div>
+
+      <div class="group2">
+        <div class="group-header">
+          <h2>working on</h2>
+        </div>
+        <draggable v-model="list2" :options="dragOptions" @start="drag=true" @end="drag=false" class="item-container">
+          <!-- <transition-group> -->
+          <div v-for="element in list2" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
+            <div class="first">
+              <span class="title">
+                <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
+              <span class="avator">
+                <img src="../../assets/header_user.png"/>
+                          </span>
+            </div>
+            <div class="second">
+              <span>6月30日截止</span>
+              <span>每月重复</span>
+            </div>
+            <div class="third">
+              <span><i></i>自动部署</span>
+              <span><i></i>技能提升</span>
+            </div>
+          </div>
+          <!-- </transition-group> -->
+        </draggable>
+      </div>
+      <div class="group3">
+        <div class="group-header">
+          <h2>complete</h2>
+        </div>
+        <draggable v-model="list3" :options="dragOptions" @start="drag=true" @end="drag=false" class="item-container">
+          <!-- <transition-group> -->
+          <div v-for="element in list3" :key="element.title" class="drag-item" :class="[element.draggable?'draggable':'no-draggable']">
+            <div class="first">
+              <span class="title">
+                <span style="color:red;">{{element.name}}</span>{{element.description}}</span>
+              <span class="avator">
+                <img src="../../assets/header_user.png"/>
+                          </span>
+            </div>
+            <div class="second">
+              <span>6月30日截止</span>
+              <span>每月重复</span>
+            </div>
+            <div class="third">
+              <span><i></i>自动部署</span>
+              <span><i></i>技能提升</span>
+            </div>
+          </div>
+          <!-- </transition-group> -->
+        </draggable>
+      </div>
     </div>
-    
+  </div>
+
 </template>
 
 <script>
@@ -101,7 +94,7 @@ export default {
   components: {
     draggable
   },
-  data: function() {
+  data: function () {
     return {
       editable: true,
       isDragging: false,
@@ -175,7 +168,7 @@ export default {
     };
   },
   computed: {
-    dragOptions() {
+    dragOptions () {
       return {
         animation: 0,
         group: "description",
@@ -189,7 +182,7 @@ export default {
     }
   },
   watch: {
-    isDragging(newValue) {
+    isDragging (newValue) {
       if (newValue) {
         this.delayedDragging = true;
         return;
@@ -201,15 +194,15 @@ export default {
     }
   },
   methods: {
-    handleChange() {
+    handleChange () {
       console.log("changed");
       // alert("changed");
     },
-    inputChanged(value) {
+    inputChanged (value) {
       this.activeNames = value;
     },
     // add event handler to  child
-    handleClick() {
+    handleClick () {
       // alert("click");
     },
 
@@ -219,7 +212,7 @@ export default {
     on:   events to be subscribe in the child component
     */
 
-    getComponentData() {
+    getComponentData () {
       return {
         on: {
           change: this.handleChange,
@@ -231,7 +224,7 @@ export default {
         }
       };
     },
-    addItem() {
+    addItem () {
       // let index = this.count++;
       // let item = {
       //   draggable: true,
@@ -243,14 +236,14 @@ export default {
     },
     // evt object has same property as Sortable onMove event, and 3 additional properties:
     //evt.relatedContext,evt.draggedContext
-    checkMove({ relatedContext, draggedContext }) {
+    checkMove ({ relatedContext, draggedContext }) {
       //
       //  return (evt.draggedContext.element.name!=='apple');
       // alert(draggedContext.element.description);
       return true;
     },
     // can watch any changes for an group
-    group1Change({ added, removed, moved }) {
+    group1Change ({ added, removed, moved }) {
       // console.log(added.element.name);
       // console.log(removed.element.name);
       // console.log(moved.element.name);
