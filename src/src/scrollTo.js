@@ -149,6 +149,7 @@ export const scroller = () => {
       );
     }
 
+
     container = _.$(options.container || defaults.container);
     duration = options.duration || defaults.duration;
     // 动画效果The easing to be used when animating
