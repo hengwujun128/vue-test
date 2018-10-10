@@ -4,10 +4,10 @@
       <section>
         <ul>
           <li class="wrapper" v-for="(item, index) in list" :key="index">
-            <div class="group-header">
+            <div class="group-header" @click="toogle(index)">
               <span class="title">{{item.title}}</span>
             </div>
-            <draggable :list="list[index].children" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" class="dragable-container">
+            <draggable :list="list[index].children" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
               <div v-for="item2 in list[index].children" class="item-wrapper draggable" :key="`dropitem-${item2.key}`">
                 <div class="drag-item">{{item2.value}}</div>
               </div>
@@ -70,7 +70,7 @@ export default {
       list: [
         {
           title: 'first group',
-          name: 'first',
+          isCollapse: true,
           description: 'hello first',
           children: [
             { key: 'key1', value: 'value1' },
@@ -81,7 +81,7 @@ export default {
         },
         {
           title: 'second group',
-          name: 'second',
+          isCollapse: false,
           description: 'hello second',
           children: [
             { key: 'key12', value: 'value12' },
@@ -92,7 +92,7 @@ export default {
         },
         {
           title: 'third group',
-          name: 'third',
+          isCollapse: false,
           description: 'hello third',
           children: [
             { key: 'key13', value: 'value13' },
@@ -100,13 +100,31 @@ export default {
             { key: 'key33', value: 'value33' },
             { key: 'key43', value: 'value43' }
           ]
-        }
+        },
+        // {
+        //   title: 'fourth group',
+        //   name: 'fourth',
+        //   description: 'hello fourth',
+        //   children: [
+        //     { key: 'key14', value: 'value14' },
+        //     { key: 'key24', value: 'value24' },
+        //     { key: 'key34', value: 'value34' },
+        //     { key: 'key44', value: 'value44' }
+        //   ]
+        // }
       ],
       inputData: [],
-      outputData: []
+      outputData: [],
+      isCollapse: 1
     }
   },
   methods: {
+    toogle (index) {
+      // this.isCollapse = index
+      this.list[index]['isCollapse'] = !this.list[index]['isCollapse']
+      // this.isCollapse = (this.isCollapse === index ? null : index)
+    },
+
     myUpdate () {
       console.log(this.inputData)
       // debugger
@@ -136,6 +154,8 @@ export default {
     // background: #ddd;
     section {
       height: 100%;
+      box-sizing: border-box;
+      overflow-y: scroll;
       ul {
         list-style: none;
         margin: 0px;
@@ -148,6 +168,9 @@ export default {
             padding-top: 10px;
             padding-left: 10px;
             text-align: left;
+            background: #e6c33c9e;
+            height: 30px;
+            cursor: pointer;
             .title {
               font-size: 16px;
               font-weight: 600;
@@ -157,8 +180,12 @@ export default {
           }
           .dragable-container {
             box-sizing: border-box;
+            overflow: hidden;
             // margin: 10px 0;
             padding: 10px;
+            height: 0px;
+            // transition: all 1s linear;
+            // transition: visibility 0s linear 0.33s, opacity 0.33s linear;
             .item-wrapper {
               // background: #dddddd;
               background: #ffffff;
@@ -173,6 +200,11 @@ export default {
               line-height: 1.2;
               text-align: left;
             }
+          }
+          .isCollapse {
+            height: 100%;
+            // visibility: visible;
+            // opacity: 1;
           }
         }
       }
