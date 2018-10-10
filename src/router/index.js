@@ -7,7 +7,7 @@ import "nprogress/nprogress.css"; // progress bar style
 import HelloWorld from "@/components/HelloWorld";
 import treeTable from "@/views/treeTable/treeTable";
 import canban from "@/views/canban/canban";
-import canban1 from "@/views/canban/example";
+import canban1 from "@/views/canban/test";
 import canban2 from "@/views/canban/drag2";
 
 import direc from "@/views/directiveTest/directiveTest";
