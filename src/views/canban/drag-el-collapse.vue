@@ -2,34 +2,27 @@
   <div class="container">
     <div class="left">
       <section>
-        <ul>
-          <li class="wrapper" v-for="(item, index) in list" :key="index">
-            <div class="group-header" @click="toogle(index)">
-              <span class="title">{{item.title}}</span>
-            </div>
-            <draggable :list="list[index].children" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
-              <div v-for="item2 in list[index].children" class="item-wrapper draggable" :key="`dropitem-${item2.key}`">
-                <div class="drag-item">{{item2.value}}</div>
-              </div>
-            </draggable>
 
-          </li>
-        </ul>
-        <!-- <el-collapse v-model="activeNames" @change="handleChange">
-          <el-collapse-item v-for="(item, index) in list" :key="index" :title="item.title" :name="index">
+        <el-collapse v-model="activeNames" @change="handleChange">
+          <el-collapse-item v-for="(item, index) in list" :key="index" :name="index">
+            <template slot="title">
+              <span class="title">{{item.title}}</span>
+            </template>
             <draggable :list="list[index].children" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
               <div v-for="item2 in list[index].children" class="item-wrapper draggable" :key="`dropitem-${item2.key}`">
                 <div class="drag-item">{{item2.value}}</div>
               </div>
             </draggable>
           </el-collapse-item>
-        </el-collapse> -->
+        </el-collapse>
       </section>
     </div>
 
     <div class="right">
       <div class="input">
-        <div class="input-header"></div>
+        <div class="input-header">
+          <span>输入</span>
+        </div>
         <div class="input-body">
           <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
             <div v-for="(element, index) in inputData" :key="index" class="target-item draggable">
@@ -41,7 +34,9 @@
       </div>
 
       <div class="output">
-        <div class="output-header"></div>
+        <div class="output-header">
+          <span>输出</span>
+        </div>
         <div class="output-body">
           <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
             <div v-for="(element, index) in outputData" :key="index" class="target-item draggable">
@@ -111,17 +106,17 @@ export default {
             { key: 'key43', value: 'value43' }
           ]
         },
-        // {
-        //   title: 'fourth group',
-        //   name: 'fourth',
-        //   description: 'hello fourth',
-        //   children: [
-        //     { key: 'key14', value: 'value14' },
-        //     { key: 'key24', value: 'value24' },
-        //     { key: 'key34', value: 'value34' },
-        //     { key: 'key44', value: 'value44' }
-        //   ]
-        // }
+        {
+          title: 'fourth group',
+          name: 'fourth',
+          description: 'hello fourth',
+          children: [
+            { key: 'key14', value: 'value14' },
+            { key: 'key24', value: 'value24' },
+            { key: 'key34', value: 'value34' },
+            { key: 'key44', value: 'value44' }
+          ]
+        }
       ],
       inputData: [],
       outputData: [],
@@ -169,57 +164,25 @@ export default {
       height: 100%;
       box-sizing: border-box;
       overflow-y: auto;
-      ul {
-        list-style: none;
-        margin: 0px;
-        padding: 0px;
-        .wrapper {
-          margin: 10px;
-          background: #e66c3cab;
-          border-radius: 6px;
-          .group-header {
-            padding-top: 10px;
-            padding-left: 10px;
-            text-align: left;
-            background: #e6c33c9e;
-            height: 30px;
-            cursor: pointer;
-            .title {
-              font-size: 16px;
-              font-weight: 600;
-              line-height: 1.2;
-              color: #fff;
-            }
-          }
-          .dragable-container {
-            box-sizing: border-box;
-            overflow: hidden;
-            // margin: 10px 0;
-            padding: 10px;
-            height: 0px;
-            // transition: all 1s linear;
-            // transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-            .item-wrapper {
-              // background: #dddddd;
-              background: #ffffff;
-              position: relative;
-              margin: 10px 10px;
-              padding: 10px;
-              border-radius: 4px;
-              -webkit-transition: 0.3s all;
-              transition: 0.3s all;
-              cursor: pointer;
-              font-size: 14px;
-              line-height: 1.2;
-              text-align: left;
-            }
-          }
-          .isCollapse {
-            height: 100%;
-            // visibility: visible;
-            // opacity: 1;
-          }
-        }
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+        float: left;
+        margin-left: 10px;
+      }
+      .item-wrapper {
+        background: #dddddd;
+        position: relative;
+        margin: 10px 10px;
+        padding: 10px;
+
+        border-radius: 4px;
+        -webkit-transition: 0.3s all;
+        transition: 0.3s all;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1.2;
+        text-align: left;
       }
     }
   }
@@ -242,12 +205,23 @@ export default {
       .input-header {
         height: 40px;
         width: 100%;
+        text-align: left;
+        // color: #909399;
+        span {
+          text-align: left;
+          height: 40px;
+          width: 100%;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 40px;
+        }
       }
       .input-body {
         height: calc(100% - 40px);
         // padding: 20px;
         box-sizing: border-box;
-        border: 2px dashed #e66c3cab;
+        // border: 2px dashed #e66c3cab;
+        border: 2px dashed #66b1ff;
         overflow: auto;
       }
     }
@@ -255,12 +229,21 @@ export default {
       .output-header {
         height: 40px;
         width: 100%;
+        text-align: left;
+        span {
+          text-align: left;
+          height: 40px;
+          width: 100%;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 40px;
+        }
       }
       .output-body {
         height: calc(100% - 40px);
         // padding: 20px;
         box-sizing: border-box;
-        border: 2px dashed #e66c3cab;
+        border: 2px dashed #66b1ff;
       }
     }
     // 目标元素
