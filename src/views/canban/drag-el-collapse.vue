@@ -6,11 +6,11 @@
         <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item v-for="(item, index) in list" :key="index" :name="index">
             <template slot="title">
-              <span class="title">{{item.title}}</span>
+              <span class="title">{{item.groupName}}</span>
             </template>
-            <draggable :list="list[index].children" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
-              <div v-for="item2 in list[index].children" class="item-wrapper draggable" :key="`dropitem-${item2.key}`">
-                <div class="drag-item">{{item2.value}}</div>
+            <draggable :list="list[index].parameterList" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
+              <div v-for="item2 in list[index].parameterList" class="item-wrapper draggable" :key="`dropitem-${item2.parameterId}`">
+                <div class="drag-item">{{item2.parameterName}}</div>
               </div>
             </draggable>
           </el-collapse-item>
@@ -24,9 +24,9 @@
           <span>输入</span>
         </div>
         <div class="input-body">
-          <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
+          <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="myStart" @end="myEnd" @update="myUpdate" @add="myAdd">
             <div v-for="(element, index) in inputData" :key="index" class="target-item draggable">
-              <div class="drag-item">{{element.value}}<i class="el-icon-close close" @click="remove(index,1)"></i></div>
+              <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div>
             </div>
           </draggable>
         </div>
@@ -40,7 +40,7 @@
         <div class="output-body">
           <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
             <div v-for="(element, index) in outputData" :key="index" class="target-item draggable">
-              <div class="drag-item">{{element.value}} <i class="el-icon-close close" @click="remove(index,2)"></i></div>
+              <div class="drag-item">{{element.parameterName}} <i class="el-icon-close close" @click="remove(index,2)"></i></div>
             </div>
           </draggable>
         </div>
@@ -55,6 +55,17 @@ export default {
   components: {
     draggable
   },
+  watch: {
+    isDragging (newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
+    }
+  },
   computed: {
     inputOptions () {
       return {
@@ -67,54 +78,79 @@ export default {
         // disabled: !this.editable,
         ghostClass: "ghost"
       }
-    }
+    },
+    // 对输入的数据进行过滤
+    // groupsAndParams () {
+    //   // let inputParamIds = []
+    //   this.inputData.map(item => {
+    //     if (!item['count']) {
+    //       item['count'] = 0
+    //     }
+    //     item['count'] += 1
+    //     // inputParamIds.push(item.parameterId)
+    //   })
+    //   return this.inputData
+    // }
   },
   data () {
     return {
+      isDragging: false,
+
+
       activeNames: 1,
       list: [
         {
+          groupId: '1',
+          groupName: 'first group',
           title: 'first group',
           isCollapse: true,
           description: 'hello first',
-          children: [
-            { key: 'key1', value: 'value1' },
-            { key: 'key2', value: 'value2' },
-            { key: 'key3', value: 'value3' },
-            { key: 'key4', value: 'value4' }
+          parameterList: [
+            { parameterId: 'parameterId1', parameterName: 'parameterName1' },
+            { parameterId: 'parameterId2', parameterName: 'parameterName2' },
+            { parameterId: 'parameterId3', parameterName: 'parameterName3' },
+            { parameterId: 'parameterId4', parameterName: 'parameterName4' }
           ]
         },
         {
+          groupId: '2',
+          groupName: 'second group',
           title: 'second group',
           isCollapse: false,
           description: 'hello second',
-          children: [
-            { key: 'key12', value: 'value12' },
-            { key: 'key22', value: 'value22' },
-            { key: 'key32', value: 'value32' },
-            { key: 'key42', value: 'value42' }
+          parameterList: [
+            { parameterId: 'parameterId12', parameterName: 'parameterName12' },
+            { parameterId: 'parameterId22', parameterName: 'parameterName22' },
+            { parameterId: 'parameterId32', parameterName: 'parameterName32' },
+            { parameterId: 'parameterId42', parameterName: 'parameterName42' }
           ]
         },
         {
+          groupId: '3',
+          groupName: 'third group',
           title: 'third group',
           isCollapse: false,
           description: 'hello third',
-          children: [
-            { key: 'key13', value: 'value13' },
-            { key: 'key23', value: 'value23' },
-            { key: 'key33', value: 'value33' },
-            { key: 'key43', value: 'value43' }
+          parameterList: [
+            { parameterId: 'parameterId13', parameterName: 'parameterName13' },
+            { parameterId: 'parameterId23', parameterName: 'parameterName23' },
+            { parameterId: 'parameterId33', parameterName: 'parameterName33' },
+            { parameterId: 'parameterId43', parameterName: 'parameterName43' }
           ]
         },
         {
+          groupId: '4',
+          groupName: 'fourth group',
           title: 'fourth group',
           name: 'fourth',
           description: 'hello fourth',
-          children: [
-            { key: 'key14', value: 'value14' },
-            { key: 'key24', value: 'value24' },
-            { key: 'key34', value: 'value34' },
-            { key: 'key44', value: 'value44' }
+          parameterList: [
+            { parameterId: 'parameterId14', parameterName: 'parameterName14' },
+            { parameterId: 'parameterId24', parameterName: 'parameterName24' },
+            { parameterId: 'parameterId34', parameterName: 'parameterName34' },
+            { parameterId: 'parameterId44', parameterName: 'parameterName44' },
+            { parameterId: 'parameterId54', parameterName: 'parameterName54' }
+
           ]
         }
       ],
@@ -132,7 +168,33 @@ export default {
       this.list[index]['isCollapse'] = !this.list[index]['isCollapse']
       // this.isCollapse = (this.isCollapse === index ? null : index)
     },
+    myAdd (obj) {
+      // debugger
+      // console.log(this.inputData)
+      // console.log(this.groupsAndParams)
+      // this.groupsAndParams.map((item, index) => {
+      //   if (item.count > 1) {
+      //     alert('duplicate')
+      //     this.inputData.splice(index, 1)
+      //   }
+      // })
+      // let temp = []
+      // this.inputData.filter(item => {
+      //   if (temp.includes(item.parameterId)) {
+      //     return false
+      //   } else {
+      //     temp.push(item.parameterId)
+      //   }
+      // })
 
+    },
+
+    myStart () {
+      this.isDragging = true
+    },
+    myEnd () {
+      this.isDragging = false
+    },
     myUpdate () {
       console.log(this.inputData)
       // debugger
@@ -183,6 +245,10 @@ export default {
         font-size: 14px;
         line-height: 1.2;
         text-align: left;
+
+        // 分裂显示
+        // display: inline-block;
+        // width: 30%;
       }
     }
   }
