@@ -2,7 +2,6 @@
   <div class="container">
     <div class="left">
       <section>
-
         <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item v-for="(item, index) in list" :key="index" :name="index">
             <template slot="title">
@@ -24,7 +23,7 @@
           <span>输入</span>
         </div>
         <div class="input-body">
-          <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="myStart" @end="myEnd" @update="myUpdate" @add="myAdd">
+          <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
             <div v-for="(element, index) in inputData" :key="index" class="target-item draggable">
               <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div>
             </div>
@@ -38,7 +37,7 @@
           <span>输出</span>
         </div>
         <div class="output-body">
-          <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
+          <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate" @add="outputAdd">
             <div v-for="(element, index) in outputData" :key="index" class="target-item draggable">
               <div class="drag-item">{{element.parameterName}} <i class="el-icon-close close" @click="remove(index,2)"></i></div>
             </div>
@@ -79,18 +78,21 @@ export default {
         ghostClass: "ghost"
       }
     },
-    // 对输入的数据进行过滤
-    // groupsAndParams () {
-    //   // let inputParamIds = []
-    //   this.inputData.map(item => {
-    //     if (!item['count']) {
-    //       item['count'] = 0
-    //     }
-    //     item['count'] += 1
-    //     // inputParamIds.push(item.parameterId)
-    //   })
-    //   return this.inputData
-    // }
+    // 对输入和输出组的数据进行过滤(注意：默认组)
+    inputFilter () {
+      let data = []
+      this.inputData.map(item => {
+        data.push(item.parameterId)
+      })
+      return data;
+    },
+    outputFilter () {
+      let data = []
+      this.outputData.map(item => {
+        data.push(item.parameterId)
+      })
+      return data
+    }
   },
   data () {
     return {
@@ -168,31 +170,45 @@ export default {
       this.list[index]['isCollapse'] = !this.list[index]['isCollapse']
       // this.isCollapse = (this.isCollapse === index ? null : index)
     },
-    myAdd (obj) {
+    inputAdd (obj) {
+      debugger
+      if(!this.$parent.customizedInputGroup.includes(this.inputData[obj.newIndex].groupId)){
+        this.inputData[obj.newIndex].groupId=-1
+      }
+      this.duplicatedTips(obj, this.inputData)
+    },
+    outputAdd (obj) {
+      this.duplicatedTips(obj, this.outputData)
+    },
+    duplicatedTips (obj, list) {
+      let pushedIndex = obj.newIndex;  // element's new index within new parent
+      let pushedItem = list[pushedIndex]
       // debugger
-      // console.log(this.inputData)
-      // console.log(this.groupsAndParams)
-      // this.groupsAndParams.map((item, index) => {
-      //   if (item.count > 1) {
-      //     alert('duplicate')
-      //     this.inputData.splice(index, 1)
-      //   }
-      // })
-      // let temp = []
-      // this.inputData.filter(item => {
-      //   if (temp.includes(item.parameterId)) {
-      //     return false
-      //   } else {
-      //     temp.push(item.parameterId)
-      //   }
-      // })
+      if (list.length > 1) {
+        // debugger
+        // let originData = this.inputData.splice(pushedIndex,1)
+        list.map((item, index) => {
+          if ((index !== pushedIndex) && (item.parameterId === pushedItem['parameterId'])) {
+            this.$confirm('已经存在该字段, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+            }).catch(() => {
+              list.splice(pushedIndex, 1)
+            });
+          }
+        })
+      }
+    },
+    isExistInGroups () {
 
     },
-
     myStart () {
       this.isDragging = true
     },
-    myEnd () {
+    inputEnd (obj) {
+      console.log(this.inputData)
       this.isDragging = false
     },
     myUpdate () {
@@ -225,10 +241,12 @@ export default {
     section {
       height: 100%;
       box-sizing: border-box;
+      overflow-x: hidden;
       overflow-y: auto;
       .title {
-        font-size: 16px;
-        font-weight: 600;
+        font-size: 14px;
+        // font-weight: 600;
+        color: #09afff;
         float: left;
         margin-left: 10px;
       }
@@ -242,7 +260,7 @@ export default {
         -webkit-transition: 0.3s all;
         transition: 0.3s all;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 1.2;
         text-align: left;
 
@@ -310,6 +328,7 @@ export default {
         // padding: 20px;
         box-sizing: border-box;
         border: 2px dashed #66b1ff;
+        overflow: auto;
       }
     }
     // 目标元素
