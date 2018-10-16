@@ -1,3 +1,4 @@
+
 <template>
   <div class="container">
     <div class="left">
@@ -20,14 +21,37 @@
     <div class="right">
       <div class="input">
         <div class="input-header">
-          <span>输入</span>
+          <span class="title">输入(拖动参数到分组)</span>
+          <span class="add-group">
+            <el-button plain size="mini" class="el-icon-circle-plus" @click="addGroup">新增分组</el-button>
+          </span>
         </div>
         <div class="input-body">
-          <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
-            <div v-for="(element, index) in inputData" :key="index" class="target-item draggable">
-              <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div>
+
+          <draggable v-model="list2" :options="inputOptions" style="height:100%;" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
+            <div v-for="(element, index) in list2" :key="index" class="target-item draggable">
+              <!-- <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div> -->
+              <div class="group-panel" style="background:#fff">
+                <div class="group-header my-handle">
+                  <span>{{element.groupName}}</span>
+                  <span class="group-operation"><i class="el-icon-edit-outline" @click="editGroup(index)"></i></span>
+                  <span class="group-operation"><i class="el-icon-delete" @click="deleteGroup(index)"></i></span>
+                </div>
+                <div class="group-body">
+                  <!-- 注意:options中的group 为左侧的groups中的公用test; 为 -->
+                  <draggable :list="list2[index].parameterList" :options="groupOptions" style="height:100%;" class="each-group">
+                    <div v-for="(item2, index2) in list2[index].parameterList" :key="item2.parameterId" :class="{draggable2:true, 'drag-button':true}">
+                      <div>
+                        {{item2.parameterName}}
+                        <i class="el-icon-close close" @click="remove(index,index2,1)"></i>
+                      </div>
+                    </div>
+                  </draggable>
+                </div>
+              </div>
             </div>
           </draggable>
+
         </div>
 
       </div>
@@ -37,19 +61,30 @@
           <span>输出</span>
         </div>
         <div class="output-body">
-          <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate" @add="outputAdd">
+          <!-- <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate" @add="outputAdd">
             <div v-for="(element, index) in outputData" :key="index" class="target-item draggable">
               <div class="drag-item">{{element.parameterName}} <i class="el-icon-close close" @click="remove(index,2)"></i></div>
             </div>
-          </draggable>
+          </draggable> -->
         </div>
       </div>
     </div>
+    <el-dialog title="新增分组" :visible.sync="dialogVisible" width="30%" :before-close="handleClose" :center="false">
+      <el-form ref="addGroupForm" :model="groupForm" label-width="80px" size="mini">
+        <el-form-item label="分组名称">
+          <el-input v-model="groupForm.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveGroup">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import draggable from 'vuedraggable'
-
+import indexMixin from "./index.js"
 export default {
   components: {
     draggable
@@ -65,17 +100,29 @@ export default {
       });
     }
   },
+  mixins: [indexMixin],
   computed: {
     inputOptions () {
       return {
+        handle: '.my-handle',
         animation: 0,
         group: {
           name: 'input',
           put: ['test']
         },
         dragable: '.draggable',
-        // disabled: !this.editable,
+        // disabled: true,
         ghostClass: "ghost"
+      }
+    },
+    groupOptions () {
+      return {
+        draggable: '.draggable2',
+        ghostClass: 'groupItem-ghost',
+        group: {
+          name: 'groupItem',
+          put: ['test']
+        }
       }
     },
     // 对输入和输出组的数据进行过滤(注意：默认组)
@@ -100,62 +147,7 @@ export default {
 
 
       activeNames: 1,
-      list: [
-        {
-          groupId: '1',
-          groupName: 'first group',
-          title: 'first group',
-          isCollapse: true,
-          description: 'hello first',
-          parameterList: [
-            { parameterId: 'parameterId1', parameterName: 'parameterName1' },
-            { parameterId: 'parameterId2', parameterName: 'parameterName2' },
-            { parameterId: 'parameterId3', parameterName: 'parameterName3' },
-            { parameterId: 'parameterId4', parameterName: 'parameterName4' }
-          ]
-        },
-        {
-          groupId: '2',
-          groupName: 'second group',
-          title: 'second group',
-          isCollapse: false,
-          description: 'hello second',
-          parameterList: [
-            { parameterId: 'parameterId12', parameterName: 'parameterName12' },
-            { parameterId: 'parameterId22', parameterName: 'parameterName22' },
-            { parameterId: 'parameterId32', parameterName: 'parameterName32' },
-            { parameterId: 'parameterId42', parameterName: 'parameterName42' }
-          ]
-        },
-        {
-          groupId: '3',
-          groupName: 'third group',
-          title: 'third group',
-          isCollapse: false,
-          description: 'hello third',
-          parameterList: [
-            { parameterId: 'parameterId13', parameterName: 'parameterName13' },
-            { parameterId: 'parameterId23', parameterName: 'parameterName23' },
-            { parameterId: 'parameterId33', parameterName: 'parameterName33' },
-            { parameterId: 'parameterId43', parameterName: 'parameterName43' }
-          ]
-        },
-        {
-          groupId: '4',
-          groupName: 'fourth group',
-          title: 'fourth group',
-          name: 'fourth',
-          description: 'hello fourth',
-          parameterList: [
-            { parameterId: 'parameterId14', parameterName: 'parameterName14' },
-            { parameterId: 'parameterId24', parameterName: 'parameterName24' },
-            { parameterId: 'parameterId34', parameterName: 'parameterName34' },
-            { parameterId: 'parameterId44', parameterName: 'parameterName44' },
-            { parameterId: 'parameterId54', parameterName: 'parameterName54' }
 
-          ]
-        }
-      ],
       inputData: [],
       outputData: [],
       isCollapse: 1
@@ -171,10 +163,9 @@ export default {
       // this.isCollapse = (this.isCollapse === index ? null : index)
     },
     inputAdd (obj) {
-      debugger
-      if(!this.$parent.customizedInputGroup.includes(this.inputData[obj.newIndex].groupId)){
-        this.inputData[obj.newIndex].groupId=-1
-      }
+      // if (!this.$parent.customizedInputGroup.includes(this.inputData[obj.newIndex].groupId)) {
+      //   this.inputData[obj.newIndex].groupId = -1
+      // }
       this.duplicatedTips(obj, this.inputData)
     },
     outputAdd (obj) {
@@ -215,9 +206,9 @@ export default {
       console.log(this.inputData)
       // debugger
     },
-    remove: function (index, tag) {
+    remove: function (index, index2, tag) {
       if (tag == 1) {
-        this.inputData.splice(index, 1);
+        this.list2[index].parameterList.splice(index2, 1);
       } else {
         this.outputData.splice(index, 1);
       }
@@ -226,7 +217,10 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.el-dialog__header {
+  text-align: left;
+}
 .container {
   width: 100%;
   height: 100%;
@@ -280,24 +274,29 @@ export default {
     .output {
       height: 50%;
       width: 100%;
-      background: #eee;
+      // background: #eee;
       box-sizing: border-box;
       padding: 10px;
+      position: relative;
     }
     .input {
       // margin-bottom: 40px;
       .input-header {
         height: 40px;
+        line-height: 40px;
         width: 100%;
         text-align: left;
-        // color: #909399;
+        color: #606266;
+        font-size: 18px;
         span {
           text-align: left;
           height: 40px;
-          width: 100%;
           font-size: 16px;
-          font-weight: 600;
-          line-height: 40px;
+          // font-weight: 600;
+          // line-height: 40px;
+        }
+        .add-group {
+          float: right;
         }
       }
       .input-body {
@@ -305,7 +304,7 @@ export default {
         // padding: 20px;
         box-sizing: border-box;
         // border: 2px dashed #e66c3cab;
-        border: 2px dashed #66b1ff;
+        border: 1px dashed #66b1ff;
         overflow: auto;
       }
     }
@@ -314,6 +313,7 @@ export default {
         height: 40px;
         width: 100%;
         text-align: left;
+        color: #606266;
         span {
           text-align: left;
           height: 40px;
@@ -327,15 +327,15 @@ export default {
         height: calc(100% - 40px);
         // padding: 20px;
         box-sizing: border-box;
-        border: 2px dashed #66b1ff;
+        border: 1px dashed #66b1ff;
         overflow: auto;
       }
     }
     // 目标元素
     .target-item {
-      background-color: rgba(64, 158, 255, 0.1);
-      display: inline-block;
-      padding: 0 10px;
+      // background-color: rgba(64, 158, 255, 0.1);
+      // display: inline-block;
+      // padding: 0 10px;
       margin: 10px;
       height: 32px;
       line-height: 30px;
@@ -345,16 +345,82 @@ export default {
       box-sizing: border-box;
       cursor: pointer;
       // cursor: move;
-      border: 1px solid rgba(64, 158, 255, 0.2);
+      // border: 1px solid rgba(64, 158, 255, 0.2);
+      border: 2px solid #eeeeee;
       white-space: nowrap;
+      height: 150px;
+
       .close {
         margin-left: 6px;
         font-size: 16px;
       }
+      .group-panel {
+        height: 100%;
+        .group-header {
+          // position: relative;
+          background: #f5f5f5;
+          color: #606266;
+          font-size: 18px;
+          line-height: 30px;
+          text-align: left;
+          height: 30px;
+          padding: 0 10px;
+          .group-operation {
+            // display: inline-block;
+            box-sizing: border-box;
+            margin: 0px 10px;
+            // padding: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            line-height: 30px;
+            float: right;
+          }
+        }
+        .group-body {
+          height: calc(100% - 30px);
+        }
+      }
     }
+
+    .each-group {
+      text-align: left;
+      height: 100%;
+      white-space: normal;
+      overflow: auto;
+    }
+    // button
+    .drag-button {
+      display: inline-block;
+      // background-color: rgba(64, 158, 255, 0.1);
+      background-color: #f2f2f2;
+      padding: 0 10px;
+      margin: 5px;
+      font-size: 12px;
+
+      color: #606266;
+      border-radius: 4px;
+      box-sizing: border-box;
+      cursor: pointer;
+      // cursor: move;
+      border: 1px solid rgba(64, 158, 255, 0.2);
+      white-space: nowrap;
+    }
+
+    // handle
+    .my-handle {
+      cursor: move;
+      cursor: -webkit-grabbing;
+    }
+
     // Class name for the drop placeholder (default sortable-ghost).
     .ghost {
       opacity: 0.5;
+      background: #c8ebfb;
+    }
+    //
+    .groupItem-ghost {
+      opacity: 0.8;
+      // color: #409eff;
       background: #c8ebfb;
     }
   }
