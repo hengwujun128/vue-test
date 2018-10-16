@@ -9,6 +9,7 @@ import treeTable from "@/views/treeTable/treeTable";
 import canban from "@/views/canban/canban";
 import canban1 from "@/views/canban/test";
 import canban2 from "@/views/canban/drag-el-collapse";
+import canban3 from "@/views/canban/dragGroup";
 
 import direc from "@/views/directiveTest/directiveTest";
 
@@ -58,6 +59,11 @@ let app_router = new Router({
       path: "/canban2",
       name: "canban2",
       component: canban2
+    },
+    {
+      path: "/canban3",
+      name: "canban3",
+      component: canban3
     },
     {
       path: "/directive",
