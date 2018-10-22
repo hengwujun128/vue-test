@@ -108,7 +108,8 @@ export default {
         animation: 0,
         group: {
           name: 'input',
-          put: ['test']
+          // put: ['test']
+          put: false
         },
         dragable: '.draggable',
         // disabled: true,
