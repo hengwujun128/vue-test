@@ -24,6 +24,7 @@
     "smart-modal": "^1.0.3",
     "vue": "^2.5.2",
     "vue-notification": "^1.3.7",
+    "vue-pdf": "^3.3.1",
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.11.0",
     "vue-tag-autocomplete": "0.0.7",
