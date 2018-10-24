@@ -10,7 +10,7 @@ const install = function (Vue, options) {
   if (options) setDefaults(options);
   // 向vue 实例全局注入指令
   Vue.directive("scroll-to", VueScrollTo);
-  // 向vue实例全局添加方法
+  // 向vue实例全局添加方法(一个构造函数实例)
   Vue.prototype.$scrollTo = VueScrollTo.scrollTo;
 };
 
