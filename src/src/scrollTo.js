@@ -15,8 +15,10 @@ let defaults = {
   container: "body",
   duration: 500,
   easing: "ease",
+
   offset: 0,
   cancelable: true,
+
   onStart: false,
   onDone: false,
   onCancel: false,
@@ -41,7 +43,8 @@ export const scroller = () => {
   let onCancel; // callback when scrolling is canceled / aborted
   let x; // scroll on x axis
   let y; // scroll on y axis
-  // 
+
+  // 定义私有的 初始位置和目标位置变量
   let initialX; // initial X of container
   let targetX; // target X of container
   let initialY; // initial Y of container
@@ -64,7 +67,7 @@ export const scroller = () => {
 
   let progress; // progress
 
-  // 
+  // 获取容器元素的滚动条滚动的垂直距离
   function scrollTop(container) {
     let scrollTop = container.scrollTop;
 
@@ -91,27 +94,30 @@ export const scroller = () => {
     return scrollLeft;
   }
 
-  // 每一帧要执行的函数
+  // 每一帧要执行的函数(在每一帧执行的过程中可以做一些相关操作)
   function step(timestamp) {
+    // 如果abort变量为真，就调用done函数，1.注销container元素上所有的事件处理程序；2.设置滚动开始时间为false；
     if (abort) return done();
+    // 如果滚动在这一针取消掉，重置滚动的开始时间为当前时间戳
     if (!timeStart) timeStart = timestamp;
-    // 耗时
+    // 耗时(动画到了当前帧所用的时间)
     timeElapsed = timestamp - timeStart;
-    // duration 用户定义的滚动完成时间
+    // 耗时/用户定义动画完成的时间 ,最大值为1；如果耗时超过用户定义的时间，则为1；  (duration 用户定义的滚动完成时间)
     progress = Math.min(timeElapsed / duration, 1);
     progress = easingFn(progress);
 
-    // 让容器元素在滚动条的位置(initialY,initialX)，滚动diff距离到目标位置
+    // 让容器元素的滚动条在初始位置(initialY,initialX)，滚动diff距离到目标位置；每一帧滚动一定的比率，但不是增量累加滚动
     topLeft(
       container,
       initialY + diffY * progress,
       initialX + diffX * progress
     );
-    // 
+    // 如果耗时小于用户设置的时间，继续下一帧；否则(超过用户时间的话)的调用down())直接设置到目标位置
     timeElapsed < duration ? window.requestAnimationFrame(step) : done();
   }
 
   function done() {
+    // 这一步是直接定位到目标位置
     if (!abort) topLeft(container, targetY, targetX);
     timeStart = false;
 
@@ -119,7 +125,7 @@ export const scroller = () => {
     if (abort && onCancel) onCancel(abortEv, element);
     if (!abort && onDone) onDone(element);
   }
-  // 元素(容器)滚动到指定位置
+  // 让容器元素的滚动条 滚动到指定位置
   function topLeft(element, top, left) {
     if (y) element.scrollTop = top;
     if (x) element.scrollLeft = left;
@@ -134,12 +140,13 @@ export const scroller = () => {
   // 滚动的构造函数 target:要滚动到指定的目标位置(一个元素选择器),_durration 是从指令中调用构造函数传过来的
   function scrollTo(target, _duration, options = {}) {
     debugger
+    // 判断构造函数第二参数是对象还是数字
     if (typeof _duration === "object") {
       options = _duration;
     } else if (typeof _duration === "number") {
       options.duration = _duration;
     }
-    // dom 元素
+    // 目标元素
     element = _.$(target);
 
     if (!element) {
@@ -149,8 +156,9 @@ export const scroller = () => {
       );
     }
 
-
+    // 容器元素，默认把body当做容器元素
     container = _.$(options.container || defaults.container);
+    // 滚动需要的时间
     duration = options.duration || defaults.duration;
     // 动画效果The easing to be used when animating
     easing = options.easing || defaults.easing;
@@ -160,6 +168,7 @@ export const scroller = () => {
     cancelable = options.hasOwnProperty("cancelable") ?
       options.cancelable !== false :
       defaults.cancelable;
+    // 用户可以自定义回调，如果没有就为false，
     // A callback function that should be called when scrolling has started. Receives the target element as a parameter.
     onStart = options.onStart || defaults.onStart;
     // A callback function that should be called when scrolling has ended. Receives the target element as a parameter.
@@ -179,19 +188,20 @@ export const scroller = () => {
       offset = offset();
     }
     // 默认container 为body，如果一个元素不能滚动，scrollTop is 0
-    // 通常使用容器元素的scrollTop
+    // 容器元素滚动条垂直初始位置
     initialY = scrollTop(container);
+    // 目标位置都是以容器元素为参照物
     // 目标位置= 目标元素的偏移量-容器元素的偏移量(就是元素在容器中的偏移量)
     // 加上 offset 就是用户手动设置的偏移
     targetY = cumulativeOffsetElement.top -
       cumulativeOffsetContainer.top +
       offset;
-
+    // 容器元素滚动条水平初始位置
     initialX = scrollLeft(container);
     targetX = cumulativeOffsetElement.left -
       cumulativeOffsetContainer.left +
       offset;
-
+    // 初始化一个变量
     abort = false;
     // 元素相对于容器的偏移- 容器滚动条的滚动距离（也就是目标元素不需要从容器元素左上角开始滚动）
     diffY = targetY - initialY;
