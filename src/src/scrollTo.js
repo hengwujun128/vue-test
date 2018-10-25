@@ -123,6 +123,7 @@ export const scroller = () => {
 
     _.off(container, abortEvents, abortFn);
     if (abort && onCancel) onCancel(abortEv, element);
+    // 如果有完成时候的回调，则直接调用回调
     if (!abort && onDone) onDone(element);
   }
   // 让容器元素的滚动条 滚动到指定位置
@@ -216,13 +217,13 @@ export const scroller = () => {
     if (!diffY && !diffX) return;
     // scroll开始的钩子函数
     if (onStart) onStart(element);
-    // 为容器元素添加事件处理程序
+    // 为容器元素添加多个事件处理程序
     _.on(container, abortEvents, abortFn, {
       passive: true
     });
     // 把每一帧 action 放入到动画队列中
     window.requestAnimationFrame(step);
-
+    // 返回一个匿名函数
     return () => {
       abortEv = null;
       abort = true;
@@ -231,6 +232,6 @@ export const scroller = () => {
 
   return scrollTo;
 };
-// 返回的是构造函数
+// 返回的是构造函数(如果在此执行_scroller(),则在此返回一个匿名函数)
 const _scroller = scroller();
 export default _scroller;
