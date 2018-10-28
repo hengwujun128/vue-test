@@ -5,7 +5,7 @@
       {{currentPage}} / {{pageCount}}
       <!-- <pdf src="../../static/ES6.pdf" :rotate="0" @num-pages="pageCount = $event" @page-loaded="currentPage = $event"></pdf> -->
 
-      <pdf v-for="i in numPages" :key="i" :src="src" :page="i" @num-pages="pageCount = $event" @page-loaded="currentPage = $event"></pdf>
+      <!-- <pdf v-for="i in numPages" :key="i" :src="src" :page="i" @num-pages="pageCount = $event" @page-loaded="currentPage = $event"></pdf> -->
     </div>
   </div>
 </template>
