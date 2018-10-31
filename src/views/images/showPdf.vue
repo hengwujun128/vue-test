@@ -11,7 +11,7 @@
 </template>
 <script>
 import pdf from 'vue-pdf'
-let loadingTask = pdf.createLoadingTask('../../static/ES6.pdf');
+// let loadingTask = pdf.createLoadingTask('../../static/ES6.pdf');
 
 export default {
   data () {

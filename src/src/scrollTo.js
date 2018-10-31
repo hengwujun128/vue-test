@@ -140,7 +140,7 @@ export const scroller = () => {
   }
   // 滚动的构造函数 target:要滚动到指定的目标位置(一个元素选择器),_durration 是从指令中调用构造函数传过来的
   function scrollTo(target, _duration, options = {}) {
-    debugger
+    // debugger
     // 判断构造函数第二参数是对象还是数字
     if (typeof _duration === "object") {
       options = _duration;
