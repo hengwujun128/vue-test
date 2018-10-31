@@ -11,11 +11,11 @@ const cssRouter = [{
   redirect: 'scroll',
   children: [{
       path: 'scroll',
-      name: 'scroll',
+      name: 'scroll1',
       component: scroll
     }, {
       path: 'navigator',
-      name: 'navigator',
+      name: 'navigator1',
       component: navigator
     },
     {

@@ -33,6 +33,9 @@ import mock from "@/views/mock";
 import directive from "./directive"
 import css3Router from './css.js'
 import imageRouter from './image.js'
+import form from "./form.js"
+
+
 let app_router = new Router({
   routes: [{
       path: "/",
@@ -107,7 +110,8 @@ let app_router = new Router({
     },
     ...directive,
     ...css3Router,
-    ...imageRouter
+    ...imageRouter,
+    ...form
   ]
 });
 NProgress.configure({

@@ -51,7 +51,7 @@ function handleClick(e) {
   // 在事件处理程序中获取指定绑定的数据
   console.log(this)
   let ctx = getBinding(this).binding;
-  debugger
+  // debugger
   // 如果元素中为指令绑定的是个字符串,则直接调用滚动方法直接滚动到指定位置
   if (typeof ctx.value === "string") {
     return scrollTo(ctx.value);
