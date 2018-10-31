@@ -20,6 +20,7 @@
     </ul>
 
     <section id="content">
+      <p id="target1">hello,this is target1</p>
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
@@ -82,7 +83,7 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
-      <p id="target1">hello,this is target1</p>
+
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
@@ -348,11 +349,13 @@ export default {
     function doSomething (scroll_pos) {
       // do something with the scroll position
       // console.log('定时获取位置' + scroll_pos)
-      if (scroll_pos <= target1.top + 50) {
+      // debugger
+      if (scroll_pos < target2.top) {
         me.active = 1
-      } else if (scroll_pos <= target2.top + 50) {
+      } else if ((target2.top <= scroll_pos) && (scroll_pos < target3.top)) {
         me.active = 2
-      } else {
+      } else if ((target3.top) <= scroll_pos) {
+
         me.active = 3;
       }
     }
