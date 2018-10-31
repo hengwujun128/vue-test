@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container dragGroup">
+  <div class="container">
     <div class="left">
       <section>
         <el-collapse v-model="activeNames" @change="handleChange">
@@ -8,9 +8,8 @@
             <template slot="title">
               <span class="title">{{item.groupName}}</span>
             </template>
-            <!-- add dragable2 and drag-button to sort according to input and out each item -->
-            <draggable :list="list[index].parameterList" :options="leftEachGroupOptions" :class="{'dragable-container':true}">
-              <div v-for="item2 in list[index].parameterList" class="item-wrapper draggable2 drag-button" :key="item2.parameterId">
+            <draggable :list="list[index].parameterList" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
+              <div v-for="item2 in list[index].parameterList" class="item-wrapper draggable" :key="`dropitem-${item2.parameterId}`">
                 <div class="drag-item">{{item2.parameterName}}</div>
               </div>
             </draggable>
@@ -24,24 +23,24 @@
         <div class="input-header">
           <span class="title">输入(拖动参数到分组)</span>
           <span class="add-group">
-            <el-button type="primary" plain size="mini" class="el-icon-circle-plus" @click="addGroup(1)">新增分组</el-button>
+            <el-button plain size="mini" class="el-icon-circle-plus" @click="addGroup">新增分组</el-button>
           </span>
         </div>
         <div class="input-body">
 
-          <draggable v-model="list2" :options="GroupOptions" style="over-flow:auto;height:96%" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
+          <draggable v-model="list2" :options="inputOptions" style="height:100%;" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
             <div v-for="(element, index) in list2" :key="index" class="target-item draggable">
               <!-- <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div> -->
               <div class="group-panel" style="background:#fff">
                 <div class="group-header my-handle">
                   <span>{{element.groupName}}</span>
-                  <span class="group-operation"><i class="el-icon-edit-outline" @click="editGroup(1,index)"></i></span>
-                  <span class="group-operation"><i class="el-icon-delete" @click="deleteGroup(1,index)"></i></span>
+                  <span class="group-operation"><i class="el-icon-edit-outline" @click="editGroup(index)"></i></span>
+                  <span class="group-operation"><i class="el-icon-delete" @click="deleteGroup(index)"></i></span>
                 </div>
                 <div class="group-body">
                   <!-- 注意:options中的group 为左侧的groups中的公用test; 为 -->
-                  <draggable :list="list2[index].parameterList" :options="EachGroupOptions" style="height:100%;" class="each-group" @add="InputAddItem" :id="index">
-                    <div v-for="(item2, index2) in list2[index].parameterList" :key="index2" :class="{draggable2:true, 'drag-button':true}">
+                  <draggable :list="list2[index].parameterList" :options="groupOptions" style="height:100%;" class="each-group">
+                    <div v-for="(item2, index2) in list2[index].parameterList" :key="item2.parameterId" :class="{draggable2:true, 'drag-button':true}">
                       <div>
                         {{item2.parameterName}}
                         <i class="el-icon-close close" @click="remove(index,index2,1)"></i>
@@ -59,47 +58,26 @@
 
       <div class="output">
         <div class="output-header">
-          <span class="title">输出(拖动参数到分组)</span>
-          <span class="add-group">
-            <el-button type="primary" plain size="mini" class="el-icon-circle-plus" @click="addGroup(2)">新增分组</el-button>
-          </span>
+          <span>输出</span>
         </div>
         <div class="output-body">
-          <draggable v-model="list3" :options="GroupOptions" style="over-flow:auto;height:96%" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
-            <div v-for="(element, index) in list3" :key="index" class="target-item draggable">
-              <!-- <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div> -->
-              <div class="group-panel" style="background:#fff">
-                <div class="group-header my-handle">
-                  <span>{{element.groupName}}</span>
-                  <span class="group-operation"><i class="el-icon-edit-outline" @click="editGroup(2,index)"></i></span>
-                  <span class="group-operation"><i class="el-icon-delete" @click="deleteGroup(2,index)"></i></span>
-                </div>
-                <div class="group-body">
-                  <!-- 注意:options中的group 为左侧的groups中的公用test; 为 -->
-                  <draggable :list="list3[index].parameterList" :options="EachGroupOptions" style="height:100%;" class="each-group" @add="OutputAddItem" :id="index">
-                    <div v-for="(item2, index2) in list3[index].parameterList" :key="index2" :class="{draggable2:true, 'drag-button':true}">
-                      <div>
-                        {{item2.parameterName}}
-                        <i class="el-icon-close close" @click="remove(index,index2,2)"></i>
-                      </div>
-                    </div>
-                  </draggable>
-                </div>
-              </div>
+          <!-- <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate" @add="outputAdd">
+            <div v-for="(element, index) in outputData" :key="index" class="target-item draggable">
+              <div class="drag-item">{{element.parameterName}} <i class="el-icon-close close" @click="remove(index,2)"></i></div>
             </div>
-          </draggable>
+          </draggable> -->
         </div>
       </div>
     </div>
-    <el-dialog :title="groupForm.title" :visible.sync="dialogVisible" width="30%" :before-close="handleClose" :center="false">
+    <el-dialog title="新增分组" :visible.sync="dialogVisible" width="30%" :before-close="handleClose" :center="false">
       <el-form ref="addGroupForm" :model="groupForm" label-width="80px" size="mini">
         <el-form-item label="分组名称">
           <el-input v-model="groupForm.name"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
-        <el-button size="mini" type="primary" @click="saveGroup" :disabled="!this.groupForm.name">确 定</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveGroup">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -124,48 +102,28 @@ export default {
   },
   mixins: [indexMixin],
   computed: {
-    leftEachGroupOptions () {
-      return {
-        group: { name: 'test', pull: 'clone', put: false },
-        draggable: '.draggable2',
-        ghostClass: 'groupItem-ghost',
-        chosenClass: 'item-chosen',
-        sort: false,
-      }
-    },
-    GroupOptions () {
+    inputOptions () {
       return {
         handle: '.my-handle',
         animation: 0,
         group: {
           name: 'input',
-          // put: false
-          put: to => {
-            // 如果后期优化，可以加上
-            // if (to.el.children.length < 1) {
-            //   this.$alert('请先建立参数组', '提示', {
-            //     confirmButtonText: '确定',
-            //     type: 'warning',
-            //   });
-            // }
-            return false
-          }
+          // put: ['test']
+          put: false
         },
-
         dragable: '.draggable',
+        // disabled: true,
         ghostClass: "ghost"
       }
     },
-    EachGroupOptions () {
+    groupOptions () {
       return {
         draggable: '.draggable2',
         ghostClass: 'groupItem-ghost',
-        chosenClass: 'item-chosen',
         group: {
           name: 'groupItem',
           put: ['test']
-        },
-
+        }
       }
     },
     // 对输入和输出组的数据进行过滤(注意：默认组)
@@ -197,35 +155,6 @@ export default {
     }
   },
   methods: {
-    // 去重方案(如果后期优化，可以加上) every puesed item's index in new Group is always 0;
-    InputAddItem (data) {
-      // let index = data.target.id;
-      // let pushedIndex = data.newIndex
-      // debugger
-      // let pushedObject = this.list2[index]['parameterList'][pushedIndex]
-      // let groupList = this.list2[index]['parameterList']
-
-      // if (groupList.length > 1) {
-      //   // debugger
-      //   // let originData = this.inputData.splice(pushedIndex,1)
-      //   groupList.map((item, index) => {
-      //     if ((index !== pushedIndex) && (item.parameterId === pushedObject['parameterId'])) {
-      //       this.$confirm('已经存在该字段, 是否继续?', '提示', {
-      //         confirmButtonText: '确定',
-      //         cancelButtonText: '取消',
-      //         type: 'warning'
-      //       }).then(() => {
-      //       }).catch(() => {
-      //         groupList.splice(pushedIndex, 1)
-      //       });
-      //     }
-      //   })
-      // }
-      this.duplicatedTips(data, this.list2)
-    },
-    OutputAddItem (data) {
-      this.duplicatedTips(data, this.list3)
-    },
     handleChange () {
 
     },
@@ -238,34 +167,31 @@ export default {
       // if (!this.$parent.customizedInputGroup.includes(this.inputData[obj.newIndex].groupId)) {
       //   this.inputData[obj.newIndex].groupId = -1
       // }
-      // this.duplicatedTips(obj, this.list2)
+      this.duplicatedTips(obj, this.inputData)
     },
     outputAdd (obj) {
-      // this.duplicatedTips(obj, this.list3)
+      this.duplicatedTips(obj, this.outputData)
     },
-    duplicatedTips (data, list) {
-      let index = data.target.id;
-      let pushedIndex = data.newIndex
+    duplicatedTips (obj, list) {
+      let pushedIndex = obj.newIndex;  // element's new index within new parent
+      let pushedItem = list[pushedIndex]
       // debugger
-      let pushedObject = list[index]['parameterList'][pushedIndex]
-      let groupList = list[index]['parameterList']
-
-      if (groupList.length > 1) {
+      if (list.length > 1) {
         // debugger
-        groupList.map((item, index) => {
-          if ((index !== pushedIndex) && (item.parameterId === pushedObject['parameterId'])) {
+        // let originData = this.inputData.splice(pushedIndex,1)
+        list.map((item, index) => {
+          if ((index !== pushedIndex) && (item.parameterId === pushedItem['parameterId'])) {
             this.$confirm('已经存在该字段, 是否继续?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
             }).catch(() => {
-              groupList.splice(pushedIndex, 1)
+              list.splice(pushedIndex, 1)
             });
           }
         })
       }
-
     },
     isExistInGroups () {
 
@@ -274,17 +200,18 @@ export default {
       this.isDragging = true
     },
     inputEnd (obj) {
+      console.log(this.inputData)
       this.isDragging = false
     },
     myUpdate () {
+      console.log(this.inputData)
       // debugger
     },
-    // if tag equal to 1,input;
     remove: function (index, index2, tag) {
       if (tag == 1) {
         this.list2[index].parameterList.splice(index2, 1);
       } else {
-        this.list3[index].parameterList.splice(index2, 1);
+        this.outputData.splice(index, 1);
       }
 
     },
@@ -295,33 +222,22 @@ export default {
 .el-dialog__header {
   text-align: left;
 }
-
-.dragGroup .el-collapse-item__header {
-  background: #e9f6ff;
-  height: 40px;
-  line-height: 40px;
-  margin-bottom: 10px;
-}
-
-.dragGroup.container {
+.container {
   width: 100%;
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-
   .left {
     width: 300px;
     height: 100%;
-
     // background: #ddd;
     section {
       height: 100%;
       box-sizing: border-box;
       overflow-x: hidden;
       overflow-y: auto;
-
       .title {
         font-size: 14px;
         // font-weight: 600;
@@ -329,13 +245,12 @@ export default {
         float: left;
         margin-left: 10px;
       }
-
       .item-wrapper {
-        background: #f2f2f2;
-        color: #606266;
+        background: #dddddd;
         position: relative;
         margin: 10px 10px;
         padding: 10px;
+
         border-radius: 4px;
         -webkit-transition: 0.3s all;
         transition: 0.3s all;
@@ -343,33 +258,19 @@ export default {
         font-size: 12px;
         line-height: 1.2;
         text-align: left;
-        // 两列布局
-        float: left;
-        // display: inline-block;
-        width: 35%;
-        // width: 120px;
-        box-sizing: border-box;
 
-        // white-space: nowrap;
-        // overflow: hidden;
-        // text-overflow: ellipsis;
-        .drag-item {
-          text-overflow: ellipsis;
-          width: 100%;
-          overflow: hidden;
-          white-space: nowrap;
-        }
+        // 分裂显示
+        // display: inline-block;
+        // width: 30%;
       }
     }
   }
-
   .right {
     flex: 1;
     height: 100%;
     padding: 0px 10px;
     box-sizing: border-box;
     overflow: hidden;
-
     .input,
     .output {
       height: 50%;
@@ -379,7 +280,6 @@ export default {
       padding: 10px;
       position: relative;
     }
-
     .input {
       // margin-bottom: 40px;
       .input-header {
@@ -388,20 +288,18 @@ export default {
         width: 100%;
         text-align: left;
         color: #606266;
-        font-size: 16px;
-        font-weight: 600;
-
+        font-size: 18px;
         span {
           text-align: left;
           height: 40px;
-          margin-left: 4px;
+          font-size: 16px;
+          // font-weight: 600;
+          // line-height: 40px;
         }
-
         .add-group {
           float: right;
         }
       }
-
       .input-body {
         height: calc(100% - 40px);
         // padding: 20px;
@@ -411,30 +309,21 @@ export default {
         overflow: auto;
       }
     }
-
     .output {
       .output-header {
         height: 40px;
-        line-height: 40px;
         width: 100%;
         text-align: left;
         color: #606266;
-        font-size: 16px;
-        font-weight: 600;
-
         span {
           text-align: left;
           height: 40px;
-          margin-left: 4px;
-          // font-size: 14px;
-          // line-height: 40px;
-        }
-
-        .add-group {
-          float: right;
+          width: 100%;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 40px;
         }
       }
-
       .output-body {
         height: calc(100% - 40px);
         // padding: 20px;
@@ -443,7 +332,6 @@ export default {
         overflow: auto;
       }
     }
-
     // 目标元素
     .target-item {
       // background-color: rgba(64, 158, 255, 0.1);
@@ -456,7 +344,7 @@ export default {
       color: #409eff;
       border-radius: 4px;
       box-sizing: border-box;
-      // cursor: pointer;
+      cursor: pointer;
       // cursor: move;
       // border: 1px solid rgba(64, 158, 255, 0.2);
       border: 2px solid #eeeeee;
@@ -467,21 +355,17 @@ export default {
         margin-left: 6px;
         font-size: 16px;
       }
-
       .group-panel {
         height: 100%;
-
         .group-header {
           // position: relative;
           background: #f5f5f5;
           color: #606266;
-          font-size: 14px;
-          font-weight: 600;
+          font-size: 18px;
           line-height: 30px;
           text-align: left;
           height: 30px;
           padding: 0 10px;
-
           .group-operation {
             // display: inline-block;
             box-sizing: border-box;
@@ -493,7 +377,6 @@ export default {
             float: right;
           }
         }
-
         .group-body {
           height: calc(100% - 30px);
         }
@@ -506,7 +389,6 @@ export default {
       white-space: normal;
       overflow: auto;
     }
-
     // button
     .drag-button {
       display: inline-block;
@@ -515,6 +397,7 @@ export default {
       padding: 0 10px;
       margin: 5px;
       font-size: 12px;
+
       color: #606266;
       border-radius: 4px;
       box-sizing: border-box;
@@ -522,13 +405,6 @@ export default {
       // cursor: move;
       border: 1px solid rgba(64, 158, 255, 0.2);
       white-space: nowrap;
-
-      .el-icon-close:hover {
-        // border-radius: 50%;
-        // transform: scale(1.2);
-        // background-color: #f56c6c;
-        // color: #fff;
-      }
     }
 
     // handle
@@ -542,23 +418,10 @@ export default {
       opacity: 0.5;
       background: #c8ebfb;
     }
-
     //
     .groupItem-ghost {
       opacity: 0.8;
-      color: #409eff;
-      background: #c8ebfb;
-      // width:100px;
-    }
-
-    // customieze group item
-    .item-chosen {
-      box-shadow: 6px 14px 42px 0 rgba(99, 117, 138, 0.23);
-      transform: scale(1.2) rotate(3deg);
-      transition: 0.5s all;
-    }
-
-    .sortable-fallback {
+      // color: #409eff;
       background: #c8ebfb;
     }
   }

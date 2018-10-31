@@ -15,11 +15,12 @@
         <el-button :class="{active:active===2}" v-scroll-to="options2">scrollTo2</el-button>
       </li>
       <li>
-        <el-button :class="{active:active===3}" v-scroll-to="options3">scrollTo3</el-button>
+        <el-button :class="{active:active===3}" v-scroll-to="options3" @click="clickHandler(3)">scrollTo3</el-button>
       </li>
     </ul>
 
     <section id="content">
+      <p id="target1">hello,this is target1</p>
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
@@ -82,7 +83,7 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
-      <p id="target1">hello,this is target1</p>
+
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
@@ -265,6 +266,7 @@
 <script>
 export default {
   data () {
+    let me = this
     return {
       active: 1,
       options1: {
@@ -326,6 +328,9 @@ export default {
         onDone: function (element) {
           // scrolling is done
           // alert('done')
+          // me.$nextTick(function () {
+          //   me.active = 3
+          // })
         },
         onCancel: function () {
           // scrolling has been interrupted
@@ -340,19 +345,24 @@ export default {
     let target2 = this.cumulativeOffset(document.querySelector('#target2'))
     let target3 = this.cumulativeOffset(document.querySelector('#target3'))
 
+    let targetObj1 = getComputedStyle(document.querySelector('#target1'))
+    let targetObj2 = getComputedStyle(document.querySelector('#target2'))
+    let targetObj3 = getComputedStyle(document.querySelector('#target3'))
     console.log(target1, target2, target3)
-
+    console.log(targetObj1.height, targetObj2.height, targetObj3.height)
     var last_known_scroll_position = 0;
     var ticking = false;
     var me = this;
     function doSomething (scroll_pos) {
       // do something with the scroll position
       // console.log('定时获取位置' + scroll_pos)
-      if (scroll_pos <= target1.top + 50) {
+      // 10 代表偏移量,滚动指令滚动到目标位置时候-10，此时要加上
+      if (scroll_pos + 10 < target2.top) {
         me.active = 1
-      } else if (scroll_pos <= target2.top + 50) {
+      } else if ((scroll_pos + 10 < target3.top)) {
         me.active = 2
-      } else {
+      } else if (target3.top <= scroll_pos + 10) {
+        // debugger
         me.active = 3;
       }
     }
@@ -360,10 +370,11 @@ export default {
     window.addEventListener('scroll', function (e) {
       // 1.在事件处理程序中要实时获取滚动位置
       last_known_scroll_position = window.scrollY;
+      last_known_scroll_position = document.documentElement.scrollTop;
       // console.log('事件处理实时获取位置:' + last_known_scroll_position)
       // 2.在事件处理程序中，通过变量控制添加window.requestAnimationFrame;
       if (!ticking) {
-
+        // 
         window.requestAnimationFrame(function () {
           doSomething(last_known_scroll_position);
           ticking = false;
@@ -393,6 +404,9 @@ export default {
         top: top,
         left: left
       };
+    },
+    clickHandler (n) {
+      // this.active = n
     }
   }
 }
