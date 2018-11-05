@@ -84,7 +84,8 @@ var ScrollTo = {
       for (var i = 1; i <= hopCount; i++) {
         (function (i) {
           //  每一步要走的距离,都是从0开始走;
-          //  每一步需要的时间也是不一样的,保证单位时间内走的距离是一样的
+          //  每一步需要的时间,
+          //  每一步走的距离是不一样的,每一步所需时间也是不一样的,但是频率是一样的
           var hopTopPosition = gap * i;
 
           setTimeout(function () {
