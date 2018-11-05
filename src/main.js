@@ -27,8 +27,10 @@ if (process.env.NODE_ENV === 'development') {
   // mock.start()
 }
 // var VueScrollTo = require('vue-scrollto');
-import VueScrollTo from './src'
-// import VueScrollTo from './views/myDirective/scroll/second/index.js'
+// 第一种方式
+// import VueScrollTo from './src'
+// 第二种方式
+import VueScrollTo from './views/myDirective/scroll/second/index.js'
 
 
 Vue.use(VueScrollTo)

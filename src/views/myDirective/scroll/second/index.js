@@ -35,6 +35,7 @@ function getScrollTopDocument() {
   return document.documentElement.scrollTop + document.body.scrollTop;
 }
 
+//  ScrollTo is a plugin
 var ScrollTo = {
   install: function (Vue, config) {
     var settings = {
@@ -67,18 +68,23 @@ var ScrollTo = {
       if (!$element) {
         throw new Error('$element is not defined, selector="' + selector + '" ');
       }
-      // 
+      // hopCount:设置滚动完成需要多少步
+
       var hopCount = Math.ceil(settings.speed / settings.movingFrequency);
       var documentScrollTop = getScrollTopDocument();
+      // 目标元素距离 / 总步数 = 每一步要滚动的距离
       var gap = (getScrollTopElement($element) - documentScrollTop - padding) / hopCount;
 
       if (gap === 0) {
         // Do not scroll when current position is the same as target offset.
         return;
       }
-      // 通过设置多个定时函数，间隔一定时间调用一次,滚动一段距离
+      // 循环总步数,每一步滚动的距离(滚动的距离是相等的)gap * 当前步数
+      //  时间,距离 和频率问题
       for (var i = 1; i <= hopCount; i++) {
         (function (i) {
+          //  每一步要走的距离,都是从0开始走;
+          //  每一步需要的时间也是不一样的,保证单位时间内走的距离是一样的
           var hopTopPosition = gap * i;
 
           setTimeout(function () {
