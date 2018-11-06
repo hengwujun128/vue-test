@@ -3,15 +3,21 @@ let _ = {
     return document.querySelector(selector)
   },
   on($element, events, handler) {
-    if (events instanceof Array) {
-      events = [events]
+    // if (events instanceof Array) {
+    //   events = [events]
+    // }
+    // for (let i = 0; i < events.length; i++) {
+    //   $element.addEventListener(events[i], handler)
+    // }
+    if (!(events instanceof Array)) {
+      events = [events];
     }
-    for (let i = 0; i < events.length; i++) {
-      $element.addEventListener(events[i], handler)
+    for (var i = 0; i < events.length; i++) {
+      $element.addEventListener(events[i], handler);
     }
   },
   off($element, events, handler) {
-    if (events instanceof Array) {
+    if (!events instanceof Array) {
       events = [events]
     }
     for (let i = 0; i < events.length; i++) {
@@ -19,6 +25,7 @@ let _ = {
     }
   }
 }
+const defaultComponentName = 'show-big-image'
 let ShowBigImage = {
   install(Vue, config) {
     let settings = {
@@ -27,10 +34,13 @@ let ShowBigImage = {
     Object.assign(settings, config)
 
     function handleClick() {
-
+      // var options = this.expression;
+      var value = this.value;
+      debugger
     }
     Vue.directive('show-big-image', {
       bind($element, context) {
+        debugger
         _.on($element, 'click', handleClick.bind(context))
       },
       unbind($element) {
@@ -40,3 +50,4 @@ let ShowBigImage = {
 
   }
 }
+export default ShowBigImage
