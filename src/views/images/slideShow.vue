@@ -3,19 +3,24 @@
     <div class="content">
       <!-- Full-width images with number and caption text -->
       <div class="mySlide fade">
-        <div class="numbertext">1 / 3</div>
-        <!-- <img src="../../assets/img/slideImage1.jpg" style="width:100%"> -->
+        <div class="numbertext">1 / 4</div>
+        <img src="../../assets/img/slideImage1.jpg" style="width:100%">
         <div class="text">Caption Text1</div>
       </div>
 
       <div class="mySlide fade">
-        <div class="numbertext">2 / 3</div>
-        <!-- <img src="../../assets/img/slideImage2.jpg" style="width:100%"> -->
+        <div class="numbertext">2 / 4</div>
+        <img src="../../assets/img/slideImage2.jpg" style="width:100%">
         <div class="text">Caption Text2</div>
       </div>
       <div class="mySlide fade">
-        <div class="numbertext">3 / 3</div>
-        <!-- <img src="../../assets/img/slideImage3.jpg" style="width:100%"> -->
+        <div class="numbertext">3 / 4</div>
+        <img src="../../assets/img/slideImage3.jpg" style="width:100%">
+        <div class="text">Caption Text3</div>
+      </div>
+      <div class="mySlide fade">
+        <div class="numbertext">3 / 4</div>
+        <img src="../../assets/img/slideImage3.jpg" style="width:100%">
         <div class="text">Caption Text3</div>
       </div>
       <!-- Next and previous buttons -->
@@ -29,62 +34,68 @@
       <span class="dot" @click="currentSlide(1)"></span>
       <span class="dot" @click="currentSlide(2)"></span>
       <span class="dot" @click="currentSlide(3)"></span>
+      <span class="dot" @click="currentSlide(4)"></span>
     </div>
 
   </div>
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       slideIndex: 1
     }
   },
   methods: {
-    plusSlides (n) {
-      this.showSlides(this.slideIndex += n);
+    plusSlides(n) {
+      this.showSlides((this.slideIndex += n))
     },
-    currentSlide (n) {
-      this.showSlides(this.slideIndex = n);
+    currentSlide(n) {
+      this.showSlides((this.slideIndex = n))
     },
-    showSlides (n) {
-      var i;
-      var slides = document.getElementsByClassName("mySlide");
-      var dots = document.getElementsByClassName("dot");
-      if (n > slides.length) { this.slideIndex = 1 }
-      if (n < 1) { this.slideIndex = slides.length }
+    showSlides(n) {
+      var i
+      var slides = document.getElementsByClassName('mySlide')
+      var dots = document.getElementsByClassName('dot')
+      if (n > slides.length) {
+        this.slideIndex = 1
+      }
+      if (n < 1) {
+        this.slideIndex = slides.length
+      }
       for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
+        slides[i].style.display = 'none'
       }
       for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
+        dots[i].className = dots[i].className.replace(' active', '')
       }
       // debugger
-      slides[this.slideIndex - 1]['style'].display = "block";
-      dots[this.slideIndex - 1].className += " active";
+      slides[this.slideIndex - 1]['style'].display = 'block'
+      dots[this.slideIndex - 1].className += ' active'
     },
     // Automatic SlideShow
-    automaticShow () {
+    automaticShow() {
       // debugger
-      var i;
+      var i
       // get all mySlides and then set those display with none;
-      var slides = document.getElementsByClassName("mySlide");
+      var slides = document.getElementsByClassName('mySlide')
       for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
+        slides[i].style.display = 'none'
       }
       // add index when every call
-      this.slideIndex++;
-      // 
-      if (this.slideIndex > slides.length) { this.slideIndex = 1 }
-      slides[this.slideIndex - 1].style.display = "block";
+      this.slideIndex++
+      //
+      if (this.slideIndex > slides.length) {
+        this.slideIndex = 1
+      }
+      slides[this.slideIndex - 1].style.display = 'block'
       // use setTimeout and resursive to replace setInterval
-      setTimeout(this.automaticShow, 2000); // Change image every 2 seconds
+      setTimeout(this.automaticShow, 2000) // Change image every 2 seconds
     }
   },
-  mounted () {
-    this.showSlides(this.slideIndex);
+  mounted() {
+    this.showSlides(this.slideIndex)
     // this.automaticShow();
-
   }
 }
 </script>
@@ -122,15 +133,13 @@ export default {
       position: absolute;
       top: 50%;
       width: auto;
-      //
-      margin-top: -22px;
       padding: 16px;
-
+      margin-top: -22px;
       color: white;
       font-weight: bold;
       font-size: 18px;
-      transition: 0.6 ease;
-      border-radius: 0 3px 0 3px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
     }
     /* Position the "next button" to the right */
     .next {
