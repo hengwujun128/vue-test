@@ -96,6 +96,7 @@ var ScrollTo = {
     }
 
     Vue.directive('scroll-to', {
+      // el：指令所绑定的元素，binding:an object
       // context is the binding
       bind: function ($element, context) {
         // add element an event listener by directive
