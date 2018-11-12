@@ -31,10 +31,12 @@ if (process.env.NODE_ENV === 'development') {
 // import VueScrollTo from './src'
 // 第二种方式
 import VueScrollTo from './views/myDirective/scroll/second/index.js'
+// expandImg
+import ShowBigImage from './views/myDirective/expandImg/index.js'
 
 
 Vue.use(VueScrollTo)
-
+Vue.use(ShowBigImage)
 Vue.use(ElementUI, {
   size: "small"
 });

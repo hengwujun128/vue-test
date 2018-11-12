@@ -1,7 +1,7 @@
 <template>
   <div class="modal-container">
     <h2>hello,this is modal image</h2>
-    <img id="myImg" src="../../assets/img/img_snow.jpg" alt="Snow" style="width:100%;max-width:300px">
+    <img id="myImg" :src="url" alt="Snow" style="width:100%;max-width:300px" v-show-big-image="{url:url,id:'myModal'}">
     <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -19,7 +19,10 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      url: require('../../assets/img/img_snow.jpg'),
+      options: {}
+    }
   },
   mounted() {
     let modal = document.querySelector('#myModal')
@@ -31,7 +34,6 @@ export default {
       modalImg.src = this.src
       captionText.innerHTML = this.alt
     })
-
     let span = document.getElementsByClassName('close')[0]
     span.addEventListener('click', function() {
       modal.style.display = 'none'

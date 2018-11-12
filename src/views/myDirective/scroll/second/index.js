@@ -98,6 +98,13 @@ var ScrollTo = {
     Vue.directive('scroll-to', {
       // el：指令所绑定的元素，binding:an object
       // context is the binding
+      // 所有的钩子函数会被复制到实际的**指令对象**中，而这个指令对象将会是所有钩子函数的 `this` 上下文环境。指令对象上暴露了一些有用的公开属性：
+      // - **el**： 指令绑定的元素
+      // - **vm**： 拥有该指令的上下文 ViewModel
+      // - **expression**： 指令的表达式，不包括参数和过滤器
+      // - **arg**： 指令的参数
+      // - **raw**： 未被解析的原始表达式
+      // - **name**： 不带前缀的指令名
       bind: function ($element, context) {
         // add element an event listener by directive
         // 注意：handleClick 绑定了上下文
