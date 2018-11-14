@@ -29,13 +29,14 @@ import vueVersion from "@/views/testVueVersion/index.vue";
 
 import myCanvas from "@/views/canvas/index.vue"
 
+
 import mock from "@/views/mock";
 
 import directive from "./directive"
 import css3Router from './css.js'
 import imageRouter from './image.js'
 import form from "./form.js"
-
+import canvas from "./canvas.js"
 
 let app_router = new Router({
   routes: [{
@@ -117,7 +118,8 @@ let app_router = new Router({
     ...directive,
     ...css3Router,
     ...imageRouter,
-    ...form
+    ...form,
+    ...canvas
   ]
 });
 NProgress.configure({
