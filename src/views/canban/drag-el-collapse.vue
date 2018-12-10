@@ -7,8 +7,16 @@
             <template slot="title">
               <span class="title">{{item.groupName}}</span>
             </template>
-            <draggable :list="list[index].parameterList" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :class="{'dragable-container':true,isCollapse:item['isCollapse']}">
-              <div v-for="item2 in list[index].parameterList" class="item-wrapper draggable" :key="`dropitem-${item2.parameterId}`">
+            <draggable
+              :list="list[index].parameterList"
+              :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}"
+              :class="{'dragable-container':true,isCollapse:item['isCollapse']}"
+            >
+              <div
+                v-for="item2 in list[index].parameterList"
+                class="item-wrapper draggable"
+                :key="`dropitem-${item2.parameterId}`"
+              >
                 <div class="drag-item">{{item2.parameterName}}</div>
               </div>
             </draggable>
@@ -23,13 +31,23 @@
           <span>输入</span>
         </div>
         <div class="input-body">
-          <draggable v-model="inputData" :options="inputOptions" style="height:100%;" @start="myStart" @end="inputEnd" @update="myUpdate" @add="inputAdd">
+          <draggable
+            v-model="inputData"
+            :options="inputOptions"
+            style="height:100%;"
+            @start="myStart"
+            @end="inputEnd"
+            @update="myUpdate"
+            @add="inputAdd"
+          >
             <div v-for="(element, index) in inputData" :key="index" class="target-item draggable">
-              <div class="drag-item">{{element.parameterName}}<i class="el-icon-close close" @click="remove(index,1)"></i></div>
+              <div class="drag-item">
+                {{element.parameterName}}
+                <i class="el-icon-close close" @click="remove(index,1)"></i>
+              </div>
             </div>
           </draggable>
         </div>
-
       </div>
 
       <div class="output">
@@ -37,9 +55,20 @@
           <span>输出</span>
         </div>
         <div class="output-body">
-          <draggable v-model="outputData" :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate" @add="outputAdd">
+          <draggable
+            v-model="outputData"
+            :options="{group:{name:'test2',put:['test']},draggable: '.draggable'}"
+            style="height:100%;"
+            @start="drag=true"
+            @end="drag=false"
+            @update="myUpdate"
+            @add="outputAdd"
+          >
             <div v-for="(element, index) in outputData" :key="index" class="target-item draggable">
-              <div class="drag-item">{{element.parameterName}} <i class="el-icon-close close" @click="remove(index,2)"></i></div>
+              <div class="drag-item">
+                {{element.parameterName}}
+                <i class="el-icon-close close" @click="remove(index,2)"></i>
+              </div>
             </div>
           </draggable>
         </div>
@@ -48,14 +77,14 @@
   </div>
 </template>
 <script>
-import draggable from 'vuedraggable'
+import draggable from "vuedraggable";
 
 export default {
   components: {
     draggable
   },
   watch: {
-    isDragging (newValue) {
+    isDragging(newValue) {
       if (newValue) {
         this.delayedDragging = true;
         return;
@@ -66,165 +95,166 @@ export default {
     }
   },
   computed: {
-    inputOptions () {
+    inputOptions() {
       return {
         animation: 0,
         group: {
-          name: 'input',
-          put: ['test']
+          name: "input",
+          put: ["test"]
         },
-        dragable: '.draggable',
+        dragable: ".draggable",
         // disabled: !this.editable,
         ghostClass: "ghost"
-      }
+      };
     },
     // 对输入和输出组的数据进行过滤(注意：默认组)
-    inputFilter () {
-      let data = []
+    inputFilter() {
+      let data = [];
       this.inputData.map(item => {
-        data.push(item.parameterId)
-      })
+        data.push(item.parameterId);
+      });
       return data;
     },
-    outputFilter () {
-      let data = []
+    outputFilter() {
+      let data = [];
       this.outputData.map(item => {
-        data.push(item.parameterId)
-      })
-      return data
+        data.push(item.parameterId);
+      });
+      return data;
     }
   },
-  data () {
+  data() {
     return {
       isDragging: false,
-
 
       activeNames: 1,
       list: [
         {
-          groupId: '1',
-          groupName: 'first group',
-          title: 'first group',
+          groupId: "1",
+          groupName: "first group",
+          title: "first group",
           isCollapse: true,
-          description: 'hello first',
+          description: "hello first",
           parameterList: [
-            { parameterId: 'parameterId1', parameterName: 'parameterName1' },
-            { parameterId: 'parameterId2', parameterName: 'parameterName2' },
-            { parameterId: 'parameterId3', parameterName: 'parameterName3' },
-            { parameterId: 'parameterId4', parameterName: 'parameterName4' }
+            { parameterId: "parameterId1", parameterName: "parameterName1" },
+            { parameterId: "parameterId2", parameterName: "parameterName2" },
+            { parameterId: "parameterId3", parameterName: "parameterName3" },
+            { parameterId: "parameterId4", parameterName: "parameterName4" }
           ]
         },
         {
-          groupId: '2',
-          groupName: 'second group',
-          title: 'second group',
+          groupId: "2",
+          groupName: "second group",
+          title: "second group",
           isCollapse: false,
-          description: 'hello second',
+          description: "hello second",
           parameterList: [
-            { parameterId: 'parameterId12', parameterName: 'parameterName12' },
-            { parameterId: 'parameterId22', parameterName: 'parameterName22' },
-            { parameterId: 'parameterId32', parameterName: 'parameterName32' },
-            { parameterId: 'parameterId42', parameterName: 'parameterName42' }
+            { parameterId: "parameterId12", parameterName: "parameterName12" },
+            { parameterId: "parameterId22", parameterName: "parameterName22" },
+            { parameterId: "parameterId32", parameterName: "parameterName32" },
+            { parameterId: "parameterId42", parameterName: "parameterName42" }
           ]
         },
         {
-          groupId: '3',
-          groupName: 'third group',
-          title: 'third group',
+          groupId: "3",
+          groupName: "third group",
+          title: "third group",
           isCollapse: false,
-          description: 'hello third',
+          description: "hello third",
           parameterList: [
-            { parameterId: 'parameterId13', parameterName: 'parameterName13' },
-            { parameterId: 'parameterId23', parameterName: 'parameterName23' },
-            { parameterId: 'parameterId33', parameterName: 'parameterName33' },
-            { parameterId: 'parameterId43', parameterName: 'parameterName43' }
+            { parameterId: "parameterId13", parameterName: "parameterName13" },
+            { parameterId: "parameterId23", parameterName: "parameterName23" },
+            { parameterId: "parameterId33", parameterName: "parameterName33" },
+            { parameterId: "parameterId43", parameterName: "parameterName43" }
           ]
         },
         {
-          groupId: '4',
-          groupName: 'fourth group',
-          title: 'fourth group',
-          name: 'fourth',
-          description: 'hello fourth',
+          groupId: "4",
+          groupName: "fourth group",
+          title: "fourth group",
+          name: "fourth",
+          description: "hello fourth",
           parameterList: [
-            { parameterId: 'parameterId14', parameterName: 'parameterName14' },
-            { parameterId: 'parameterId24', parameterName: 'parameterName24' },
-            { parameterId: 'parameterId34', parameterName: 'parameterName34' },
-            { parameterId: 'parameterId44', parameterName: 'parameterName44' },
-            { parameterId: 'parameterId54', parameterName: 'parameterName54' }
-
+            { parameterId: "parameterId14", parameterName: "parameterName14" },
+            { parameterId: "parameterId24", parameterName: "parameterName24" },
+            { parameterId: "parameterId34", parameterName: "parameterName34" },
+            { parameterId: "parameterId44", parameterName: "parameterName44" },
+            { parameterId: "parameterId54", parameterName: "parameterName54" }
           ]
         }
       ],
       inputData: [],
       outputData: [],
       isCollapse: 1
-    }
+    };
   },
   methods: {
-    handleChange () {
-
-    },
-    toogle (index) {
+    handleChange() {},
+    toogle(index) {
       // this.isCollapse = index
-      this.list[index]['isCollapse'] = !this.list[index]['isCollapse']
+      this.list[index]["isCollapse"] = !this.list[index]["isCollapse"];
       // this.isCollapse = (this.isCollapse === index ? null : index)
     },
-    inputAdd (obj) {
-      debugger
-      if(!this.$parent.customizedInputGroup.includes(this.inputData[obj.newIndex].groupId)){
-        this.inputData[obj.newIndex].groupId=-1
+    inputAdd(obj) {
+      debugger;
+      if (
+        !this.$parent.customizedInputGroup.includes(
+          this.inputData[obj.newIndex].groupId
+        )
+      ) {
+        this.inputData[obj.newIndex].groupId = -1;
       }
-      this.duplicatedTips(obj, this.inputData)
+      this.duplicatedTips(obj, this.inputData);
     },
-    outputAdd (obj) {
-      this.duplicatedTips(obj, this.outputData)
+    outputAdd(obj) {
+      this.duplicatedTips(obj, this.outputData);
     },
-    duplicatedTips (obj, list) {
-      let pushedIndex = obj.newIndex;  // element's new index within new parent
-      let pushedItem = list[pushedIndex]
+    duplicatedTips(obj, list) {
+      let pushedIndex = obj.newIndex; // element's new index within new parent
+      let pushedItem = list[pushedIndex];
       // debugger
       if (list.length > 1) {
         // debugger
         // let originData = this.inputData.splice(pushedIndex,1)
         list.map((item, index) => {
-          if ((index !== pushedIndex) && (item.parameterId === pushedItem['parameterId'])) {
-            this.$confirm('已经存在该字段, 是否继续?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-            }).catch(() => {
-              list.splice(pushedIndex, 1)
-            });
+          if (
+            index !== pushedIndex &&
+            item.parameterId === pushedItem["parameterId"]
+          ) {
+            this.$confirm("已经存在该字段, 是否继续?", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            })
+              .then(() => {})
+              .catch(() => {
+                list.splice(pushedIndex, 1);
+              });
           }
-        })
+        });
       }
     },
-    isExistInGroups () {
-
+    isExistInGroups() {},
+    myStart() {
+      this.isDragging = true;
     },
-    myStart () {
-      this.isDragging = true
+    inputEnd(obj) {
+      console.log(this.inputData);
+      this.isDragging = false;
     },
-    inputEnd (obj) {
-      console.log(this.inputData)
-      this.isDragging = false
-    },
-    myUpdate () {
-      console.log(this.inputData)
+    myUpdate() {
+      console.log(this.inputData);
       // debugger
     },
-    remove: function (index, tag) {
+    remove: function(index, tag) {
       if (tag == 1) {
         this.inputData.splice(index, 1);
       } else {
         this.outputData.splice(index, 1);
       }
-
-    },
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .container {
