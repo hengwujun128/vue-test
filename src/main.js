@@ -45,7 +45,10 @@ Vue.config.productionTip = false;
 Vue.use(Notifications);
 
 // import Components from "zzq-component"
-// import "zzq-component"
+import "zzq-component"
+// 注意,css 需要单独引用(之前没有引用,就是css 的问题)
+import "zzq-component/dist/zzq.css"
+// // import "zzq-component"
 // Object.keys(Components).forEach((name) => {
 //   Vue.component(name, Components[name]);
 // });
