@@ -44,6 +44,11 @@ Vue.config.productionTip = false;
 
 Vue.use(Notifications);
 
+// import Components from "zzq-component"
+// import "zzq-component"
+// Object.keys(Components).forEach((name) => {
+//   Vue.component(name, Components[name]);
+// });
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
