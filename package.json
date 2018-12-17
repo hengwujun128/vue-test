@@ -30,7 +30,7 @@
     "vue-scrollto": "^2.11.0",
     "vue-tag-autocomplete": "0.0.7",
     "vuedraggable": "^2.16.0",
-    "zzq-component": "^0.1.4"
+    "zzq-component": "^0.1.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
