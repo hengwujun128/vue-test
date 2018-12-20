@@ -12,7 +12,7 @@ const directiveRouter = [{
     name: 'scroll',
     component: scroll
   }, {
-    path: 'navigator',
+    path: '/myDirective/navigator',
     name: 'navigator',
     component: navigator
   }]

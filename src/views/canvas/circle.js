@@ -21,6 +21,7 @@ export default class Circle {
 
 
   draw(context) {
+    // 使用栈保存当前的使用状态
     context.save();
     // 移动上下文坐标到指定位置(注意在原始的坐标进行累加)
     context.translate(this.x, this.y);
@@ -41,7 +42,7 @@ export default class Circle {
     if (this.lineWidth > 0) {
       context.stroke();
     }
-
+    // 
     context.restore();
 
   }

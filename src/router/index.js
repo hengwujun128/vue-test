@@ -37,6 +37,8 @@ import css3Router from './css.js'
 import imageRouter from './image.js'
 import form from "./form.js"
 import canvas from "./canvas.js"
+// npm component
+import componentRouter from "./component"
 
 let app_router = new Router({
   routes: [{
@@ -119,7 +121,9 @@ let app_router = new Router({
     ...css3Router,
     ...imageRouter,
     ...form,
-    ...canvas
+    ...canvas,
+    ...componentRouter
+
   ]
 });
 NProgress.configure({
