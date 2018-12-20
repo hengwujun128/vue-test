@@ -6,7 +6,7 @@
       <el-button v-scroll-to="options1">scrollTo1</el-button>
       <el-button v-scroll-to="options2">scrollTo2</el-button>
       <el-button v-scroll-to="options3">scrollTo3</el-button>
-    </div> -->
+    </div>-->
     <ul class="button">
       <!-- 第一种方式滚动,requestAnimationFrame -->
       <!-- <li>
@@ -17,16 +17,21 @@
       </li>
       <li>
         <el-button :class="{active:active===3}" v-scroll-to="options3" @click="clickHandler(3)">scrollTo3</el-button>
-      </li> -->
+      </li>-->
       <!-- 第二种方式滚动,setTimeout -->
-       <li>
-        <el-button :class="{active:active===1}" v-scroll-to="'#target1'">scrollTo1</el-button>
+      <li>
+        <!-- <el-button :class="{active:active===1}" v-scroll-to="'#target1'">scrollTo1</el-button> -->
+        <el-button :class="{active:active===1}" v-zscroll="'#target1'">scrollTo1</el-button>
       </li>
       <li>
-        <el-button :class="{active:active===2}" v-scroll-to="'#target2'">scrollTo2</el-button>
+        <el-button :class="{activse:active===2}" v-zscroll="'#target2'">scrollTo2</el-button>
       </li>
       <li>
-        <el-button :class="{active:active===3}" v-scroll-to="'#target3'" @click="clickHandler(3)">scrollTo3</el-button>
+        <el-button
+          :class="{active:active===3}"
+          v-zscroll="'#target3'"
+          @click="clickHandler(3)"
+        >scrollTo3</el-button>
       </li>
     </ul>
 
@@ -72,7 +77,8 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
-      <p>hellhello1shushuxing
+      <p>
+        hellhello1shushuxing
         wei mdigui2weieiymeiyit2shuju tianjia le
         deb
         vel biaoz2
@@ -82,7 +88,8 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
-      <p>hello1
+      <p>
+        hello1
         deb
       </p>
       <p>hello1</p>
@@ -269,7 +276,6 @@
       <p>hello1</p>
       <p>hello1</p>
     </section>
-
   </div>
 </template>
 
@@ -277,15 +283,15 @@
 <script>
 export default {
   data() {
-    let me = this
+    let me = this;
     return {
       active: 1,
       options1: {
-        el: '#target1',
+        el: "#target1",
         // container: '#content',
-        container: 'body',
+        container: "body",
         duration: 1000,
-        easing: 'linear',
+        easing: "linear",
         offset: -10, //The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
         onStart: function(element) {
@@ -303,11 +309,11 @@ export default {
         y: true
       },
       options2: {
-        el: '#target2',
+        el: "#target2",
         // container: '#content',
-        container: 'body',
+        container: "body",
         duration: 1000,
-        easing: 'linear',
+        easing: "linear",
         offset: -10, //The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
         onStart: function(element) {
@@ -325,11 +331,11 @@ export default {
         y: true
       },
       options3: {
-        el: '#target3',
+        el: "#target3",
         // container: '#content',
-        container: 'body',
+        container: "body",
         duration: 1000,
-        easing: 'linear',
+        easing: "linear",
         offset: -10, //The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
         onStart: function(element) {
@@ -349,75 +355,75 @@ export default {
         x: false,
         y: true
       }
-    }
+    };
   },
   mounted() {
-    let target1 = this.cumulativeOffset(document.querySelector('#target1'))
-    let target2 = this.cumulativeOffset(document.querySelector('#target2'))
-    let target3 = this.cumulativeOffset(document.querySelector('#target3'))
+    let target1 = this.cumulativeOffset(document.querySelector("#target1"));
+    let target2 = this.cumulativeOffset(document.querySelector("#target2"));
+    let target3 = this.cumulativeOffset(document.querySelector("#target3"));
 
-    let targetObj1 = getComputedStyle(document.querySelector('#target1'))
-    let targetObj2 = getComputedStyle(document.querySelector('#target2'))
-    let targetObj3 = getComputedStyle(document.querySelector('#target3'))
-    console.log(target1, target2, target3)
-    console.log(targetObj1.height, targetObj2.height, targetObj3.height)
-    var last_known_scroll_position = 0
-    var ticking = false
-    var me = this
+    let targetObj1 = getComputedStyle(document.querySelector("#target1"));
+    let targetObj2 = getComputedStyle(document.querySelector("#target2"));
+    let targetObj3 = getComputedStyle(document.querySelector("#target3"));
+    console.log(target1, target2, target3);
+    console.log(targetObj1.height, targetObj2.height, targetObj3.height);
+    var last_known_scroll_position = 0;
+    var ticking = false;
+    var me = this;
     function doSomething(scroll_pos) {
       // do something with the scroll position
       // console.log('定时获取位置' + scroll_pos)
       // 10 代表偏移量,滚动指令滚动到目标位置时候-10，此时要加上
       if (scroll_pos + 10 < target2.top) {
-        me.active = 1
+        me.active = 1;
       } else if (scroll_pos + 10 < target3.top) {
-        me.active = 2
+        me.active = 2;
       } else if (target3.top <= scroll_pos + 10) {
         // debugger
-        me.active = 3
+        me.active = 3;
       }
     }
     //
-    window.addEventListener('scroll', function(e) {
+    window.addEventListener("scroll", function(e) {
       // 1.在事件处理程序中要实时获取滚动位置
-      last_known_scroll_position = window.scrollY
-      last_known_scroll_position = document.documentElement.scrollTop
+      last_known_scroll_position = window.scrollY;
+      last_known_scroll_position = document.documentElement.scrollTop;
       // console.log('事件处理实时获取位置:' + last_known_scroll_position)
       // 2.在事件处理程序中，通过变量控制添加window.requestAnimationFrame;
       if (!ticking) {
         //
         window.requestAnimationFrame(function() {
-          doSomething(last_known_scroll_position)
-          ticking = false
-        })
+          doSomething(last_known_scroll_position);
+          ticking = false;
+        });
 
-        ticking = true
+        ticking = true;
       }
-    })
+    });
   },
   methods: {
     cumulativeOffset(element) {
-      let top = 0
-      let left = 0
+      let top = 0;
+      let left = 0;
 
       do {
-        top += element.offsetTop || 0
-        left += element.offsetLeft || 0
+        top += element.offsetTop || 0;
+        left += element.offsetLeft || 0;
         // 如果有祖先定位元素，就循环累加
 
-        element = element.offsetParent
-      } while (element)
+        element = element.offsetParent;
+      } while (element);
 
       return {
         top: top,
         left: left
-      }
+      };
     },
     clickHandler(n) {
       // this.active = n
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .scrollTo-container {
