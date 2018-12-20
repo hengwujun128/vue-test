@@ -1,4 +1,6 @@
+
 <script>
+// 没有 template 的 component
 import { events } from "./bus";
 const pointerSize = 6;
 const directions = {
@@ -7,12 +9,15 @@ const directions = {
   top: [0, 1],
   bottom: [0, -1]
 };
+
 export default {
   name: "Popover",
+  // 在组件中使用render 函数,高阶函数,
   render: function(createElement) {
     if (!this.visible) {
       return;
     }
+    //创建一个 div 元素,属性样式在第二个参数对象中
     return createElement(
       "div",
       {
@@ -28,9 +33,11 @@ export default {
         },
         ref: "dropdown"
       },
+      // 使用 this.$slots.default 设置子元素
       this.$slots.default
     );
   },
+  // 外部向组件传入的属性
   props: {
     name: {
       type: String,
