@@ -34,6 +34,15 @@ if (process.env.NODE_ENV === 'development') {
 // expandImg
 import ShowBigImage from './views/myDirective/expandImg/index.js'
 
+import Components from 'zzq-component';
+
+// Object.entries(Components).forEach((name, component) => {
+//   debugger
+//   Vue.component(name, component);
+// });
+Object.keys(Components).forEach(name => {
+  Vue.component(name, Components[name])
+})
 
 // Vue.use(VueScrollTo)
 Vue.use(ShowBigImage)
