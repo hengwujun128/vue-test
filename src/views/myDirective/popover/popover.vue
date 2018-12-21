@@ -1,41 +1,50 @@
+<template>
+  <div
+    :class="this.className"
+    :style="this.style"
+    :data-popover="this.name"
+    @click="(e)"
+    ref="dropdown"
+  ></div>
+</template>
 
 <script>
 // 没有 template 的 component
-import { events } from "./bus";
-const pointerSize = 6;
+import { events } from './bus'
+const pointerSize = 6
 const directions = {
   left: [-1, 0],
   right: [1, 0],
   top: [0, 1],
   bottom: [0, -1]
-};
+}
 
 export default {
-  name: "Popover",
+  name: 'Popover',
   // 在组件中使用render 函数,高阶函数,
   render: function(createElement) {
     if (!this.visible) {
-      return;
+      return
     }
     //创建一个 div 元素,属性样式在第二个参数对象中
     return createElement(
-      "div",
+      'div',
       {
         class: this.className,
         style: this.style,
         attrs: {
-          "data-popover": this.name
+          'data-popover': this.name
         },
         on: {
           click(event) {
-            event.stopPropagation();
+            event.stopPropagation()
           }
         },
-        ref: "dropdown"
+        ref: 'dropdown'
       },
       // 使用 this.$slots.default 设置子元素
       this.$slots.default
-    );
+    )
   },
   // 外部向组件传入的属性
   props: {
@@ -51,9 +60,10 @@ export default {
       type: Boolean,
       default: true
     },
+    // 引入组件时候，会设置触发该组件的事件名称
     event: {
       type: String,
-      default: "click"
+      default: 'click'
     },
     anchor: {
       type: Number,
@@ -64,112 +74,130 @@ export default {
   data() {
     return {
       visible: false,
-      positionClass: "",
+      positionClass: '',
       position: {
         left: 0,
         top: 0
       }
-    };
+    }
   },
   mounted() {
-    events.$on(this.showEventName, this.showEventListener);
-    events.$on(this.hideEventName, this.hideEventListener);
+    // 在eventBus中监听发射的事件，事件名称是通过计算属性得来(因为是自定义事件，所以事件名称可以随便定义),默认是click事件
+    events.$on(this.showEventName, this.showEventListener)
+    events.$on(this.hideEventName, this.hideEventListener)
   },
   beforeDestroy() {
-    events.$off(this.showEventName, this.showEventListener);
-    events.$off(this.hideEventName, this.hideEventListener);
+    events.$off(this.showEventName, this.showEventListener)
+    events.$off(this.hideEventName, this.hideEventListener)
   },
   computed: {
     showEventName() {
-      return `show:${this.event}`;
+      return `show:${this.event}`
     },
     hideEventName() {
-      return `hide:${this.event}`;
+      return `hide:${this.event}`
     },
+    // 通过 prop 和data属性计算 className
     className() {
-      return ["vue-popover", this.pointer && this.positionClass];
+      return ['vue-popover', this.pointer && this.positionClass]
     },
+    //style  也可以使用计算属性或得，返回一个对象
     style() {
       return {
         width: `${this.width}px`,
         ...this.position
-      };
+      }
     }
   },
   methods: {
+    // 用户点击触发显示事件之后，popover指令发射了事件， popover组件要做的事情
     showEventListener(event) {
+      // 如果当前是显示,就发射一个关闭事件
       if (this.visible) {
-        events.$emit(this.hideEventName);
-        return;
+        events.$emit(this.hideEventName)
+        return
       }
+      // 嵌套三层$nextTick() 为何?
       this.$nextTick(() => {
-        let { target, name, position } = event;
+        let { target, name, position } = event
+        // name 为指令中的name,this.name 是属性prop传入的
         if (name === this.name) {
-          let direction = directions[position];
-          this.positionClass = `dropdown-position-${position}`;
-          this.visible = true;
+          // set direction
+          let direction = directions[position]
+          // set positionClass
+          this.positionClass = `dropdown-position-${position}`
+          // set visible state
+          this.visible = true
+          //
           this.$nextTick(() => {
-            this.$emit("show", event);
-
+            debugger
+            // 提供给父组件的钩子,父组件可以监听show，做一些事情
+            this.$emit('show', event)
+            debugger
             this.$nextTick(() => {
               let position = this.getDropdownPosition(
                 target,
                 this.$refs.dropdown,
                 direction
-              );
+              )
 
               this.position = {
                 left: `${position.left}px`,
                 top: `${position.top}px`
-              };
-            });
-          });
+              }
+            })
+          })
         }
-      });
+      })
     },
     hideEventListener(event) {
       if (this.visible) {
-        this.visible = false;
-        this.$emit("hide", event);
+        this.visible = false
+        this.$emit('hide', event)
       }
     },
+    //target :指令所绑定的元素；dropdown:是dropdown组件的引用;direction:[]
     getDropdownPosition(target, dropdown, direction) {
-      let trRect = target.getBoundingClientRect();
-      let ddRect = dropdown.getBoundingClientRect();
-      // Scroll offset of the current document
+      // 获取两个dom对象相对于浏览器视窗的位置(dom 对象在浏览器可视范围的距离，不包括ScrollOffset)
+      let trRect = target.getBoundingClientRect()
+      let ddRect = dropdown.getBoundingClientRect()
+
+      // Scroll offset of the current document(滚动条滚动的offset)
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
-        document.body.scrollTop;
+        document.body.scrollTop
       let scrollLeft =
         window.pageXOffset ||
         document.documentElement.scrollLeft ||
-        document.body.scrollLeft;
-      // Position within the parent
-      let offsetLeft = trRect.left + scrollLeft;
-      let offsetTop = trRect.top + scrollTop;
+        document.body.scrollLeft
+
+      // Position within the parent()：获取元素相对于page的位置;这比使用 do{}while(){} ,offsetParent ,offsetLeft,offsetTop 简单很多
+      let offsetLeft = trRect.left + scrollLeft
+      let offsetTop = trRect.top + scrollTop
+
       // let shiftX = ddRect.width - trRect.width
-      let shiftY = 0.5 * (ddRect.height + trRect.height);
+      let shiftY = 0.5 * (ddRect.height + trRect.height)
       // Center of the target element
-      let centerX = offsetLeft - 0.5 * (ddRect.width - trRect.width);
-      let centerY = offsetTop + trRect.height - shiftY;
+      let centerX = offsetLeft - 0.5 * (ddRect.width - trRect.width)
+      let centerY = offsetTop + trRect.height - shiftY
       // let anchorX = direction[0] * this.anchor
       // let anchorY = direction[0] * this.anchor
       // Position of the dropdown relatively to target
-      let x = direction[0] * 0.5 * (ddRect.width + trRect.width);
-      let y = direction[1] * shiftY;
+      let x = direction[0] * 0.5 * (ddRect.width + trRect.width)
+      let y = direction[1] * shiftY
       // Pointer size correction
       if (this.pointer) {
-        x += direction[0] * pointerSize;
-        y += direction[1] * pointerSize;
+        x += direction[0] * pointerSize
+        y += direction[1] * pointerSize
       }
       return {
         left: centerX + x,
         top: centerY - y
-      };
+      }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -187,7 +215,7 @@ $pointer-size: 6px;
     position: absolute;
     width: 0;
     height: 0;
-    content: "";
+    content: '';
   }
   &.dropdown-position-bottom:before {
     border-left: $pointer-size solid transparent;
