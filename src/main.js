@@ -33,9 +33,10 @@ if (process.env.NODE_ENV === 'development') {
 // import VueScrollTo from './views/myDirective/scroll/second/index.js'
 // expandImg
 import ShowBigImage from './views/myDirective/expandImg/index.js'
+import Popover from './views/myDirective/popover/index.js'
+// import Popover from 'vue-js-popover'
 
 import Components from 'zzq-component';
-
 // Object.entries(Components).forEach((name, component) => {
 //   debugger
 //   Vue.component(name, component);
@@ -46,6 +47,9 @@ Object.keys(Components).forEach(name => {
 
 // Vue.use(VueScrollTo)
 Vue.use(ShowBigImage)
+Vue.use(Popover, {
+  tooltip: true
+})
 Vue.use(ElementUI, {
   size: "small"
 });

@@ -104,7 +104,7 @@ export default {
       }
     })
 
-    // 可以在添加指令时候通过传入的参数,注入一个组件
+    //通过传入的参数,注入一个组件
     if (params.tooltip) {
       if (params.debug) {
         console.log('vue-js-popover | tooltip active')

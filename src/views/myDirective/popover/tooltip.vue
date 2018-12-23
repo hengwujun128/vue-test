@@ -8,6 +8,7 @@
   >{{value}}</popover>
 </template>
 <script>
+// tooltip 也是使用popover 组件来实现
 export default {
   name: "Tooltip",
   props: {
