@@ -186,7 +186,7 @@ export default {
       // 两个 dom 元素如果高宽相同的话, centerX 和centerY 就是 target 元素的坐标
       let centerX = offsetLeft - 0.5 * (ddRect.width - trRect.width);
       // let centerY = offsetTop + trRect.height - shiftY;
-      let centerY = offsetTop + 0.5 * (trRect.height - ddRect.height);
+      let centerY = offsetTop - 0.5 * (ddRect.height - trRect.height);
 
       // let anchorX = direction[0] * this.anchor
       // let anchorY = direction[0] * this.anchor
