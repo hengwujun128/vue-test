@@ -39,6 +39,8 @@ import form from "./form.js"
 import canvas from "./canvas.js"
 // npm component
 import componentRouter from "./component"
+// my js function
+import js from './js'
 
 let app_router = new Router({
   routes: [{
@@ -122,7 +124,8 @@ let app_router = new Router({
     ...imageRouter,
     ...form,
     ...canvas,
-    ...componentRouter
+    ...componentRouter,
+    ...js
 
   ]
 });

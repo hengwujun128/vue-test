@@ -12,6 +12,14 @@ import "normalize.css/normalize.css";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 
+
+// //vw的兼容处理 （有些手机不支持vw单位 ）
+// require('viewport-units-buggyfill').init({
+//   hacks: hacks
+// });
+
+
+
 // third party component
 import Notifications from "vue-notification";
 import axios from "axios";
@@ -40,9 +48,9 @@ import Components from 'zzq-component';
 //   debugger
 //   Vue.component(name, component);
 // });
-Object.keys(Components).forEach(name => {
-  Vue.component(name, Components[name])
-})
+// Object.keys(Components).forEach(name => {
+//   Vue.component(name, Components[name])
+// })
 
 // Vue.use(VueScrollTo)
 Vue.use(ShowBigImage)
@@ -61,6 +69,16 @@ import "zzq-component/dist/zzq.css"
 // Object.keys(Components).forEach((name) => {
 //   Vue.component(name, Components[name]);
 // });
+
+
+
+
+
+
+
+
+
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
