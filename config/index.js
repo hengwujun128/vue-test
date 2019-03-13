@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: 'localhost.huawei.com', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST
     port: 80, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false, // show err on brower
     errorOverlay: true, // show err on brower
@@ -47,7 +47,7 @@ module.exports = {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
-    // Paths 
+    // Paths
     assetsRoot: path.resolve(__dirname, '../dist'), // 在node中使用相对路径，就要使用path.resolve(__dirname,'../xxx')
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

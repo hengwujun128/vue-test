@@ -1,11 +1,21 @@
 <template>
   <div id="scroll-wrapper">
     <ul>
-      <li :class="{active:active==='red'}" @click="active='red'"><a href="#red">red</a></li>
-      <li :class="{active:active==='green'}" @click="active='green'"><a href="#green">green</a></li>
-      <li :class="{active:active==='blue'}" @click="active='blue'"><a href="#blue">blue</a></li>
-      <li :class="{active:active==='yellow'}" @click="active='yellow'"><a href="#yellow">yellow</a></li>
-      <li :class="{active:active==='magenta'}" @click="active='magenta'"><a href="#magenta">magenta</a></li>
+      <li :class="{active:active==='red'}" @click="active='red'">
+        <a href="#red">red</a>
+      </li>
+      <li :class="{active:active==='green'}" @click="active='green'">
+        <a href="#green">green</a>
+      </li>
+      <li :class="{active:active==='blue'}" @click="active='blue'">
+        <a href="#blue">blue</a>
+      </li>
+      <li :class="{active:active==='yellow'}" @click="active='yellow'">
+        <a href="#yellow">yellow</a>
+      </li>
+      <li :class="{active:active==='magenta'}" @click="active='magenta'">
+        <a href="#magenta">magenta</a>
+      </li>
     </ul>
     <div class="container">
       <div id="red">
@@ -25,7 +35,6 @@
       </div>
     </div>
   </div>
-
 </template>
 <script>
 export default {
@@ -38,14 +47,14 @@ export default {
     // alert(12344)
   },
   mounted () {
-    let me = this
-    let ele = document.querySelector('.container')
+    let me=this
+    let ele=document.querySelector('.container')
     // 外层容器的高度是固定的
-    let eleHeight = window
+    let eleHeight=window
       .getComputedStyle(ele)
       .getPropertyValue('height')
       .split('px')[0]
-    ele.addEventListener('scroll', function (e) {
+    ele.addEventListener('scroll',function(e) {
       // if(ele.scrollTop>)
       // console.log(ele.scrollTop)
       // console.log(eleHeight * 2)

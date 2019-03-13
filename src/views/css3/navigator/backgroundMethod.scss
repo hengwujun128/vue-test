@@ -1,0 +1,99 @@
+$toolbar-size: 52px;
+
+@mixin toolbar-item($pos, $hovpos) {
+}
+.navigator-container {
+  position: relative;
+  // 容器
+  .toolbar {
+    background: #dddddd;
+    position: fixed;
+    left: 20%;
+    bottom: 50px;
+    margin-left: -$toolbar-size / 2;
+    // 每个item公共样式:,相对定位;transition;宽高;hover:显示子元素(opacity,transform);
+    /* 每个 item 的子元素的公共样式:绝对定位,在父元素的左侧(如何和父元素共用一个变量实现:right,bottom);让子元素不可见(opacity+transform.scale(0.01); */
+    /* 每个 item 的具体样式:设置初始背景位置;hover改变背景位置background-position;hover设置子元素的高和background-position ;因为子元素的高不能再公共样式设置,因为有的 item 没有子元素的动画*/
+
+    .common {
+      display: block;
+      width: $toolbar-size;
+      height: $toolbar-size;
+      background-image: url("../../../assets/img/toolbar.png");
+      background-repeat: no-repeat;
+      margin-top: 1px;
+      // 因为二维码要相对于父元素进行绝对定位
+      position: relative;
+      // 每个项目进行过度
+      transition: background-position 1s;
+      // 二维码公共样式
+      .toolbar-layer {
+        position: absolute;
+        // 偏离父元素的宽度,在父元素的左侧
+        right: $toolbar-size;
+        bottom: -10px;
+        width: 172px;
+        // height: 212px;
+        background-image: url("../../../assets/img/toolbar.png");
+        background-repeat: no-repeat;
+        // 正常情况下是透明的
+        opacity: 0;
+        // 兼容IE
+        filter: alpha(opacity=0);
+        // 变换到最小
+        transform: scale(0.01);
+        // 变换原点（相对于元素本身）
+        transform-origin: 95% 95%;
+        // 二维码进行过度
+        transition: all 1s;
+      }
+      // 鼠标移入时候二维码的状态 ：透明度，大小
+      &:hover {
+        .toolbar-layer {
+          opacity: 1;
+          filter: alpha(opacity=100);
+          transform: scale(1);
+        }
+      }
+    }
+    .weixin {
+      // image height 52px
+      background-position: 0 -798px;
+      &:hover {
+        background-position: 0 -860px;
+      }
+      // 微信二维码
+      .toolbar-layer {
+        height: 212px; //要和背景图片大小相等
+        background-position: 0 0;
+      }
+    }
+    .feedback {
+      // image height 52px
+      background-position: 0 -426px;
+      &:hover {
+        background-position: 0 -480px;
+      }
+    }
+    .app {
+      // image height 52px
+      background-position: 0 -550px;
+      &:hover {
+        background-position: 0 -612px;
+      }
+      // app 下的二维码
+      .toolbar-layer {
+        height: 194px;
+        background-position: 0 -222px;
+      }
+    }
+    .code {
+      // image height 52px
+      background-position: 0 -674px;
+      &:hover {
+        background-position: 0 -736px;
+      }
+      // code 下的二维码
+    }
+  }
+}

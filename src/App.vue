@@ -2,9 +2,8 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <router-view/>
-    <notifications group="foo" />
+    <notifications group="foo"/>
   </div>
-
 </template>
 
 <script>
@@ -36,5 +35,9 @@ body {
   background-size: 500%;
   animation: 2s linear infinite barprogress, 0.3s fadein;
   width: 100%;
+}
+// vw
+img {
+  content: normal !important;
 }
 </style>

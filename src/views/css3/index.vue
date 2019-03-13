@@ -3,10 +3,10 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {}
   },
-  created() {
+  created () {
     // alert('this is css3')
   }
 }

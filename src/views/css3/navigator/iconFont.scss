@@ -1,0 +1,149 @@
+@font-face {
+  font-family: "icomoon";
+  src: url("fonts/icomoon.eot?41ep2h");
+  src: url("fonts/icomoon.eot?41ep2h#iefix") format("embedded-opentype"),
+    url("fonts/icomoon.ttf?41ep2h") format("truetype"),
+    url("fonts/icomoon.woff?41ep2h") format("woff"),
+    url("fonts/icomoon.svg?41ep2h#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wechat:before {
+  content: "\e900";
+}
+.icon-message:before {
+  content: "\e901";
+}
+.icon-mobile:before {
+  content: "\e958";
+}
+.icon-arrow-up2:before {
+  content: "\ea3a";
+}
+$toolbar2Size: 52px;
+@mixin transition($transition) {
+  transition: $transition;
+}
+.toolbar2 {
+  position: fixed;
+  left: 40%;
+  bottom: 50px;
+  margin-left: $toolbar2Size/2;
+
+  .toolbar2-item {
+    display: block;
+    position: relative;
+    width: $toolbar2Size;
+    height: $toolbar2Size;
+    margin-top: 1px;
+
+    .toolbar2-btn {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: $toolbar2Size;
+      height: $toolbar2Size;
+      // 上下移动条件
+      overflow: hidden;
+      .toolbar2-icon {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: $toolbar2Size;
+        height: $toolbar2Size;
+        background-color: #d0d6d9;
+        // 设置字体的大小和居中
+        font-size: 30px;
+        color: #fff;
+        text-align: center;
+        line-height: $toolbar2Size;
+        // transition: all 1s;
+        // @include transition(top 1s);
+        @include transition(left 1s);
+      }
+      .toolbar2-text {
+        position: absolute;
+        // 子元素默认不可见:可以设置在隐藏在右边,left: $toolbar2Size;影藏在下边:top: $toolbar2Size;
+        // left: 0px;
+        left: $toolbar2Size;
+
+        top: 0;
+        // top: $toolbar2Size;
+        width: $toolbar2Size;
+        height: $toolbar2Size;
+        background-color: #98a1a6;
+        // 设置字体的大小和居中
+        font-size: 14px;
+        color: #fff;
+        text-align: center;
+        // 因为是两行文字,所以不能通过line-height,应该用padding-top 垂直居中
+        line-height: 1.2;
+        padding-top: 12px;
+        // @include transition(top 1s);
+        @include transition(left 1s);
+      }
+    }
+    .toolbar2-layer {
+      position: absolute;
+      right: $toolbar2Size;
+      bottom: 0px;
+      width: 2 * $toolbar2Size;
+      height: 2 * $toolbar2Size;
+      background-color: #ddd;
+      margin-right: 2px;
+      opacity: 0;
+      transform: scale(0.01);
+      transform-origin: bottom right;
+      // transform-origin: 95% 95%;
+      @include transition(all 1s);
+    }
+    // a 标签下 hover 状态下让元素产生位移,只需改变 子元素的 top 值即可,前提是子元素设置了transition
+    /* 1. hover中的子元素要放在最后
+       2. 位移不一定非要translate
+       3. 字体可以设置大小可以通过font-size
+    */
+    &:hover {
+      .toolbar2-icon {
+        // 不可见
+        // top: -$toolbar2Size;
+        left: -$toolbar2Size;
+      }
+      .toolbar2-text {
+        // 可见
+        // top:0;
+        left: 0;
+      }
+      .toolbar2-layer {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}
