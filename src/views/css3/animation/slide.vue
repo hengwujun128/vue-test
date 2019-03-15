@@ -18,6 +18,18 @@
         <div class="box" v-for="index in 5" :key="index"></div>
       </sequential-entrance>
     </div>
+
+    <div class="infinite-scroll">
+      <!-- <infinite-scroll :barStyle="{ background: '#42b883', padding: '5px 0',margin:'0 10px' }">
+        <span style="color: #fff;">Helo World, I love Vue Infinite Scroll</span>
+      </infinite-scroll>-->
+    </div>
+
+    <div class="cssAnimation">
+      <div class="animationContainer">
+        <p>The Caterpillar and Alice looked at each other for some time in silence: at last the Caterpillar took the hookah out of its mouth, and addressed her in a languid, sleepy voice.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -119,6 +131,32 @@ $titleHeight: 40px;
       width: 100px;
       height: 100px;
       margin: 1rem;
+    }
+  }
+  @keyframes moveAnimation {
+    from {
+      // margin-left: 100%;
+      transform: translateX(100%);
+    }
+    to {
+      // margin-left: 0%;
+      transform: translateX(0%);
+    }
+  }
+  .cssAnimation {
+    .animationContainer {
+      // 去除滚动条
+      width: 100%;
+      overflow: hidden;
+      p {
+        display: block;
+        height: 50px;
+        animation-name: moveAnimation;
+        // 完成一次耗时
+        animation-duration: 3s;
+        // 执行无限次
+        animation-iteration-count: infinite;
+      }
     }
   }
 }
