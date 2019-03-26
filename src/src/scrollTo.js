@@ -2,6 +2,7 @@ import BezierEasing from 'bezier-easing'
 import easings from './easings'
 import _ from './utils'
 // 存储各种事件名称
+// 退出 (quit,withdraw)
 const abortEvents = [
   'mousedown',
   'wheel',
@@ -56,9 +57,10 @@ export const scroller = () => {
 
   let abortEv // event that aborted scrolling
   let abortFn = e => {
+    // cancelable 默认为 true,
     if (!cancelable) return
     abortEv = e
-    abort = true
+    abort = true //
   }
   let easingFn
 
@@ -97,6 +99,7 @@ export const scroller = () => {
   // 每一帧要执行的函数(在每一帧执行的过程中可以做一些相关操作)
   function step (timestamp) {
     // 如果abort变量为真，就调用done函数，1.注销container元素上所有的事件处理程序；2.设置滚动开始时间为false；
+    // 初始化,abort undefined
     if (abort) return done()
     // 如果滚动在这一针取消掉，重置滚动的开始时间为当前时间戳
     if (!timeStart) timeStart = timestamp
@@ -111,12 +114,13 @@ export const scroller = () => {
     // 如果耗时小于用户设置的时间，继续下一帧；否则(超过用户时间的话)的调用down())直接设置到目标位置
     timeElapsed < duration ? window.requestAnimationFrame(step) : done()
   }
-
+  // 动画完成函数
   function done () {
-    // 这一步是直接定位到目标位置
+    // 这一步是直接定位到目标位置()
     if (!abort) topLeft(container, targetY, targetX)
+    // 重置timeStart
     timeStart = false
-
+    //  取消事件
     _.off(container, abortEvents, abortFn)
     if (abort && onCancel) onCancel(abortEv, element)
     // 如果有完成时候的回调，则直接调用回调
@@ -196,7 +200,7 @@ export const scroller = () => {
     initialX = scrollLeft(container)
     targetX =
       cumulativeOffsetElement.left - cumulativeOffsetContainer.left + offset
-    // 初始化一个变量
+    // 初始化一个变量,退出变量
     abort = false
     // 元素相对于容器的偏移- 容器滚动条的滚动距离（也就是目标元素不需要从容器元素左上角开始滚动）
     diffY = targetY - initialY

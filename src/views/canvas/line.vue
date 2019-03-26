@@ -1,8 +1,5 @@
 <template>
-  <div class="line">hello,line
-    <!-- <z-banner>This is a banner!</z-banner> -->
-    <ZButton>this is a my Button</ZButton>
-  </div>
+  <div class="line">hello,line</div>
 </template>
 <script>
 // import myComponent from 'zzq-component'

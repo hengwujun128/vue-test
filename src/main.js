@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 // var VueScrollTo = require('vue-scrollto');
 // 第一种方式
-// import VueScrollTo from './src'
+import VueScrollTo from './src'
 // 第二种方式
 // import VueScrollTo from './views/myDirective/scroll/second/index.js'
 // expandImg
@@ -47,7 +47,7 @@ import Popover from './views/myDirective/popover/index.js'
 import zzq from 'zzq-component'
 Vue.use(zzq)
 
-// Vue.use(VueScrollTo)
+Vue.use(VueScrollTo)
 Vue.use(ShowBigImage)
 Vue.use(Popover, {
   tooltip: true

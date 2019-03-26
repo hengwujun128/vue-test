@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       toogleHeight: null,
       items: [
@@ -48,14 +48,14 @@ export default {
     }
   },
   methods: {
-    toogle (index) {
+    toogle(index) {
       if(this.toogleHeight===index) {
         this.toogleHeight=null
       } else {
         this.toogleHeight=index
       }
     },
-    isShowTriangle (index) {
+    isShowTriangle(index) {
       if(this.toogleHeight===index) {
         return {
           opactiy: 1,

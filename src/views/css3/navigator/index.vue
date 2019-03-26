@@ -23,19 +23,21 @@
         <!-- 子元素图标和文字 -->
         <span class="toolbar2-btn">
           <i class="toolbar2-icon icon-wechat"></i>
-          <span class="toolbar2-text">公众
+          <span class="toolbar2-text">
+            公众
             <br>账号
           </span>
         </span>
         <!-- 左侧子元素 -->
         <span class="toolbar2-layer toolbar2-layer-weixin">hello</span>
       </a>
-      
+
       <a href="javascript:;" class="toolbar2-item">
         <!-- 子元素图标和文字 -->
         <span class="toolbar2-btn">
           <i class="toolbar2-icon icon-message"></i>
-          <span class="toolbar2-text">意见
+          <span class="toolbar2-text">
+            意见
             <br>反馈
           </span>
         </span>
@@ -45,7 +47,8 @@
         <!-- 子元素图标和文字 -->
         <span class="toolbar2-btn">
           <i class="toolbar2-icon icon-mobile"></i>
-          <span class="toolbar2-text">App
+          <span class="toolbar2-text">
+            App
             <br>下载
           </span>
         </span>
@@ -56,7 +59,8 @@
         <!-- 子元素图标和文字 -->
         <span class="toolbar2-btn">
           <i class="toolbar2-icon icon-arrow-up2"></i>
-          <span class="toolbar2-text">返回
+          <span class="toolbar2-text">
+            返回
             <br>顶部
           </span>
         </span>
