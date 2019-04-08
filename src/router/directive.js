@@ -3,6 +3,7 @@ import directive from '@/views/myDirective/index.vue'
 import scroll from '@/views/myDirective/scroll/index.vue'
 import navigator from '@/views/myDirective/navigation/index.vue'
 import popover from '@/views/myDirective/popover.vue'
+import resize from '@/views/myDirective/resize'
 const directiveRouter = [
   {
     path: '/myDirective',
@@ -24,6 +25,11 @@ const directiveRouter = [
         path: '/myDirective/popover',
         name: 'popover',
         component: popover
+      },
+      {
+        path: '/myDirective/resize',
+        name: 'resize',
+        component: resize
       }
     ]
   }

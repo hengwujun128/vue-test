@@ -28,7 +28,7 @@ const cssRouter = [
         component: polygon
       },
       {
-        path: '/css/slide',
+        path: '/css/animation',
         name: 'slide',
         component: slide
       }

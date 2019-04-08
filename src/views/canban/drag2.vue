@@ -16,7 +16,7 @@
 
           </el-collapse-item>
         </draggable>
-      </div> -->
+      </div>-->
       <!-- <div class="group2">
         <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item v-for="item in list" :key="item.name" :title="item.title" :name="item.name">
@@ -29,34 +29,32 @@
             </draggable>
           </el-collapse-item>
         </el-collapse>
-      </div> -->
+      </div>-->
       <div class="group3">
         <div class="input-container">
           <draggable v-model="inputData" :options="{group:{name:'test1',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
             <div v-for="(element, index) in inputData" :key="index" class="item-wrapper draggable">
-              <div class="drag-item">{{element.value}}</div>
+              <div class="drag-item">{{ element.value }}</div>
             </div>
           </draggable>
         </div>
       </div>
-      <div class="group4"></div>
+      <div class="group4" />
     </div>
     <div class="section2">
       <div class="group1">
         <div class="output-container">
-          <draggable v-for="(item, index) in list" :list="list[index].children" :key="index" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" class="dragable-container" :element="'div'">
+          <draggable v-for="(item, index) in list" :list="list[index].children" :key="index" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :element="'div'" class="dragable-container">
             <!-- <span class="title">{{item.title}}</span> -->
-            <div v-for="item2 in list[index].children" class="item-wrapper draggable" :key="`dropitem-${item2.key}`">
-              <div class="drag-item">{{item2.value}}</div>
+            <div v-for="item2 in list[index].children" :key="`dropitem-${item2.key}`" class="item-wrapper draggable">
+              <div class="drag-item">{{ item2.value }}</div>
             </div>
           </draggable>
         </div>
-
       </div>
-      <div class="group2"></div>
+      <div class="group2" />
     </div>
   </div>
-
 </template>
 
 <script>
@@ -64,28 +62,6 @@ import draggable from 'vuedraggable'
 export default {
   components: {
     draggable
-  },
-  computed: {
-    dragOptions () {
-      return {
-        animation: 150,
-        group: 'test',
-        disabled: !this.editable, // disable the sortable if set true
-        ghostClass: 'ghost',
-        draggable: '.draggable', // Specifies which items inside the element should be draggable
-        chosenClass: 'sortable-chosen', // Class name for the chosen item(when mouseDown)
-        ghostClass: 'sortable-ghost', // Class name for the drop placeholder
-        handle: '.my-handle' //
-      }
-    },
-    // myList: {
-    //     get() {
-
-    //     },
-    //     set(index) {
-    //         this.list[index].children
-    //     }
-    // }
   },
   data () {
     return {
@@ -138,10 +114,50 @@ export default {
       ]
     }
   },
+  computed: {
+    dragOptions () {
+      return {
+        animation: 150,
+        group: 'test',
+        disabled: !this.editable, // disable the sortable if set true
+        ghostClass: 'ghost',
+        draggable: '.draggable', // Specifies which items inside the element should be draggable
+        chosenClass: 'sortable-chosen', // Class name for the chosen item(when mouseDown)
+        handle: '.my-handle' //
+      }
+    }
+    // myList: {
+    //     get() {
+
+    //     },
+    //     set(index) {
+    //         this.list[index].children
+    //     }
+    // }
+  },
+  mounted () {
+    var acc = document.getElementsByClassName('accordion')
+    var i
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener('click', function () {
+        /* Toggle between adding and removing the "active" class,
+        to highlight the button that controls the panel */
+        this.classList.toggle('active')
+
+        /* Toggle between hiding and showing the active panel */
+        var panel = this.nextElementSibling
+        if (panel.style.display === 'block') {
+          panel.style.display = 'none'
+        } else {
+          panel.style.display = 'block'
+        }
+      })
+    }
+  },
   methods: {
     myUpdate () {
       console.log(this.inputData)
-      debugger
     },
     cloneHandler (original) {
       // alert('clone')
@@ -163,26 +179,6 @@ export default {
           value: this.activeNames
         }
       }
-    }
-  },
-  mounted () {
-    var acc = document.getElementsByClassName('accordion')
-    var i
-
-    for (i = 0; i < acc.length; i++) {
-      acc[i].addEventListener('click', function () {
-        /* Toggle between adding and removing the "active" class,
-        to highlight the button that controls the panel */
-        this.classList.toggle('active')
-
-        /* Toggle between hiding and showing the active panel */
-        var panel = this.nextElementSibling
-        if (panel.style.display === 'block') {
-          panel.style.display = 'none'
-        } else {
-          panel.style.display = 'block'
-        }
-      })
     }
   }
 }

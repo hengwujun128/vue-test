@@ -15,15 +15,11 @@
     </div>
     <div class="sequence">
       <sequential-entrance delay="600">
-        <div class="box" v-for="index in 5" :key="index"></div>
+        <div class="box aaa" v-for="index in 5" :key="index"></div>
       </sequential-entrance>
     </div>
 
-    <div class="infinite-scroll">
-      <!-- <infinite-scroll :barStyle="{ background: '#42b883', padding: '5px 0',margin:'0 10px' }">
-        <span style="color: #fff;">Helo World, I love Vue Infinite Scroll</span>
-      </infinite-scroll>-->
-    </div>
+    <div class="infinite-scroll"></div>
 
     <div class="cssAnimation">
       <div class="animationContainer">
@@ -35,28 +31,28 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       toogleHeight: null,
       items: [
-        { name: 'hover slide1',content: 'aaaaa' },
-        { name: 'hover slide2',content: 'bbbbb' },
-        { name: 'hover slide3',content: 'ccccc' },
-        { name: 'hover slide4',content: 'ddddd' },
-        { name: 'hover slide5',content: 'eeeee' },
+        { name: 'hover slide1', content: 'aaaaa' },
+        { name: 'hover slide2', content: 'bbbbb' },
+        { name: 'hover slide3', content: 'ccccc' },
+        { name: 'hover slide4', content: 'ddddd' },
+        { name: 'hover slide5', content: 'eeeee' }
       ]
     }
   },
   methods: {
-    toogle(index) {
-      if(this.toogleHeight===index) {
-        this.toogleHeight=null
+    toogle (index) {
+      if (this.toogleHeight === index) {
+        this.toogleHeight = null
       } else {
-        this.toogleHeight=index
+        this.toogleHeight = index
       }
     },
-    isShowTriangle(index) {
-      if(this.toogleHeight===index) {
+    isShowTriangle (index) {
+      if (this.toogleHeight === index) {
         return {
           opactiy: 1,
           transform: 'scale(1)'
@@ -69,7 +65,7 @@ export default {
     //     return isShow=this.toogleHeight===index
     //   },1000)
     // }
-  },
+  }
 }
 </script>
 
@@ -155,7 +151,7 @@ $titleHeight: 40px;
         // 完成一次耗时
         animation-duration: 3s;
         // 执行无限次
-        animation-iteration-count: infinite;
+        // animation-iteration-count: infinite;
       }
     }
   }

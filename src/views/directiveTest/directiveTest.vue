@@ -1,54 +1,53 @@
 <template>
   <div class="color-container">
-    <notifications position="top left"/>
-    <h2>hello,this is directive  test</h2>
+    <notifications position="top left" />
+    <h2>hello,this is directive test</h2>
     <el-button type="info" @click="change">change</el-button>
     <div class="wrapper">
-    <div v-change-color>1</div>
-    <div v-change-color="customerColor">2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
-    <div>7</div>
-    <div>8</div>
-    <div>9</div>
-    <div>10</div>
-    <div>11</div>
-    <div>12</div>
+      <div v-change-color>1</div>
+      <div v-change-color="customerColor">2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+      <div>10</div>
+      <div>11</div>
+      <div>12</div>
     </div>
   </div>
 </template>
 
-
 <script>
-import { changeColor } from "@/directive/changeColor";
+import { changeColor } from '@/directive/changeColor'
 
 export default {
-  data() {
-    return {
-      customerColor: "#000000"
-    };
-  },
-  methods: {
-    change() {
-      // this.customerColor = Math.random();
-      // alert(Math.floor(Math.random() * 100) + 1);
-      let change = Math.floor(Math.random() * 100) + 1;
-      this.customerColor = `#0000${change}`;
-      console.log(this.customerColor);
-      this.$notify({
-        group: "foo",
-        title: change,
-        text: "Hello user! This is a notification!"
-      });
-    }
-  },
-  created() {},
   directives: {
     changeColor
+  },
+  data () {
+    return {
+      customerColor: '#000000'
+    }
+  },
+  created () { },
+  methods: {
+    change () {
+      // this.customerColor = Math.random();
+      // alert(Math.floor(Math.random() * 100) + 1);
+      let change = Math.floor(Math.random() * 100) + 1
+      this.customerColor = `#0000${change}`
+      console.log(this.customerColor)
+      this.$notify({
+        group: 'foo',
+        title: change,
+        text: 'Hello user! This is a notification!'
+      })
+    }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .wrapper {

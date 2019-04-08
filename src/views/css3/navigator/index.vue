@@ -16,7 +16,6 @@
         <span class="toolbar-layer"></span>
       </a>
     </section>
-
     <!-- 第二种方法 -->
     <div class="toolbar2">
       <a href="javascript:;" class="toolbar2-item">
@@ -43,6 +42,7 @@
         </span>
         <!--没有 左侧子元素 -->
       </a>
+
       <a href="javascript:;" class="toolbar2-item">
         <!-- 子元素图标和文字 -->
         <span class="toolbar2-btn">
@@ -74,16 +74,17 @@
 export default {
   data () {
     return {
-
+      id: 'asfdasdf',
+      id2: 'asdf'
     }
   },
   created () {
-    // alert('hello')
+    alert('hello')
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "./backgroundMethod.scss";
-@import "./iconFont.scss";
+@import './backgroundMethod.scss';
+@import './iconFont.scss';
 </style>

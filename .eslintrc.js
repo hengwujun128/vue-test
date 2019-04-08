@@ -6,22 +6,25 @@ module.exports = {
     parser: 'babel-eslint'
   },
   env: {
-    "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "jquery": true
+    browser: true,
+    commonjs: true,
+    es6: true,
+    jquery: true
   },
+  // 当前配置（主流）：extends配置vue校验规则，parser移至parserOptions下，plugins中配置为vue
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
+    // 按从上往下的规则匹配
+    //推荐校验(会和 vscode 中设置的相冲突)
+    // 'plugin:vue/recommended',
+    //基本校验
     'plugin:vue/essential',
     // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard'
   ],
   // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
+  plugins: ['vue'],
   // add your custom rules here
   /**
    * "extends": "eslint:recommended" 选项表示启用推荐规则，
