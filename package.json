@@ -47,6 +47,7 @@
     "zzq-component": "^0.1.10"
   },
   "devDependencies": {
+    "@microsoft/set-webpack-public-path-plugin": "^2.1.104",
     "autoprefixer": "^7.1.2",
     "axios-mock-adapter": "^1.15.0",
     "babel-core": "^6.22.1",

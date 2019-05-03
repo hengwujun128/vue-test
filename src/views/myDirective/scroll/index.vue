@@ -121,6 +121,11 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
+      <div :class="{fixedHeader:true,isFixed:titleFixed == true}" ref="pride_tab_fixed">
+        <div class="">
+          hello,fixedHeader
+        </div>
+      </div>
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
@@ -139,7 +144,7 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
-      <!-- <p class="target2">hello1</p> -->
+      <!-- <p class=" target2">hello1</p> -->
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
@@ -259,10 +264,11 @@
 </template>
 
 <script>
+import { debuglog,debug } from 'util';
 export default {
   data () {
-    let me = this
     return {
+      titleFixed: false,
       active: 1,
       options1: {
         el: '#target1',
@@ -272,15 +278,15 @@ export default {
         easing: 'linear',
         offset: -10, // The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
-        onStart: function (element) {
+        onStart: function(element) {
           // scrolling started
           // alert('start')
         },
-        onDone: function (element) {
+        onDone: function(element) {
           // scrolling is done
           // alert('done')
         },
-        onCancel: function () {
+        onCancel: function() {
           // scrolling has been interrupted
         },
         x: false,
@@ -294,15 +300,15 @@ export default {
         easing: 'linear',
         offset: -10, // The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
-        onStart: function (element) {
+        onStart: function(element) {
           // scrolling started
           // alert('start')
         },
-        onDone: function (element) {
+        onDone: function(element) {
           // scrolling is done
           // alert('done')
         },
-        onCancel: function () {
+        onCancel: function() {
           // scrolling has been interrupted
         },
         x: false,
@@ -316,18 +322,18 @@ export default {
         easing: 'linear',
         offset: 0, // The offset that should be applied when scrolling. This option accepts a callback function since v2.8.0,
         cancelable: true,
-        onStart: function (element) {
+        onStart: function(element) {
           // scrolling started
           // alert('start')
         },
-        onDone: function (element) {
+        onDone: function(element) {
           // scrolling is done
           // alert('done')
           // me.$nextTick(function () {
           //   me.active = 3
           // })
         },
-        onCancel: function () {
+        onCancel: function() {
           // scrolling has been interrupted
         },
         x: false,
@@ -335,54 +341,74 @@ export default {
       }
     }
   },
-  mounted () {
-    let target1 = this.cumulativeOffset(document.querySelector('#target1'))
-    let target2 = this.cumulativeOffset(document.querySelector('#target2'))
-    let target3 = this.cumulativeOffset(document.querySelector('#target3'))
 
-    let targetObj1 = getComputedStyle(document.querySelector('#target1'))
-    let targetObj2 = getComputedStyle(document.querySelector('#target2'))
-    let targetObj3 = getComputedStyle(document.querySelector('#target3'))
-    console.log(targetObj1.height, targetObj2.height, targetObj3.height)
-    var last_known_scroll_position = 0
-    var ticking = false
-    var me = this
+  mounted () {
+    // this.titleFixed=false;
+    // window.addEventListener('scroll',this.handleScroll.bind(this));
+    /* stick top end*/
+    let target1=this.cumulativeOffset(document.querySelector('#target1'))
+    let target2=this.cumulativeOffset(document.querySelector('#target2'))
+    let target3=this.cumulativeOffset(document.querySelector('#target3'))
+
+    let targetObj1=getComputedStyle(document.querySelector('#target1'))
+    let targetObj2=getComputedStyle(document.querySelector('#target2'))
+    let targetObj3=getComputedStyle(document.querySelector('#target3'))
+    console.log(targetObj1.height,targetObj2.height,targetObj3.height)
+    var last_known_scroll_position=0
+    var ticking=false
+    var me=this
     function doSomething (scroll_pos) {
       // do something with the scroll position
       // console.log('定时获取位置' + scroll_pos)
       // 10 代表偏移量,滚动指令滚动到目标位置时候-10，此时要加上
-      if (scroll_pos + 10 < target2.top) {
-        me.active = 1
-      } else if (scroll_pos + 10 < target3.top) {
-        me.active = 2
-      } else if (target3.top <= scroll_pos + 10) {
+      if(scroll_pos+10<target2.top) {
+        me.active=1
+      } else if(scroll_pos+10<target3.top) {
+        me.active=2
+      } else if(target3.top<=scroll_pos+10) {
         // debugger
-        me.active = 3
+        me.active=3
       }
+      // sticky 有 bug
+      let offsetTop=me.$refs['pride_tab_fixed'].getBoundingClientRect().top;
+      console.log(offsetTop)
+      if(offsetTop<=0) {
+        if(!me.titleFixed) {
+          me.titleFixed=true
+        }
+      } else {
+        me.titleFixed=false
+      }
+      // if(!me.titleFixed) {
+      //   me.titleFixed=offsetTop<0;
+      // }
+
+      console.log(me.titleFixed)
     }
     // throttle
 
-    function scrollThrottle (callback, delay) {
+    function scrollThrottle (callback,delay) {
       let isScroll
-      return function (e) {
-        if (!isScroll) {
-          isScroll = true
+      return function(e) {
+        if(!isScroll) {
+          isScroll=true
           setTimeout(() => {
             callback()
-            isScroll = false
-          }, delay)
+            isScroll=false
+          },delay)
         }
       }
     }
 
     // scroll 应该用函数节流;resize 应该用 debounce
-    let scrllHandler = scrollThrottle(function () {
-      last_known_scroll_position = document.documentElement.scrollTop
-      console.log('500毫秒获取位置:' + last_known_scroll_position)
-      doSomething(last_known_scroll_position)
-    }, 500)
 
-    window.addEventListener('scroll', function (e) {
+    let scrllHandler=scrollThrottle(function() {
+      last_known_scroll_position=document.documentElement.scrollTop
+      console.log('500毫秒获取位置:'+last_known_scroll_position)
+      doSomething(last_known_scroll_position)
+    },500)
+
+    window.addEventListener('scroll',function(e) {
       // 1.在事件处理程序中要实时获取滚动位置
       // last_known_scroll_position=document.documentElement.scrollTop;
       // console.log('事件处理实时获取位置:'+last_known_scroll_position)
@@ -394,22 +420,32 @@ export default {
       //   ticking=false;
       // });
       // }
+      // me.handleScroll()
+
       // 函数节流还是很明显的
       scrllHandler(e)
     })
   },
   methods: {
+    //滚动监听，头部固定
+    handleScroll: function() {
+
+      let offsetTop=this.$refs['pride_tab_fixed'].getBoundingClientRect().top;
+      this.titleFixed=offsetTop<0;
+      debugger
+      // some code
+    },
     cumulativeOffset (element) {
-      let top = 0
-      let left = 0
+      let top=0
+      let left=0
 
       do {
-        top += element.offsetTop || 0
-        left += element.offsetLeft || 0
+        top+=element.offsetTop||0
+        left+=element.offsetLeft||0
         // 如果有祖先定位元素，就循环累加
 
-        element = element.offsetParent
-      } while (element)
+        element=element.offsetParent
+      } while(element)
 
       return {
         top: top,
@@ -425,6 +461,11 @@ export default {
 <style lang="scss" scoped>
 .scrollTo-container {
   #content {
+    .isFixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
     // height: 800px;
     padding: 10px;
     // overflow: auto;
@@ -442,6 +483,14 @@ export default {
     .target2 {
       background: green;
       color: #fff;
+    }
+    .fixedHeader {
+      height: 100px;
+      width: 100%;
+      background: #909399;
+      color: #fff;
+      font-size: 36px;
+      text-align: center;
     }
   }
   ul.button {
