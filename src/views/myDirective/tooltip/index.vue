@@ -4,8 +4,11 @@
     <!-- <div class="tooltip">Hover over me
       <span class="tooltiptext">Tooltip text</span>
     </div> -->
-    <tooltip>
-      hello,world
+    <tooltip position="left">
+      <div>
+        <div class="title">hello,title</div>
+        <div class="desc">hello,desc</div>
+      </div>
     </tooltip>
   </div>
 </template>
