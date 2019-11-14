@@ -17,9 +17,11 @@
       </a>
     </section>
     <!-- 第二种方法 -->
+    <!-- toolbar2 相当于 wrapper  -->
     <div class="toolbar2">
+      <!-- 每个 .toolbar2-item 的父元素,当鼠标 hover 时候,触发 2 个动画 -->
       <a href="javascript:;" class="toolbar2-item">
-        <!-- 子元素图标和文字 -->
+        <!-- 子元素图标和文字切换的动画 -->
         <span class="toolbar2-btn">
           <i class="toolbar2-icon icon-wechat"></i>
           <span class="toolbar2-text">
@@ -27,7 +29,7 @@
             <br>账号
           </span>
         </span>
-        <!-- 左侧子元素 -->
+        <!-- 左侧子元素动画 -->
         <span class="toolbar2-layer toolbar2-layer-weixin">hello</span>
       </a>
 
@@ -78,9 +80,7 @@ export default {
       id2: 'asdf'
     }
   },
-  created () {
-    alert('hello')
-  }
+  created () {}
 }
 </script>
 

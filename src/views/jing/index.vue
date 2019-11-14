@@ -10,7 +10,7 @@
                     <div class="pipe-container" v-if="[2,4,6,8].indexOf(item)>-1">
                         <template v-if="pipeTotal===4">
                           <!-- result 代表每个面 -->
-                          
+
                         <four v-if="item===2" :result="dealData['position2']['groupDuct']" :direction='2'></four>
                         <four v-if="item===4" :result="dealData['position1']['groupDuct']" :direction='1'></four>
                         <four v-if="item===6" :result="dealData['position4']['groupDuct']" :direction='4'></four>
@@ -48,21 +48,20 @@
     </div>
 </template>
 
-
 <script>
-/**改动大小尺寸:
+/** 改动大小尺寸:
  * 1.grid-template-rows and grid-template-columns (180,1.6),
  * 2.当每面有6个孔的时候(180,宽高42)，其宽高要按照9孔的标准计算,不能是百分比
  * 3.
  *
  *
  */
-import Data from "./data.js";
-import four from "./four.vue";
-import six from "./six.vue";
-import nine from "./nine.vue";
+import Data from './data.js'
+import four from './four.vue'
+import six from './six.vue'
+import nine from './nine.vue'
 export default {
-  data() {
+  data () {
     return {
       result: Data.six,
       total: 9,
@@ -73,7 +72,7 @@ export default {
         ductModel: 1, // 1-四孔; 2-六孔; 4-九孔
         manholeDuctSurvey: Data.manholeDuctSurvey
       }
-    };
+    }
   },
   props: {
     // 管道数据[{xx},{xx}],当引入此组件的时候要传递的参数
@@ -83,13 +82,13 @@ export default {
     // }
   },
   computed: {
-    dealData() {
-      let result = {};
+    dealData () {
+      let result = {}
       this.internalSurvey.manholeDuctSurvey.map(item => {
-        let key = "position" + item.position;
-        result[key] = item;
-      });
-      return result;
+        let key = 'position' + item.position
+        result[key] = item
+      })
+      return result
     }
   },
   components: {
@@ -98,20 +97,20 @@ export default {
     nine
   },
   methods: {
-    toggle() {
+    toggle () {
       if (this.pipeTotal === 4) {
-        this.pipeTotal = 6;
+        this.pipeTotal = 6
       } else if (this.pipeTotal === 6) {
-        this.pipeTotal = 9;
+        this.pipeTotal = 9
       } else if (this.pipeTotal === 9) {
-        this.pipeTotal = 4;
+        this.pipeTotal = 4
       }
     }
   },
-  jing(v) {
-    return [2, 4, 6, 8].includes(v);
+  jing (v) {
+    return [2, 4, 6, 8].includes(v)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

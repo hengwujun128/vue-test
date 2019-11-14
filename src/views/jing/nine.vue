@@ -1,195 +1,194 @@
 <template>
   <div class="nine-container">
-      <!-- {{direction}} -->
-      <!-- 对 position等于1,4,8 做判断 -->
-      <!-- left and right three rows and two columns -->
+    <!-- {{direction}} -->
+    <!-- 对 position等于1,4,8 做判断 -->
+    <!-- left and right three rows and two columns -->
     <template v-if="direction==1">
       <!-- left panel -->
-      <div v-for="(value, key) in leftData" :key="key"  class="nine-hole">
+      <div v-for="(value, key) in leftData" :key="key" class="nine-hole">
         <span class="first">
-          <img :src="value.src"/>
+          <img :src="value.src" />
         </span>
         <span class="second">{{value.groupNum}}行{{value.indexNum}}列</span>
       </div>
     </template>
     <!-- right panel -->
     <template v-else-if="direction==4">
-      <div v-for="(value, key) in rightData" :key="key"  class="nine-hole">
-        <span class="first"> <img :src="value.src"/></span>
+      <div v-for="(value, key) in rightData" :key="key" class="nine-hole">
+        <span class="first"> <img :src="value.src" /></span>
         <span class="second">{{value.groupNum}}行{{value.indexNum}}列</span>
       </div>
     </template>
     <!-- bottom panel -->
     <template v-else-if="direction==8">
-      <div v-for="(value, key) in bottomData" :key="key"  class="nine-hole extra">
-        <span class="first"> <img :src="value.src"/></span>
+      <div v-for="(value, key) in bottomData" :key="key" class="nine-hole extra">
+        <span class="first"> <img :src="value.src" /></span>
         <span class="second">{{value.groupNum}}行{{value.indexNum}}列</span>
       </div>
     </template>
     <!-- top panel -->
     <template v-else>
-      <div v-for="(value, key) in topData" :key="key"  class="nine-hole extra">
-        <span class="first"><img :src="value.src"/></span>
+      <div v-for="(value, key) in topData" :key="key" class="nine-hole extra">
+        <span class="first"><img :src="value.src" /></span>
         <span class="second">{{value.groupNum}}行{{value.indexNum}}列</span>
       </div>
     </template>
   </div>
 </template>
 
-
 <script>
 const MAP = {
-  "1": "available.png",
-  "2": "half.png",
-  "4": "unavailable.png"
-};
+  '1': 'available.png',
+  '2': 'half.png',
+  '4': 'unavailable.png'
+}
 export default {
-  data() {
+  data () {
     return {
-      path: "../../assets/img"
-    };
+      path: '../../assets/img'
+    }
   },
-  props: ["result", "direction"],
+  props: ['result', 'direction'],
   computed: {
-    leftData() {
-      let response = {};
+    leftData () {
+      let response = {}
       if (this.direction === 1) {
         this.result.map(res => {
-          res["src"] = require(`../../assets/img/${MAP[res.status]}`);
+          res['src'] = require(`../../assets/img/${MAP[res.status]}`)
           if (res.groupNum == 1) {
             if (res.indexNum == 1) {
-              response["7"] = res; // 1-1
+              response['7'] = res // 1-1
             } else if (res.indexNum == 2) {
-              response["4"] = res; //1-2
+              response['4'] = res // 1-2
             } else {
-              response["1"] = res; //1-3
+              response['1'] = res // 1-3
             }
           } else if (res.groupNum == 2) {
             if (res.indexNum == 1) {
-              response["8"] = res; // 2-1
+              response['8'] = res // 2-1
             } else if (res.indexNum == 2) {
-              response["5"] = res; // 2-1
+              response['5'] = res // 2-1
             } else {
-              response["2"] = res; //2-2
+              response['2'] = res // 2-2
             }
           } else {
             if (res.indexNum == 1) {
-              response["9"] = res; // 3-1
+              response['9'] = res // 3-1
             } else if (res.indexNum == 2) {
-              response["6"] = res; // 3-2
+              response['6'] = res // 3-2
             } else {
-              response["3"] = res; //3-3
+              response['3'] = res // 3-3
             }
           }
-        });
+        })
       }
-      return response;
+      return response
     },
-    rightData() {
-      let response = {};
+    rightData () {
+      let response = {}
       if (this.direction === 4) {
         this.result.map(res => {
-          res["src"] = require(`../../assets/img/${MAP[res.status]}`);
+          res['src'] = require(`../../assets/img/${MAP[res.status]}`)
           if (res.groupNum == 1) {
             if (res.indexNum == 1) {
-              response["3"] = res; // 1-1
+              response['3'] = res // 1-1
             } else if (res.indexNum == 2) {
-              response["6"] = res; // 1-2
+              response['6'] = res // 1-2
             } else {
-              response["9"] = res; //1-3
+              response['9'] = res // 1-3
             }
           } else if (res.groupNum == 2) {
             if (res.indexNum == 1) {
-              response["2"] = res; // 2-1
+              response['2'] = res // 2-1
             } else if (res.indexNum == 2) {
-              response["5"] = res; // 2-1
+              response['5'] = res // 2-1
             } else {
-              response["8"] = res; //2-2
+              response['8'] = res // 2-2
             }
           } else {
             if (res.indexNum == 1) {
-              response["1"] = res; // 2-1
+              response['1'] = res // 2-1
             } else if (res.indexNum == 2) {
-              response["4"] = res; // 2-1
+              response['4'] = res // 2-1
             } else {
-              response["7"] = res; //2-2
+              response['7'] = res // 2-2
             }
           }
-        });
+        })
       }
-      return response;
+      return response
     },
-    bottomData() {
-      let response = {};
+    bottomData () {
+      let response = {}
       if (this.direction === 8) {
         this.result.map(res => {
-          res["src"] = require(`../../assets/img/${MAP[res.status]}`);
+          res['src'] = require(`../../assets/img/${MAP[res.status]}`)
           if (res.groupNum == 1) {
             if (res.indexNum == 1) {
-              response["9"] = res; // 1-1
+              response['9'] = res // 1-1
             } else if (res.indexNum == 2) {
-              response["8"] = res; // 1-2
+              response['8'] = res // 1-2
             } else {
-              response["7"] = res; //1-3
+              response['7'] = res // 1-3
             }
           } else if (res.groupNum == 2) {
             if (res.indexNum == 1) {
-              response["6"] = res; // 2-1
+              response['6'] = res // 2-1
             } else if (res.indexNum == 2) {
-              response["5"] = res; // 2-2
+              response['5'] = res // 2-2
             } else {
-              response["4"] = res; //2-3
+              response['4'] = res // 2-3
             }
           } else {
             if (res.indexNum == 1) {
-              response["3"] = res; // 3-1
+              response['3'] = res // 3-1
             } else if (res.indexNum == 2) {
-              response["2"] = res; // 3-2
+              response['2'] = res // 3-2
             } else {
-              response["1"] = res; //3-3
+              response['1'] = res // 3-3
             }
           }
-        });
+        })
       }
-      return response;
+      return response
     },
-    topData() {
-      let response = {};
+    topData () {
+      let response = {}
       // 不需要做判断
       this.result.map(res => {
-        res["src"] = require(`../../assets/img/${MAP[res.status]}`);
+        res['src'] = require(`../../assets/img/${MAP[res.status]}`)
         if (res.groupNum == 1) {
           if (res.indexNum == 1) {
-            response["1"] = res; // 1-1
+            response['1'] = res // 1-1
           } else if (res.indexNum == 2) {
-            response["2"] = res; //1-2
+            response['2'] = res // 1-2
           } else {
-            response["3"] = res; //1-3
+            response['3'] = res // 1-3
           }
         } else if (res.groupNum == 2) {
           if (res.indexNum == 1) {
-            response["4"] = res; // 2-1
+            response['4'] = res // 2-1
           } else if (res.indexNum == 2) {
-            response["5"] = res; //1-2
+            response['5'] = res // 1-2
           } else {
-            response["6"] = res; //2-2
+            response['6'] = res // 2-2
           }
         } else {
           if (res.indexNum == 1) {
-            response["7"] = res; // 2-1
+            response['7'] = res // 2-1
           } else if (res.indexNum == 2) {
-            response["8"] = res; //1-2
+            response['8'] = res // 1-2
           } else {
-            response["9"] = res; //2-2
+            response['9'] = res // 2-2
           }
         }
-      });
-      return response;
+      })
+      return response
     }
   },
   methods: {},
-  mounted() {}
-};
+  mounted () {}
+}
 </script>
 
 <style lang="scss" scoped>

@@ -51,6 +51,7 @@ $toolbar2Size: 52px;
 @mixin transition($transition) {
   transition: $transition;
 }
+
 .toolbar2 {
   position: fixed;
   left: 40%;

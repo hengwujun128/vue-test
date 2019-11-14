@@ -23,7 +23,6 @@ const prepareBinding = ({
 }
 // 通过一个函数为 dom 添加事件
 const addClickEventListener = (target, params) => {
-
   const click = (srcEvent) => {
     // 在原生事件处理程序中,通过 eventBus 在发射事件;然后在组件中接受;
     // 前提是这个组件已经被注入到 vue 实例中,事实上却是如此
@@ -47,7 +46,7 @@ const addClickEventListener = (target, params) => {
   }
   // 为 dom 元素添加事件
   target.addEventListener('click', click)
-  //还可以为 dom 元素对象添加一个属性函数,用于移除 dom 上的原生 click 事件;一般都是在指令 unbind 的时候触发
+  // 还可以为 dom 元素对象添加一个属性函数,用于移除 dom 上的原生 click 事件;一般都是在指令 unbind 的时候触发
   target.$popoverRemoveClickHandlers = () => {
     target.removeEventListener('click', click)
   }
@@ -79,7 +78,7 @@ const addHoverEventListener = (target, params) => {
 }
 // plugin
 export default {
-  install(Vue, params = {}) {
+  install (Vue, params = {}) {
     // 监听resize
     document.addEventListener('resize', (event) => {
       events.$emit('hide', {
@@ -104,7 +103,7 @@ export default {
       }
     })
 
-    //通过传入的参数,注入一个组件
+    // 通过传入的参数,注入一个组件
     if (params.tooltip) {
       if (params.debug) {
         console.log('vue-js-popover | tooltip active')

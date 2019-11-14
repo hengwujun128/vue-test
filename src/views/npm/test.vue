@@ -13,14 +13,14 @@
 <script>
 // import Components from "zzq-component";
 export default {
-  name: "test",
+  name: 'test',
   // components: {
   //   ...Components
   // },
   data: () => {
-    return {};
+    return {}
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .title {

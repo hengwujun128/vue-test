@@ -1,34 +1,34 @@
 <template>
-    <div id="modals-container">
-      <!-- modal 为全局组件，直接可以使用 -->
-        <modal
-            v-for="modal in modals"
-            :key="modal.id"
-            v-bind="modal.config"
-            v-on="modal.events"
-            @closed="remove(modal.id)"
-        >
-            <component
-              :is="modal.component"
-              v-bind="modal.params"
-              @close="$modal.hide(modal.config.name)"
-            ></component>
-        </modal>
-    </div>
+  <div id="modals-container">
+    <!-- modal 为全局组件，直接可以使用 -->
+    <modal
+      v-for="modal in modals"
+      :key="modal.id"
+      v-bind="modal.config"
+      v-on="modal.events"
+      @closed="remove(modal.id)"
+    >
+      <component
+        :is="modal.component"
+        v-bind="modal.params"
+        @close="$modal.hide(modal.config.name)"
+      />
+    </modal>
+  </div>
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       uid: 0,
       modals: []
     }
   },
-  created() {
+  created () {
     this.$modal._setDynamicContainer(this)
   },
   methods: {
-    add(modal, params, config, events) {
+    add (modal, params, config, events) {
       let id = this.uid++
       config = config ? Object.assign({}, config) : {}
       if (!config.name) {
@@ -45,7 +45,7 @@ export default {
         this.$modal.show(config.name)
       })
     },
-    remove(id) {
+    remove (id) {
       for (let i in this.modals) {
         if (this.modals[i].id === id) {
           this.modals.splice(i, 1)

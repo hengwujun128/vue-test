@@ -146,7 +146,7 @@ export default {
   components: {
     draggable
   },
-  data: function() {
+  data: function () {
     return {
       editable: true,
       isDragging: false,
@@ -220,7 +220,7 @@ export default {
     }
   },
   computed: {
-    dragOptions() {
+    dragOptions () {
       return {
         animation: 0,
         group: 'description',
@@ -234,7 +234,7 @@ export default {
     }
   },
   watch: {
-    isDragging(newValue) {
+    isDragging (newValue) {
       if (newValue) {
         this.delayedDragging = true
         return
@@ -246,25 +246,25 @@ export default {
     }
   },
   methods: {
-    handleChange() {
+    handleChange () {
       console.log('changed')
       // alert("changed");
     },
-    inputChanged(value) {
+    inputChanged (value) {
       this.activeNames = value
     },
     // add event handler to  child
-    handleClick() {
+    handleClick () {
       // alert("click");
     },
 
-    //This props is used to pass additional information to child component declared by element props
-    /** 
+    // This props is used to pass additional information to child component declared by element props
+    /**
     props: props to be passed to the child component
     on:   events to be subscribe in the child component
     */
 
-    getComponentData() {
+    getComponentData () {
       return {
         on: {
           change: this.handleChange,
@@ -276,7 +276,7 @@ export default {
         }
       }
     },
-    addItem() {
+    addItem () {
       // let index = this.count++;
       // let item = {
       //   draggable: true,
@@ -287,15 +287,15 @@ export default {
       // this.list1.push(item);
     },
     // evt object has same property as Sortable onMove event, and 3 additional properties:
-    //evt.relatedContext,evt.draggedContext
-    checkMove({ relatedContext, draggedContext }) {
+    // evt.relatedContext,evt.draggedContext
+    checkMove ({ relatedContext, draggedContext }) {
       //
       //  return (evt.draggedContext.element.name!=='apple');
       // alert(draggedContext.element.description);
       return true
     },
     // can watch any changes for an group
-    group1Change({ added, removed, moved }) {
+    group1Change ({ added, removed, moved }) {
       // console.log(added.element.name);
       // console.log(removed.element.name);
       // console.log(moved.element.name);
@@ -307,4 +307,3 @@ export default {
 <style lang="scss">
 @import './canban.scss';
 </style>
-

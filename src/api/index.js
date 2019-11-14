@@ -1,20 +1,20 @@
-import axios from 'axios';
+import axios from 'axios'
 // import vue from 'vue';
 
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 // 请求拦截器
 axios.interceptors.request.use(function (config) {
-  return config;
+  return config
 }, function (error) {
-  return Promise.reject(error);
-});
+  return Promise.reject(error)
+})
 // 响应拦截器
 axios.interceptors.response.use(function (response) {
-  return response.data;
+  return response.data
 }, function (error) {
-  return Promise.reject(error);
-});
+  return Promise.reject(error)
+})
 
 // 封装axios的post请求
 // export function fetch(url, params) {
@@ -30,13 +30,13 @@ axios.interceptors.response.use(function (response) {
 // }
 
 export default {
-  JH_news(url, params) {
-    return fetch(url, params);
+  JH_news (url, params) {
+    return fetch(url, params)
   },
-  mockTest() {
+  mockTest () {
     return axios.get('/api/test')
   },
-  mockString() {
+  mockString () {
     return axios.get('/api/testString')
   }
-};
+}

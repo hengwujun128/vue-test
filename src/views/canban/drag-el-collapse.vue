@@ -77,184 +77,183 @@
   </div>
 </template>
 <script>
-import draggable from "vuedraggable";
+import draggable from 'vuedraggable'
 
 export default {
   components: {
     draggable
   },
   watch: {
-    isDragging(newValue) {
-      if(newValue) {
-        this.delayedDragging=true;
-        return;
+    isDragging (newValue) {
+      if (newValue) {
+        this.delayedDragging = true
+        return
       }
       this.$nextTick(() => {
-        this.delayedDragging=false;
-      });
+        this.delayedDragging = false
+      })
     }
   },
   computed: {
-    inputOptions() {
+    inputOptions () {
       return {
         animation: 0,
         group: {
-          name: "input",
-          put: ["test"]
+          name: 'input',
+          put: ['test']
         },
-        dragable: ".draggable",
+        dragable: '.draggable',
         // disabled: !this.editable,
-        ghostClass: "ghost"
-      };
+        ghostClass: 'ghost'
+      }
     },
     // 对输入和输出组的数据进行过滤(注意：默认组)
-    inputFilter() {
-      let data=[];
+    inputFilter () {
+      let data = []
       this.inputData.map(item => {
-        data.push(item.parameterId);
-      });
-      return data;
+        data.push(item.parameterId)
+      })
+      return data
     },
-    outputFilter() {
-      let data=[];
+    outputFilter () {
+      let data = []
       this.outputData.map(item => {
-        data.push(item.parameterId);
-      });
-      return data;
+        data.push(item.parameterId)
+      })
+      return data
     }
   },
-  data() {
+  data () {
     return {
       isDragging: false,
 
       activeNames: 1,
       list: [
         {
-          groupId: "1",
-          groupName: "first group",
-          title: "first group",
+          groupId: '1',
+          groupName: 'first group',
+          title: 'first group',
           isCollapse: true,
-          description: "hello first",
+          description: 'hello first',
           parameterList: [
-            { parameterId: "parameterId1",parameterName: "parameterName1" },
-            { parameterId: "parameterId2",parameterName: "parameterName2" },
-            { parameterId: "parameterId3",parameterName: "parameterName3" },
-            { parameterId: "parameterId4",parameterName: "parameterName4" }
+            { parameterId: 'parameterId1', parameterName: 'parameterName1' },
+            { parameterId: 'parameterId2', parameterName: 'parameterName2' },
+            { parameterId: 'parameterId3', parameterName: 'parameterName3' },
+            { parameterId: 'parameterId4', parameterName: 'parameterName4' }
           ]
         },
         {
-          groupId: "2",
-          groupName: "second group",
-          title: "second group",
+          groupId: '2',
+          groupName: 'second group',
+          title: 'second group',
           isCollapse: false,
-          description: "hello second",
+          description: 'hello second',
           parameterList: [
-            { parameterId: "parameterId12",parameterName: "parameterName12" },
-            { parameterId: "parameterId22",parameterName: "parameterName22" },
-            { parameterId: "parameterId32",parameterName: "parameterName32" },
-            { parameterId: "parameterId42",parameterName: "parameterName42" }
+            { parameterId: 'parameterId12', parameterName: 'parameterName12' },
+            { parameterId: 'parameterId22', parameterName: 'parameterName22' },
+            { parameterId: 'parameterId32', parameterName: 'parameterName32' },
+            { parameterId: 'parameterId42', parameterName: 'parameterName42' }
           ]
         },
         {
-          groupId: "3",
-          groupName: "third group",
-          title: "third group",
+          groupId: '3',
+          groupName: 'third group',
+          title: 'third group',
           isCollapse: false,
-          description: "hello third",
+          description: 'hello third',
           parameterList: [
-            { parameterId: "parameterId13",parameterName: "parameterName13" },
-            { parameterId: "parameterId23",parameterName: "parameterName23" },
-            { parameterId: "parameterId33",parameterName: "parameterName33" },
-            { parameterId: "parameterId43",parameterName: "parameterName43" }
+            { parameterId: 'parameterId13', parameterName: 'parameterName13' },
+            { parameterId: 'parameterId23', parameterName: 'parameterName23' },
+            { parameterId: 'parameterId33', parameterName: 'parameterName33' },
+            { parameterId: 'parameterId43', parameterName: 'parameterName43' }
           ]
         },
         {
-          groupId: "4",
-          groupName: "fourth group",
-          title: "fourth group",
-          name: "fourth",
-          description: "hello fourth",
+          groupId: '4',
+          groupName: 'fourth group',
+          title: 'fourth group',
+          name: 'fourth',
+          description: 'hello fourth',
           parameterList: [
-            { parameterId: "parameterId14",parameterName: "parameterName14" },
-            { parameterId: "parameterId24",parameterName: "parameterName24" },
-            { parameterId: "parameterId34",parameterName: "parameterName34" },
-            { parameterId: "parameterId44",parameterName: "parameterName44" },
-            { parameterId: "parameterId54",parameterName: "parameterName54" }
+            { parameterId: 'parameterId14', parameterName: 'parameterName14' },
+            { parameterId: 'parameterId24', parameterName: 'parameterName24' },
+            { parameterId: 'parameterId34', parameterName: 'parameterName34' },
+            { parameterId: 'parameterId44', parameterName: 'parameterName44' },
+            { parameterId: 'parameterId54', parameterName: 'parameterName54' }
           ]
         }
       ],
       inputData: [],
       outputData: [],
       isCollapse: 1
-    };
+    }
   },
   methods: {
-    handleChange() { },
-    toogle(index) {
+    handleChange () { },
+    toogle (index) {
       // this.isCollapse = index
-      this.list[index]["isCollapse"]=!this.list[index]["isCollapse"];
+      this.list[index]['isCollapse'] = !this.list[index]['isCollapse']
       // this.isCollapse = (this.isCollapse === index ? null : index)
     },
-    inputAdd(obj) {
-      debugger;
-      if(
+    inputAdd (obj) {
+      if (
         !this.$parent.customizedInputGroup.includes(
           this.inputData[obj.newIndex].groupId
         )
       ) {
-        this.inputData[obj.newIndex].groupId=-1;
+        this.inputData[obj.newIndex].groupId = -1
       }
-      this.duplicatedTips(obj,this.inputData);
+      this.duplicatedTips(obj, this.inputData)
     },
-    outputAdd(obj) {
-      this.duplicatedTips(obj,this.outputData);
+    outputAdd (obj) {
+      this.duplicatedTips(obj, this.outputData)
     },
-    duplicatedTips(obj,list) {
-      let pushedIndex=obj.newIndex; // element's new index within new parent
-      let pushedItem=list[pushedIndex];
+    duplicatedTips (obj, list) {
+      let pushedIndex = obj.newIndex // element's new index within new parent
+      let pushedItem = list[pushedIndex]
       // debugger
-      if(list.length>1) {
+      if (list.length > 1) {
         // debugger
         // let originData = this.inputData.splice(pushedIndex,1)
-        list.map((item,index) => {
-          if(
-            index!==pushedIndex&&
-            item.parameterId===pushedItem["parameterId"]
+        list.map((item, index) => {
+          if (
+            index !== pushedIndex &&
+            item.parameterId === pushedItem['parameterId']
           ) {
-            this.$confirm("已经存在该字段, 是否继续?","提示",{
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
+            this.$confirm('已经存在该字段, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
             })
               .then(() => { })
               .catch(() => {
-                list.splice(pushedIndex,1);
-              });
+                list.splice(pushedIndex, 1)
+              })
           }
-        });
+        })
       }
     },
-    isExistInGroups() { },
-    myStart() {
-      this.isDragging=true;
+    isExistInGroups () { },
+    myStart () {
+      this.isDragging = true
     },
-    inputEnd(obj) {
-      console.log(this.inputData);
-      this.isDragging=false;
+    inputEnd (obj) {
+      console.log(this.inputData)
+      this.isDragging = false
     },
-    myUpdate() {
-      console.log(this.inputData);
+    myUpdate () {
+      console.log(this.inputData)
       // debugger
     },
-    remove: function(index,tag) {
-      if(tag==1) {
-        this.inputData.splice(index,1);
+    remove: function (index, tag) {
+      if (tag == 1) {
+        this.inputData.splice(index, 1)
       } else {
-        this.outputData.splice(index,1);
+        this.outputData.splice(index, 1)
       }
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .container {

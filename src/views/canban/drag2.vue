@@ -32,7 +32,10 @@
       </div>-->
       <div class="group3">
         <div class="input-container">
-          <draggable v-model="inputData" :options="{group:{name:'test1',put:['test']},draggable: '.draggable'}" style="height:100%;" @start="drag=true" @end="drag=false" @update="myUpdate">
+          <draggable v-model="inputData" :options="{
+              group: { name: 'test1', put: ['test'] },
+              draggable: '.draggable'
+            }" style="height:100%;" @start="drag = true" @end="drag = false" @update="myUpdate">
             <div v-for="(element, index) in inputData" :key="index" class="item-wrapper draggable">
               <div class="drag-item">{{ element.value }}</div>
             </div>
@@ -41,10 +44,14 @@
       </div>
       <div class="group4" />
     </div>
+
     <div class="section2">
       <div class="group1">
         <div class="output-container">
-          <draggable v-for="(item, index) in list" :list="list[index].children" :key="index" :options="{group:{name:'test',pull:'clone',put:false}, draggable: '.draggable'}" :element="'div'" class="dragable-container">
+          <draggable v-for="(item, index) in list" :list="list[index].children" :key="index" :options="{
+              group: { name: 'test', pull: 'clone', put: false },
+              draggable: '.draggable'
+            }" :element="'div'" class="dragable-container">
             <!-- <span class="title">{{item.title}}</span> -->
             <div v-for="item2 in list[index].children" :key="`dropitem-${item2.key}`" class="item-wrapper draggable">
               <div class="drag-item">{{ item2.value }}</div>

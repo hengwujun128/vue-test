@@ -9,11 +9,11 @@
 </template>
 <script>
 /**
- * 
- * 1.If you’re using a component recursively you must either register it globally with Vue.component, 
+ *
+ * 1.If you’re using a component recursively you must either register it globally with Vue.component,
  * or, give it a name property. Otherwise, any children of the component will not be able to resolve further invocations
  *  and you'll get an undefined component error.
- * 
+ *
  */
 // 2.Remember that our data structure has a single root node. To begin the recursion we invoke the TreeMenu component in our main template, using the root nodesproperties for the props:
 
@@ -90,10 +90,10 @@ export default {
   },
   methods: {
     handleNodeClick (data) {
-      console.log(data);
+      console.log(data)
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .navigation-container {

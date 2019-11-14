@@ -7,11 +7,11 @@
 </template>
 <script>
 /**
- * 
- * If you’re using a component recursively you must either register it globally with Vue.component, 
+ *
+ * If you’re using a component recursively you must either register it globally with Vue.component,
  * or, give it a name property. Otherwise, any children of the component will not be able to resolve further invocations
  *  and you'll get an undefined component error.
- * 
+ *
  */
 export default {
   name: 'tree-menu',
@@ -33,7 +33,7 @@ export default {
       this.showChildren = !this.showChildren
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .tree-menu {

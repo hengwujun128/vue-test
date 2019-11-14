@@ -9,10 +9,10 @@ export default {
   //   ZBanner: myComponent.ZBanner,
   //   ZButton: myComponent.ZButton
   // },
-  data() {
+  data () {
     return {}
   },
-  created() {
+  created () {
     // console.log(myComponent)
   }
 }

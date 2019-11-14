@@ -106,7 +106,7 @@
 </template>
 <script>
 import draggable from 'vuedraggable'
-import indexMixin from "./index.js"
+import indexMixin from './index.js'
 export default {
   components: {
     draggable
@@ -114,12 +114,12 @@ export default {
   watch: {
     isDragging (newValue) {
       if (newValue) {
-        this.delayedDragging = true;
-        return;
+        this.delayedDragging = true
+        return
       }
       this.$nextTick(() => {
-        this.delayedDragging = false;
-      });
+        this.delayedDragging = false
+      })
     }
   },
   mixins: [indexMixin],
@@ -130,7 +130,7 @@ export default {
         draggable: '.draggable2',
         ghostClass: 'groupItem-ghost',
         chosenClass: 'item-chosen',
-        sort: false,
+        sort: false
       }
     },
     GroupOptions () {
@@ -153,7 +153,7 @@ export default {
         },
 
         dragable: '.draggable',
-        ghostClass: "ghost"
+        ghostClass: 'ghost'
       }
     },
     EachGroupOptions () {
@@ -164,8 +164,7 @@ export default {
         group: {
           name: 'groupItem',
           put: ['test']
-        },
-
+        }
       }
     },
     // 对输入和输出组的数据进行过滤(注意：默认组)
@@ -174,7 +173,7 @@ export default {
       this.inputData.map(item => {
         data.push(item.parameterId)
       })
-      return data;
+      return data
     },
     outputFilter () {
       let data = []
@@ -187,7 +186,6 @@ export default {
   data () {
     return {
       isDragging: false,
-
 
       activeNames: 1,
 
@@ -226,9 +224,7 @@ export default {
     OutputAddItem (data) {
       this.duplicatedTips(data, this.list3)
     },
-    handleChange () {
-
-    },
+    handleChange () {},
     toogle (index) {
       // this.isCollapse = index
       this.list[index]['isCollapse'] = !this.list[index]['isCollapse']
@@ -244,7 +240,7 @@ export default {
       // this.duplicatedTips(obj, this.list3)
     },
     duplicatedTips (data, list) {
-      let index = data.target.id;
+      let index = data.target.id
       let pushedIndex = data.newIndex
       // debugger
       let pushedObject = list[index]['parameterList'][pushedIndex]
@@ -253,23 +249,24 @@ export default {
       if (groupList.length > 1) {
         // debugger
         groupList.map((item, index) => {
-          if ((index !== pushedIndex) && (item.parameterId === pushedObject['parameterId'])) {
+          if (
+            index !== pushedIndex &&
+            item.parameterId === pushedObject['parameterId']
+          ) {
             this.$confirm('已经存在该字段, 是否继续?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
-            }).then(() => {
-            }).catch(() => {
-              groupList.splice(pushedIndex, 1)
-            });
+            })
+              .then(() => {})
+              .catch(() => {
+                groupList.splice(pushedIndex, 1)
+              })
           }
         })
       }
-
     },
-    isExistInGroups () {
-
-    },
+    isExistInGroups () {},
     myStart () {
       this.isDragging = true
     },
@@ -281,13 +278,12 @@ export default {
     },
     // if tag equal to 1,input;
     remove: function (index, index2, tag) {
-      if (tag == 1) {
-        this.list2[index].parameterList.splice(index2, 1);
+      if (tag === 1) {
+        this.list2[index].parameterList.splice(index2, 1)
       } else {
-        this.list3[index].parameterList.splice(index2, 1);
+        this.list3[index].parameterList.splice(index2, 1)
       }
-
-    },
+    }
   }
 }
 </script>

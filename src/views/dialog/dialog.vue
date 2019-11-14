@@ -10,28 +10,28 @@
 </template>
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
-      name: "hello",
+      name: 'hello',
       draggable: true,
       reset: true,
-      transition: "all"
-    };
-  },
-  methods: {
-    show() {
-      // 向v-modal emit toggle event
-      // second params transfer to modal component
-      this.$modal.show("hello",{});
-    },
-    hide() {
-      this.$modal.hide("hello");
+      transition: 'all'
     }
   },
-  created() {
+  methods: {
+    show () {
+      // 向v-modal emit toggle event
+      // second params transfer to modal component
+      this.$modal.show('hello', {})
+    },
+    hide () {
+      this.$modal.hide('hello')
+    }
+  },
+  created () {
     // this.show();
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .v--modal-overlay {

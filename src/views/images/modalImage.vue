@@ -18,24 +18,24 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       url: require('../../assets/img/img_snow.jpg'),
       options: {}
     }
   },
-  mounted() {
+  mounted () {
     let modal = document.querySelector('#myModal')
     let img = document.querySelector('#myImg')
     let modalImg = document.querySelector('#img01')
     let captionText = document.querySelector('#caption')
-    img.addEventListener('click', function() {
+    img.addEventListener('click', function () {
       modal.style.display = 'block'
       modalImg.src = this.src
       captionText.innerHTML = this.alt
     })
     let span = document.getElementsByClassName('close')[0]
-    span.addEventListener('click', function() {
+    span.addEventListener('click', function () {
       modal.style.display = 'none'
     })
   }

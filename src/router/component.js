@@ -1,5 +1,5 @@
-import component from "@/views/npm/index.vue"
-import test from "@/views/npm/test.vue"
+import component from '@/views/npm/index.vue'
+import test from '@/views/npm/test.vue'
 const componentRouter = [{
   path: '/component',
   name: 'component',

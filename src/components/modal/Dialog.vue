@@ -1,44 +1,42 @@
 <template>
   <modal
-    name="dialog"
-    height="auto"
     :classes="['v--modal', 'vue-dialog', this.params.class]"
     :width="width"
     :pivot-y="0.3"
     :adaptive="true"
-    :clickToClose="clickToClose"
+    :click-to-close="clickToClose"
     :transition="transition"
+    name="dialog"
+    height="auto"
     @before-open="beforeOpened"
     @before-close="beforeClosed"
     @opened="$emit('opened', $event)"
     @closed="$emit('closed', $event)">
-
     <div class="dialog-content">
       <div
-        class="dialog-c-title"
         v-if="params.title"
-        v-html="params.title || ''"></div>
+        class="dialog-c-title"
+        v-html="params.title || ''"/>
       <div
         class="dialog-c-text"
-        v-html="params.text || ''"></div>
+        v-html="params.text || ''"/>
     </div>
     <div
-      class="vue-dialog-buttons"
-      v-if="buttons">
+      v-if="buttons"
+      class="vue-dialog-buttons">
       <button
         v-for="(button, i) in buttons"
         :class="button.class || 'vue-dialog-button'"
-        type="button"
         :style="buttonStyle"
         :key="i"
-        v-html="button.title"
-        @click.stop="click(i, $event)">
-        {{button.title}}
-      </button>
+        type="button"
+        @click.stop="click(i, $event)"
+        v-html="button.title">{{ button.title }}</button>
     </div>
-    <div v-else class="vue-dialog-buttons-none"></div>
+    <div
+      v-else
+      class="vue-dialog-buttons-none"/>
   </modal>
-  
 </template>
 <script>
 export default {
@@ -57,40 +55,40 @@ export default {
       default: 'fade'
     }
   },
-  data() {
+  data () {
     return {
       params: {},
       defaultButtons: [{ title: 'CLOSE' }]
     }
   },
   computed: {
-    buttons() {
+    buttons () {
       return this.params.buttons || this.defaultButtons
     },
     /**
      * Returns FLEX style with correct width for arbitrary number of
      * buttons.
      */
-    buttonStyle() {
+    buttonStyle () {
       return {
         flex: `1 1 ${100 / this.buttons.length}%`
       }
     }
   },
   methods: {
-    beforeOpened(event) {
+    beforeOpened (event) {
       window.addEventListener('keyup', this.onKeyUp)
 
       this.params = event.params || {}
       this.$emit('before-opened', event)
     },
-    beforeClosed(event) {
+    beforeClosed (event) {
       window.removeEventListener('keyup', this.onKeyUp)
 
       this.params = {}
       this.$emit('before-closed', event)
     },
-    click(i, event, source = 'click') {
+    click (i, event, source = 'click') {
       const button = this.buttons[i]
 
       if (button && typeof button.handler === 'function') {
@@ -99,7 +97,7 @@ export default {
         this.$modal.hide('dialog')
       }
     },
-    onKeyUp(event) {
+    onKeyUp (event) {
       if (event.which === 13 && this.buttons.length > 0) {
         const buttonIndex =
           this.buttons.length === 1

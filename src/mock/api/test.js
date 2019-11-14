@@ -2,9 +2,8 @@
 import mock from '../plugin/axiosMockAdapter'
 import testData from '../data/testData'
 
-
 export default {
-  start() {
+  start () {
     mock.onGet('/api/test').reply(config => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -12,9 +11,9 @@ export default {
             code: '1',
             msg: 'success',
             data: testData.test
-          }]);
-        }, 200);
-      });
+          }])
+        }, 200)
+      })
     })
     mock.onGet('/api/testString').reply(config => {
       return new Promise((resolve, reject) => {
@@ -30,7 +29,5 @@ export default {
         }, 2000)
       })
     })
-
-
   }
 }

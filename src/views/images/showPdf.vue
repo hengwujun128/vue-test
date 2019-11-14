@@ -20,18 +20,16 @@ export default {
       currentPage: 0,
       pageCount: 0,
       src: loadingTask,
-      numPages: undefined,
+      numPages: undefined
     }
   },
   components: {
     pdf
   },
   mounted () {
-
     this.src.then(pdf => {
-
-      this.numPages = pdf.numPages;
-    });
+      this.numPages = pdf.numPages
+    })
   },
   methods: {
     // num_pages (a) {

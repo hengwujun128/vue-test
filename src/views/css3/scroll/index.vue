@@ -47,14 +47,14 @@ export default {
     // alert(12344)
   },
   mounted () {
-    let me=this
-    let ele=document.querySelector('.container')
+    let me = this
+    let ele = document.querySelector('.container')
     // 外层容器的高度是固定的
-    let eleHeight=window
+    let eleHeight = window
       .getComputedStyle(ele)
       .getPropertyValue('height')
       .split('px')[0]
-    ele.addEventListener('scroll',function(e) {
+    ele.addEventListener('scroll', function (e) {
       // if(ele.scrollTop>)
       // console.log(ele.scrollTop)
       // console.log(eleHeight * 2)
@@ -158,4 +158,3 @@ body {
   }
 }
 </style>
- 

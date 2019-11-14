@@ -3,7 +3,7 @@
     <div class="tooltip">
       HoverMe
       <span :class="[common, pos]">
-        <slot></slot>
+        <slot/>
       </span>
     </div>
   </div>
@@ -15,7 +15,7 @@ export default {
     position: {
       type: String,
       default: 'top'
-    },
+    }
   },
   data () {
     return {

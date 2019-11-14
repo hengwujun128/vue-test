@@ -17,9 +17,9 @@ module.exports = {
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     // 按从上往下的规则匹配
     //推荐校验(会和 vscode 中设置的相冲突)
-    // 'plugin:vue/recommended',
+    'plugin:vue/recommended',
     //基本校验
-    'plugin:vue/essential',
+    // 'plugin:vue/essential',
     // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard'
   ],
@@ -41,5 +41,6 @@ module.exports = {
     // "space-before-function-paren": [0, "always"], //函数定义时括号前面要不要有空格
     // allow debugger during development
     // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'linebreak-style': ['error', 'windows']
   }
 }

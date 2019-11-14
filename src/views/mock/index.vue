@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import api from "@/api"
+import api from '@/api'
 export default {
   name: 'mock',
   data () {
-    return {};
+    return {}
   },
   created () {
     // this.getUserInfo();
@@ -21,24 +21,24 @@ export default {
     getUserInfo () {
       // 请求'/user/userinfo'接口
       this.axios.get('/user/userinfo').then(({ data }) => {
-        //打印mock data
-        console.log(data);
+        // 打印mock data
+        console.log(data)
         if (data.error === 0) {
-          this.userInfo = data.data;
+          this.userInfo = data.data
           return this.userInfo
         } else {
-          this.userInfo = {};
+          this.userInfo = {}
         }
-      });
+      })
     },
     getMyTest () {
       this.axios.get('/planningData/list').then(res => {
-        return res;
-      });
+        return res
+      })
     },
     getString () {
       this.axios.get('/planningData/stringAndNumber').then(res => {
-        return res;
+        return res
       })
     },
     testAdapter () {
@@ -52,7 +52,7 @@ export default {
     }
 
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 </style>

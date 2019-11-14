@@ -1,5 +1,5 @@
 const indexMixin = {
-  data() {
+  data () {
     return {
       groupId: 0,
       groupName: 'add group',
@@ -11,13 +11,15 @@ const indexMixin = {
         title: '新增分组',
         name: ''
       },
-      list: [{
+      list: [
+        {
           groupId: '1',
           groupName: 'first group',
           title: 'first group',
           isCollapse: true,
           description: 'hello first',
-          parameterList: [{
+          parameterList: [
+            {
               parameterId: 'parameterId1',
               parameterName: 'parameterName1'
             },
@@ -41,7 +43,8 @@ const indexMixin = {
           title: 'second group',
           isCollapse: false,
           description: 'hello second',
-          parameterList: [{
+          parameterList: [
+            {
               parameterId: 'parameterId12',
               parameterName: 'parameterName12'
             },
@@ -65,7 +68,8 @@ const indexMixin = {
           title: 'third group',
           isCollapse: false,
           description: 'hello third',
-          parameterList: [{
+          parameterList: [
+            {
               parameterId: 'parameterId13',
               parameterName: 'parameterName13'
             },
@@ -89,7 +93,8 @@ const indexMixin = {
           title: 'fourth group',
           name: 'fourth',
           description: 'hello fourth',
-          parameterList: [{
+          parameterList: [
+            {
               parameterId: 'parameterId14',
               parameterName: 'parameterName14'
             },
@@ -109,7 +114,6 @@ const indexMixin = {
               parameterId: 'parameterId54',
               parameterName: 'parameterName54'
             }
-
           ]
         }
       ],
@@ -118,19 +122,18 @@ const indexMixin = {
     }
   },
   methods: {
-    addGroup(tag) {
-      this.operationTag = 'add',
-        this.groupForm.title = '新增分组'
+    addGroup (tag) {
+      ;(this.operationTag = 'add'), (this.groupForm.title = '新增分组')
       this.groupForm.name = ''
-      this.addGroupTag = tag;
+      this.addGroupTag = tag
       this.dialogVisible = true
     },
-    editGroup(tag, index) {
-      this.operationTag = 'edit';
+    editGroup (tag, index) {
+      this.operationTag = 'edit'
       this.groupForm.title = '编辑分组'
-      // 
+      //
       this.groupIndex = index
-      this.addGroupTag = tag;
+      this.addGroupTag = tag
       if (tag == 1) {
         this.groupForm.name = this.list2[index].groupName
       } else {
@@ -138,18 +141,18 @@ const indexMixin = {
       }
       this.dialogVisible = true
     },
-    deleteGroup(tag, index) {
+    deleteGroup (tag, index) {
       if (tag === 1) {
         this.list2.splice(index, 1)
       } else {
         this.list3.splice(index, 1)
       }
     },
-    handleClose() {
+    handleClose () {
       this.dialogVisible = false
     },
     //
-    saveGroup() {
+    saveGroup () {
       // debugger
       // 新增分组
       if (this.operationTag === 'add') {

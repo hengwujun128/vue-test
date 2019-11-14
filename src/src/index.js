@@ -1,5 +1,6 @@
 // 入口文件中引入指令,引入 js 文件
 // 指令对象,随后作为plugin 对象
+
 import VueScrollTo from './directive'
 //
 import { setDefaults } from './scrollTo'
@@ -16,6 +17,7 @@ const install = function (Vue, options) {
 if (typeof window !== 'undefined' && window.Vue) {
   window.VueScrollTo = VueScrollTo
   window.VueScrollTo.setDefaults = setDefaults
+
   Vue.use(install)
 }
 

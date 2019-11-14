@@ -1,5 +1,5 @@
 <template>
-  <div :class="className"></div>
+  <div :class="className"/>
 </template>
 <script>
 import { inRange } from './util'
@@ -17,24 +17,24 @@ export default {
       default: 0
     }
   },
-  data() {
+  data () {
     return {
       clicked: false,
       size: {}
     }
   },
-  mounted() {
-    // 当此组件挂载之后，添加mouseDown 事件,并在mouseDown事件处理程序中添加mouseMove和mouseUp事件
-    this.$el.addEventListener('mousedown', this.start, false)
-  },
   // 通过计算属性添加两个class
   computed: {
-    className() {
+    className () {
       return { 'vue-modal-resizer': true, clicked: this.clicked }
     }
   },
+  mounted () {
+    // 当此组件挂载之后，添加mouseDown 事件,并在mouseDown事件处理程序中添加mouseMove和mouseUp事件
+    this.$el.addEventListener('mousedown', this.start, false)
+  },
   methods: {
-    start(event) {
+    start (event) {
       this.clicked = true
 
       window.addEventListener('mousemove', this.mousemove, false)
@@ -43,7 +43,7 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-    stop() {
+    stop () {
       this.clicked = false
 
       window.removeEventListener('mousemove', this.mousemove, false)
@@ -54,11 +54,11 @@ export default {
         size: this.size
       })
     },
-    mousemove(event) {
+    mousemove (event) {
       this.resize(event)
     },
     // move 事件处理程序
-    resize(event) {
+    resize (event) {
       var el = this.$el.parentElement
 
       if (el) {

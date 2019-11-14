@@ -22,17 +22,17 @@ const Arr = {
   'arr4|1-10': ['world1', 'world2', 'world3', 'world4', 'world5'],
   // 从属性值array中，选择所有的元素({},{}),重复1-10次
   'arr5|1-10': [{
-      'name|+1': ['hello', 'hello1', 'hello2', 'hello3', 'hello4'],
-    },
-    {
-      'age|+1': ['world', 'world1', 'world2', 'world3', 'world4']
-    }
+    'name|+1': ['hello', 'hello1', 'hello2', 'hello3', 'hello4']
+  },
+  {
+    'age|+1': ['world', 'world1', 'world2', 'world3', 'world4']
+  }
   ],
   // 从属性值array中，选择全部元素，重复3次(实际是生成了9个元素)
   'arr6|3': ['a', 'b', 'c']
 }
 
-// Data Placeholder Defination  
+// Data Placeholder Defination
 
 const Placeholder1 = {
   trueOrFalse: '@boolean',
@@ -44,7 +44,6 @@ const Placeholder1 = {
   text1: '@paragraph(2)',
   cname1: '@cname'
 }
-
 
 //  Mock.mock() 参数是个对象
 export default {

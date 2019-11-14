@@ -10,11 +10,11 @@
 <script>
 // tooltip 也是使用popover 组件来实现
 export default {
-  name: "Tooltip",
+  name: 'Tooltip',
   props: {
     event: {
       type: String,
-      default: "hover"
+      default: 'hover'
     },
     pointer: {
       type: Boolean,
@@ -25,10 +25,10 @@ export default {
       default: 160
     }
   },
-  data() {
+  data () {
     return {
-      value: ""
-    };
+      value: ''
+    }
   }
-};
+}
 </script>

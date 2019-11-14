@@ -1,5 +1,5 @@
-import form from "@/views/form/index.vue"
-import customizedForm from "@/views/form/customizedForm.vue"
+import form from '@/views/form/index.vue'
+import customizedForm from '@/views/form/customizedForm.vue'
 const formRouter = [{
   path: '/form',
   name: 'form',
@@ -13,4 +13,4 @@ const formRouter = [{
   }]
 }]
 
-export default formRouter;
+export default formRouter

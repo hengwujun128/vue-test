@@ -7,19 +7,19 @@
 </template>
 
 <script>
-import VueVersion from "get-vue-version";
-import Vue from "vue";
+import VueVersion from 'get-vue-version'
+import Vue from 'vue'
 
 export default {
   components: {
     VueVersion
   },
   computed: {
-    version() {
-      return Vue.version;
+    version () {
+      return Vue.version
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 </style>

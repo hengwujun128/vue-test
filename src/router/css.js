@@ -5,6 +5,9 @@ import navigator from '@/views/css3/navigator/index.vue'
 import polygon from '@/views/css3/polygon/index.vue'
 
 import slide from '@/views/css3/animation/slide.vue'
+// headerNavigation
+import HeaderNavigation from '@/views/css3/headerNavigation/headerNavigation'
+import navigation from '@/views/css3/navigation'
 const cssRouter = [
   {
     path: '/css',
@@ -16,6 +19,12 @@ const cssRouter = [
         path: '/css/scroll',
         name: 'scroll',
         component: scroll
+      },
+
+      {
+        path: '/css/navigation',
+        name: 'navigation',
+        component: navigation
       },
       {
         path: '/css/navigator',

@@ -26,44 +26,42 @@ export default {
     }
   },
   mounted () {
-    let MutationObserver=window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver
-    let element=document.querySelector('.resizable')
-    this.observer=new MutationObserver((mutationList) => {
+    let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+    let element = document.querySelector('.resizable')
+    this.observer = new MutationObserver((mutationList) => {
       // for(let mutation of mutationList) {
       //   console.log(mutation)
       // }
-      let width=getComputedStyle(element).getPropertyValue('width')
-      let height=getComputedStyle(element).getPropertyValue('height')
+      let width = getComputedStyle(element).getPropertyValue('width')
+      let height = getComputedStyle(element).getPropertyValue('height')
 
-      if(width===this.recordOldValue.width&&height===this.recordOldValue.height) return
-      this.recordOldValue={
+      if (width === this.recordOldValue.width && height === this.recordOldValue.height) return
+      this.recordOldValue = {
         width,
         height
       }
       console.log(this.recordOldValue)
-      this.firedNum+=1
+      this.firedNum += 1
     })
-    this.observer.observe(element,{
+    this.observer.observe(element, {
       attributes: true,
       attributeFilter: ['style'],
       attributeOldValue: true
     })
-
   },
   beforeDestroyed () {
-    if(this.observer) {
+    if (this.observer) {
       this.observer.disconnect()
       this.observer.takeRecords()
-      this.observer=null
+      this.observer = null
     }
   },
-
 
   methods: {
     onResize (v) {
       // debugger
     }
-  },
+  }
 }
 </script>
 

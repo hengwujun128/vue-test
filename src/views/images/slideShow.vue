@@ -41,19 +41,19 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       slideIndex: 1
     }
   },
   methods: {
-    plusSlides(n) {
+    plusSlides (n) {
       this.showSlides((this.slideIndex += n))
     },
-    currentSlide(n) {
+    currentSlide (n) {
       this.showSlides((this.slideIndex = n))
     },
-    showSlides(n) {
+    showSlides (n) {
       var i
       var slides = document.getElementsByClassName('mySlide')
       var dots = document.getElementsByClassName('dot')
@@ -74,7 +74,7 @@ export default {
       dots[this.slideIndex - 1].className += ' active'
     },
     // Automatic SlideShow
-    automaticShow() {
+    automaticShow () {
       // debugger
       var i
       // get all mySlides and then set those display with none;
@@ -93,7 +93,7 @@ export default {
       setTimeout(this.automaticShow, 2000) // Change image every 2 seconds
     }
   },
-  mounted() {
+  mounted () {
     this.showSlides(this.slideIndex)
     // this.automaticShow();
   }

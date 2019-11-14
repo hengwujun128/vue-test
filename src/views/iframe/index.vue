@@ -16,15 +16,15 @@
 export default {
   data () {
     return {
-      src: ""
-    };
+      src: ''
+    }
   },
 
   methods: {
     loaded () {
       // const vm = this.$refs.iframe.contentWindow.vm;
       // console.log(vm);
-      //vm.func1()
+      // vm.func1()
     },
     /**
      * 1.要以当前用户登录sita环境，选中项目之后，才能进入
@@ -34,10 +34,10 @@ export default {
     addSrc () {
       // /msp2/smartODN/#/HBB/networkPlanning?cur_project_id=2388439019186000000&language=en-US
       // this.$refs.iframe.src = "http://sd-smartodn-dev.huawei.com/#/planning/planningMain/";
-      this.$refs.iframe.src = "http://localhost.huawei.com:9090/#/HBB/networkPlanning?cur_project_id=2388439019186000000&language=en-US"
+      this.$refs.iframe.src = 'http://localhost.huawei.com:9090/#/HBB/networkPlanning?cur_project_id=2388439019186000000&language=en-US'
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .wrapper {
@@ -60,4 +60,3 @@ export default {
   }
 }
 </style>
-

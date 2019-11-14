@@ -15,33 +15,33 @@
   </div>
 </template>
 <script>
-require('./utils.js')
 import Circle from './circle.js'
 import Rectangle from './rectangle.js'
 import Path from './path.js'
+require('./utils.js')
 
 export default {
-  data() {
+  data () {
     return {
       context: ''
     }
   },
   methods: {
-    getContext() {
+    getContext () {
       // document.querySelector('canvas1')
       let canvas1 = document.getElementById('canvas1')
       this.context = canvas1.getContext('2d')
     },
-    rectangle() {
+    rectangle () {
       let rectangle = new Rectangle()
       rectangle.draw(this.context)
     },
-    triangle() {
+    triangle () {
       let path = new Path()
       path.drawTriangle(this.context)
     }
   },
-  mounted() {
+  mounted () {
     // let targets = [
     //   { x: 125, y: 90, url: "" },
     //   { x: 375, y: 90, url: "" },
@@ -92,7 +92,7 @@ export default {
     //   });
     // });
 
-    function onMouseenter(e) {
+    function onMouseenter (e) {
       // first, remove animation
       cancelRequestAnimationFrame(animationId1)
 
@@ -113,7 +113,7 @@ export default {
     //   window.cancelRequestAnimationFrame(animationId2);
     //   drawFrame1();
     // });
-    function drawFrame1() {
+    function drawFrame1 () {
       animationId1 = window.requestAnimationFrame(drawFrame1, myCanvas)
       context.clearRect(0, 0, myCanvas.width, myCanvas.height)
 
@@ -137,7 +137,7 @@ export default {
         circle.draw(context)
       }
     }
-    function drawFrame2() {
+    function drawFrame2 () {
       animationId2 = window.requestAnimationFrame(drawFrame2, myCanvas)
       context.clearRect(0, 0, myCanvas.width, myCanvas.height)
 
@@ -163,8 +163,8 @@ export default {
     }
     // drawFrame1();
   },
-  created() {
-    this.$nextTick(function() {
+  created () {
+    this.$nextTick(function () {
       this.getContext()
       this.rectangle()
       this.triangle()

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import tooltip from '../../../components/tooltip';
+import tooltip from '../../../components/tooltip'
 export default {
   data () {
     return {

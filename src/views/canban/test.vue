@@ -70,7 +70,7 @@ export default {
         },
         dragable: '.draggable',
         // disabled: !this.editable,
-        ghostClass: "ghost"
+        ghostClass: 'ghost'
       }
     }
   },
@@ -110,7 +110,7 @@ export default {
             { key: 'key33', value: 'value33' },
             { key: 'key43', value: 'value43' }
           ]
-        },
+        }
         // {
         //   title: 'fourth group',
         //   name: 'fourth',
@@ -144,12 +144,11 @@ export default {
     },
     remove: function (index, tag) {
       if (tag == 1) {
-        this.inputData.splice(index, 1);
+        this.inputData.splice(index, 1)
       } else {
-        this.outputData.splice(index, 1);
+        this.outputData.splice(index, 1)
       }
-
-    },
+    }
   }
 }
 </script>

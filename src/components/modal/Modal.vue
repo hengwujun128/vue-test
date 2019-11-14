@@ -4,11 +4,20 @@
     <!-- 通过计算属性设置overlayClass 属性 -->
     <!-- aria-expanded  -->
     <!-- data-modal 在overlay上加上modal的名称-->
-    <div v-if="visibility.overlay" ref="overlay" :class="overlayClass" :aria-expanded="visible.toString()" :data-modal="name" @click="overlayHandler">
+    <div
+      v-if="visibility.overlay"
+      ref="overlay"
+      :class="overlayClass"
+      :aria-expanded="visible.toString()"
+      :data-modal="name"
+      @click="overlayHandler">
       <!-- 在overlay 上加一个div 用于控制overlay的点击事件,就是modal 背景的点击事件 -->
       <!-- 这个div高度宽度和overlay一致，保证点击范围，主要是关闭overlay和modal -->
       <!-- 阻止事件冒泡到overlay,用mousedown替代click -->
-      <div :class="backgroundClickClass" @mousedown.stop="onBackgroundClick" @touchstart.stop="onBackgroundClick">
+      <div
+        :class="backgroundClickClass"
+        @mousedown.stop="onBackgroundClick"
+        @touchstart.stop="onBackgroundClick">
 
         <!-- 关闭按钮，类似youtube -->
         <div class="v--modal-top-right">
@@ -16,7 +25,13 @@
         </div>
         <!--  -->
         <transition :name="transition">
-          <div v-if="visibility.modal" ref="modal" :class="modalClass" :style="modalStyle" @mousedown.stop @touchstart.stop>
+          <div
+            v-if="visibility.modal"
+            ref="modal"
+            :class="modalClass"
+            :style="modalStyle"
+            @mousedown.stop
+            @touchstart.stop>
             <!-- title slot-->
             <div :class="modalHeaderClass">
               <span>
@@ -32,7 +47,11 @@
             <div class="v--modal-footer">
               <slot name="footer">hello footer</slot>
             </div>
-            <resizer v-if="resizable && !isAutoHeight" :min-width="minWidth" :min-height="minHeight" @resize="onModalResize" />
+            <resizer
+              v-if="resizable && !isAutoHeight"
+              :min-width="minWidth"
+              :min-height="minHeight"
+              @resize="onModalResize" />
           </div>
         </transition>
 
@@ -50,7 +69,10 @@ import { inRange } from './util'
 import parseNumber from './parser' // parser.js 使用export default，因此可以改变名称
 
 export default {
-  name: 'smart-modal',
+  name: 'SmartModal',
+  components: {
+    Resizer
+  },
   // eighteen property
   props: {
     name: {
@@ -161,9 +183,6 @@ export default {
       }
     }
   },
-  components: {
-    Resizer
-  },
   data () {
     return {
       visible: false,
@@ -192,6 +211,118 @@ export default {
       },
 
       mutationObserver: null
+    }
+  },
+  computed: {
+    /**
+     * Returns true if height is set to "auto"
+     * 高度是自定义
+     */
+    isAutoHeight () {
+      //
+      return this.modal.heightType === 'auto'
+    },
+    /**
+     * Calculates and returns modal position based on the
+     * pivots, window size and modal size
+     */
+    position () {
+      const {
+        window,
+        shift,
+        pivotX,
+        pivotY,
+        trueModalWidth,
+        trueModalHeight
+      } = this
+
+      const maxLeft = window.width - trueModalWidth
+      const maxTop = window.height - trueModalHeight
+
+      const left = shift.left + pivotX * maxLeft
+      const top = shift.top + pivotY * maxTop
+
+      return {
+        left: inRange(0, maxLeft, left),
+        top: inRange(0, maxTop, top)
+      }
+    },
+    /**
+     * Returns pixel width (if set with %) and makes sure that modal size
+     * fits the window
+     */
+    trueModalWidth () {
+      const { window, modal, adaptive, minWidth, maxWidth } = this
+
+      const value =
+        modal.widthType === '%'
+          ? window.width / 100 * modal.width
+          : modal.width
+
+      const max = Math.min(window.width, maxWidth)
+
+      return adaptive ? inRange(minWidth, max, value) : value
+    },
+    /**
+     * Returns pixel height (if set with %) and makes sure that modal size
+     * fits the window.
+     *
+     * Returns modal.renderedHeight if height set as "auto"
+     */
+    trueModalHeight () {
+      const { window, modal, isAutoHeight, adaptive, maxHeight } = this
+
+      const value =
+        modal.heightType === '%'
+          ? window.height / 100 * modal.height
+          : modal.height
+
+      if (isAutoHeight) {
+        // use renderedHeight when height 'auto'
+        return this.modal.renderedHeight
+      }
+
+      const max = Math.min(window.height, maxHeight)
+
+      return adaptive ? inRange(this.minHeight, max, value) : value
+    },
+    /**
+     * Returns class list for screen overlay (modal background)
+     */
+    overlayClass () {
+      // control show or hide ,and scrollable
+      return {
+        'v--modal-overlay': true,
+        scrollable: this.scrollable && this.isAutoHeight
+      }
+    },
+    /**
+     * Returns class list for click outside overlay (background click)
+     */
+    backgroundClickClass () {
+      return ['v--modal-background-click']
+    },
+    /**
+     * Returns class list for modal itself
+     */
+    modalClass () {
+      return ['v--modal-box', this.classes]
+    },
+    /**
+     * CSS styles for position and size of the modal
+     */
+    modalStyle () {
+      // 用于精准控制modal 样式
+      return {
+        top: this.position.top + 'px',
+        left: this.position.left + 'px',
+        width: this.trueModalWidth + 'px',
+        height: this.isAutoHeight ? 'auto' : this.trueModalHeight + 'px'
+      }
+    },
+    //
+    modalHeaderClass () {
+      return this.draggable ? 'v--modal-header' : ''
     }
   },
   watch: {
@@ -319,118 +450,6 @@ export default {
       window.removeEventListener('keyup', this.onEscapeKeyUp)
     }
   },
-  computed: {
-    /**
-     * Returns true if height is set to "auto"
-     * 高度是自定义
-     */
-    isAutoHeight () {
-      //
-      return this.modal.heightType === 'auto'
-    },
-    /**
-     * Calculates and returns modal position based on the
-     * pivots, window size and modal size
-     */
-    position () {
-      const {
-        window,
-        shift,
-        pivotX,
-        pivotY,
-        trueModalWidth,
-        trueModalHeight
-      } = this
-
-      const maxLeft = window.width - trueModalWidth
-      const maxTop = window.height - trueModalHeight
-
-      const left = shift.left + pivotX * maxLeft
-      const top = shift.top + pivotY * maxTop
-
-      return {
-        left: inRange(0, maxLeft, left),
-        top: inRange(0, maxTop, top)
-      }
-    },
-    /**
-     * Returns pixel width (if set with %) and makes sure that modal size
-     * fits the window
-     */
-    trueModalWidth () {
-      const { window, modal, adaptive, minWidth, maxWidth } = this
-
-      const value =
-        modal.widthType === '%'
-          ? window.width / 100 * modal.width
-          : modal.width
-
-      const max = Math.min(window.width, maxWidth)
-
-      return adaptive ? inRange(minWidth, max, value):value
-    },
-    /**
-     * Returns pixel height (if set with %) and makes sure that modal size
-     * fits the window.
-     *
-     * Returns modal.renderedHeight if height set as "auto"
-     */
-    trueModalHeight () {
-      const { window, modal, isAutoHeight, adaptive, maxHeight } = this
-
-      const value =
-        modal.heightType === '%'
-          ? window.height / 100 * modal.height
-          : modal.height
-
-      if (isAutoHeight) {
-        // use renderedHeight when height 'auto'
-        return this.modal.renderedHeight
-      }
-
-      const max = Math.min(window.height, maxHeight)
-
-      return adaptive ? inRange(this.minHeight, max, value):value
-    },
-    /**
-     * Returns class list for screen overlay (modal background)
-     */
-    overlayClass () {
-      // control show or hide ,and scrollable
-      return {
-        'v--modal-overlay': true,
-        scrollable: this.scrollable && this.isAutoHeight
-      }
-    },
-    /**
-     * Returns class list for click outside overlay (background click)
-     */
-    backgroundClickClass () {
-      return ['v--modal-background-click']
-    },
-    /**
-     * Returns class list for modal itself
-     */
-    modalClass () {
-      return ['v--modal-box', this.classes]
-    },
-    /**
-     * CSS styles for position and size of the modal
-     */
-    modalStyle () {
-      // 用于精准控制modal 样式
-      return {
-        top: this.position.top + 'px',
-        left: this.position.left + 'px',
-        width: this.trueModalWidth + 'px',
-        height: this.isAutoHeight ? 'auto':this.trueModalHeight + 'px'
-      }
-    },
-    //
-    modalHeaderClass () {
-      return this.draggable ? 'v--modal-header':''
-    }
-  },
   methods: {
     /**
      * Initializes modal's size & position,
@@ -506,7 +525,7 @@ export default {
       // 如果当前的modal 组件已经处于显示和隐藏状态，就不需要再设置
       if (visible === state) return
       //
-      const beforeEventName = visible ? 'before-close':'before-open'
+      const beforeEventName = visible ? 'before-close' : 'before-open'
       // before-open 所做的事件，visible 为false，当前model 为隐藏状态
       if (beforeEventName === 'before-open') {
         /**
@@ -564,7 +583,7 @@ export default {
       // this.draggable default value is false, 如果是boolean，.v--modal-box 设置为拖拽容器
       // 只要是boolean，则设置拖拽
       var selector =
-        typeof this.draggable !== 'string' ? '.v--modal-box':this.draggable
+        typeof this.draggable !== 'string' ? '.v--modal-box' : this.draggable
 
       if (selector) {
         // overlay 下的 .v--modal-box 的元素
@@ -674,7 +693,7 @@ export default {
       }
       // state :true/false,当用户this.$modal.show()的时候设置
       //
-      const eventName = state ? 'opened':'closed'
+      const eventName = state ? 'opened' : 'closed'
       const event = this.genEventObject({ state })
 
       this.$emit(eventName, event)

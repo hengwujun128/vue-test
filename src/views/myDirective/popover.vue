@@ -20,16 +20,16 @@
 </template>
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   methods: {
-    showHandler(e) {
+    showHandler (e) {
       // alert(12);
     }
   },
-  created() {}
-};
+  created () {}
+}
 </script>
 <style lang="scss" scoped>
 // div[data-popover="foo"] {

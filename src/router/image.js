@@ -1,7 +1,7 @@
-import images from "@/views/images/index.vue"
-import slideShow from "@/views/images/slideShow.vue"
-import showPdf from "@/views/images/showPdf.vue"
-import modalImage from "@/views/images/modalImage.vue"
+import images from '@/views/images/index.vue'
+import slideShow from '@/views/images/slideShow.vue'
+import showPdf from '@/views/images/showPdf.vue'
+import modalImage from '@/views/images/modalImage.vue'
 const imageRouter = [
   {
     path: '/images',
