@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted () {
-    let EventHandler = this.debounce(this.scrollHandler, 300)
+    // let EventHandler = this.debounce(this.scrollHandler, 300)
     //  header元素相对于页面的偏移量(不要在事件处理程序中获取,因为这个变量不应该变化,包括偏移量也不应该变化)
     this.header = document.querySelector('header')
     // scroll bar 滚动的距离: window.pageYOffset

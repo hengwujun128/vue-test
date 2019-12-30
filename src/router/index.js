@@ -47,7 +47,7 @@ let app_router = new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld,
-      redirect: 'version'
+      redirect: 'css/navigation'
     },
     {
       path: '/treeTable',

@@ -24,7 +24,7 @@ const cssRouter = [
       {
         path: '/css/navigation',
         name: 'navigation',
-        component: navigation
+        component: HeaderNavigation
       },
       {
         path: '/css/navigator',
