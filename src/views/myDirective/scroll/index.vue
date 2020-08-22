@@ -121,11 +121,11 @@
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>
-      <div :class="{fixedHeader:true,isFixed:titleFixed == true}" ref="pride_tab_fixed">
+      <!-- <div :class="{fixedHeader:true,isFixed:titleFixed == true}" ref="pride_tab_fixed">
         <div class="">
           hello,fixedHeader
         </div>
-      </div>
+      </div> -->
       <p>hello1</p>
       <p>hello1</p>
       <p>hello1</p>

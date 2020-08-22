@@ -17,7 +17,7 @@ export default class Circle {
     // 5.backImg
     this.backImg = options.backImg || ''
   }
-
+  // 把canvas 上下文传入
   draw (context) {
     // 使用栈保存当前的使用状态
     context.save()
@@ -33,7 +33,7 @@ export default class Circle {
     //   context.drawImage(this.backImg, -60, -60, 120, 120)
     // } else {
     context.beginPath()
-    context.arc(0, 0, this.radius, 0, (Math.PI * 2), true)
+    context.arc(0, 0, this.radius, 0, Math.PI * 2, true)
     context.closePath()
     context.fill()
     // }

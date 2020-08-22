@@ -20,17 +20,19 @@ const cssRouter = [
         name: 'scroll',
         component: scroll
       },
-
+      // fix header when scroll
       {
         path: '/css/navigation',
         name: 'navigation',
         component: HeaderNavigation
       },
+      //  鼠标移入,滚动切换内容
       {
         path: '/css/navigator',
         name: 'navigator1',
         component: navigator
       },
+      // 
       {
         path: '/css/polygon',
         name: 'polygon',
