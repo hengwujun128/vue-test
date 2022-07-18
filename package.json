@@ -21,7 +21,7 @@
     "get-vue-version": "^1.0.0",
     "he-tree-vue": "^1.0.2",
     "jquery": "^3.3.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
